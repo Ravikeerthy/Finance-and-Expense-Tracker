@@ -51,11 +51,11 @@ const Register = () => {
       console.log(response.data);
 
       const message = response.data.message;
-      toast.success(message, {
+      toast.success("User Registered Successfully", {
         style: { backgroundColor: "purple", color: "white" },
       });
       resetForm();
-      navigate("/dashboard");
+      navigate("/register");
     } catch (error) {
       if (error.response) {
         const errorMessage = error.response.data.message;
