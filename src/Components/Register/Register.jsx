@@ -95,7 +95,7 @@ const Register = () => {
       const message = response.data.message;
       console.log(response.data);
       localStorage.setItem("token", token);
-      toast.success("Login Successful", {
+      toast.success( response.data.message, {
         style: { backgroundColor: "purple", color: "white" },
       });
       login();
