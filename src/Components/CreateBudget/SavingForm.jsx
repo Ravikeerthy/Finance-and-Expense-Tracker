@@ -24,7 +24,9 @@ const SavingForm = () => {
           headers: {
             // Authorization: `Bearer ${token}`,  
             'Content-Type': 'application/json'
-          }}
+          },
+        withCredentials:true
+        }
       ); 
       console.log(response.data);
       resetForm();
