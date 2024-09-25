@@ -90,6 +90,7 @@ const Register = () => {
           withCredentials: true,
         }
       );
+      const { token } = response.data;
       const message = response.data.message;
       console.log(response.data);
       localStorage.setItem("token", token);
