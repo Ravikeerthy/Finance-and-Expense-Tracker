@@ -19,7 +19,13 @@ const SavingForm = () => {
 
   const onSubmit = async (values, { resetForm }) => { 
     try {
-      const response = await axios.post("https://back-end-d6p7.onrender.com/savings/newsaving", values); 
+      const response = await axios.post("https://back-end-d6p7.onrender.com/savings/newsaving", values,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,  
+            'Content-Type': 'application/json'
+          }}
+      ); 
       console.log(response.data);
       resetForm();
     } catch (error) {
