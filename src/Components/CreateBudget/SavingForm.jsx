@@ -17,7 +17,7 @@ const SavingForm = () => {
     date: Yup.date().required("Date is required"),
   });
 
-  const onSubmit = async (values, { resetForm }) => { //https://back-end-d6p7.onrender.com/savingGoal_Router/newsaving
+  const onSubmit = async (values, { resetForm }) => { 
     try {
       const response = await axios.post("https://back-end-d6p7.onrender.com/savings/newsaving", values); 
       console.log(response.data);

@@ -19,7 +19,7 @@ const ExpenseForm = () => {
 
   const onSubmit = async (values, { resetForm }) => {
     try {
-      const response = await axios.post("/api/expense", values); // Replace with your API endpoint
+      const response = await axios.post("https://back-end-d6p7.onrender.com/expense/newexpense", values); 
       console.log(response.data);
       resetForm();
     } catch (error) {

@@ -17,7 +17,7 @@ const IncomeForm = () => {
 
   const onSubmit = async (values, { resetForm }) => {
     try {
-      const response = await axios.post("/api/budget", values); 
+      const response = await axios.post("https://back-end-d6p7.onrender.com/income/newincome", values); 
       console.log(response.data);
       resetForm();
     } catch (error) {
