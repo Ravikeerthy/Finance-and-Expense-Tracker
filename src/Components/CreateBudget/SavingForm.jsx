@@ -22,7 +22,7 @@ const SavingForm = () => {
       const response = await axios.post("https://back-end-d6p7.onrender.com/savings/newsaving", values,
         {
           headers: {
-            Authorization: `Bearer ${token}`,  
+            // Authorization: `Bearer ${token}`,  
             'Content-Type': 'application/json'
           }}
       ); 
