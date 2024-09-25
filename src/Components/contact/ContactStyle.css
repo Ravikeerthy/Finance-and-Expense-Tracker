@@ -1,0 +1,13 @@
+.contact-container{
+    background-color: rgb(255, 241, 248);
+    height: 100vh;
+    
+}
+.contact-heading{
+    text-align: center;
+    color: purple;
+    padding: 20px;
+}
+.contact-p{
+    font-weight: 600;
+}

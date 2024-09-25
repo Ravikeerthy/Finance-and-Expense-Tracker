@@ -1,0 +1,18 @@
+.financial-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 18px;
+    text-align: left;
+  }
+  
+  .financial-table th, .financial-table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+  }
+  
+  .financial-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+  
