@@ -6,20 +6,30 @@ import "./CreateBudgetStyle.css"
 
 const ExpenseForm = () => {
   const initialValues = {
-    amount: "",
-    category: "",
+    expenseAmount: "",
+    expenseCategory: "",
+    expenseDescription:"",
     date: "",
   };
 
   const validationSchema = Yup.object({
-    amount: Yup.number().required("Amount is required").positive(),
-    category: Yup.string().required("Category is required"),
+    expenseAmount: Yup.number().required("Amount is required").positive(),
+    expenseCategory: Yup.string().required("Category is required"),
+    expenseDescription: Yup.string().required("Description is required"),
     date: Yup.date().required("Date is required"),
   });
 
   const onSubmit = async (values, { resetForm }) => {
     try {
-      const response = await axios.post("https://back-end-d6p7.onrender.com/expense/newexpense", values); 
+      const response = await axios.post("https://back-end-d6p7.onrender.com/expense/newexpense", values,
+        {
+          headers: {
+            // Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      ); 
       console.log(response.data);
       resetForm();
     } catch (error) {
@@ -38,13 +48,18 @@ const ExpenseForm = () => {
         <Form className="form-class">
           <div>
             <label className="form-label">Amount:</label>
-            <Field  name="amount" type="number"/>
-            <ErrorMessage name="amount" component="div" className="error" />
+            <Field  name="expenseAmount" type="number"/>
+            <ErrorMessage name="expenseAmount" component="div" className="error" />
           </div>
           <div>
             <label className="form-label">Category:</label>
-            <Field name="category" type="text" />
-            <ErrorMessage name="category" component="div" className="error" />
+            <Field name="expenseCategory" type="text" />
+            <ErrorMessage name="expenseCategory" component="div" className="error" />
+          </div>
+          <div>
+            <label className="form-label">Description:</label>
+            <Field name="expenseDescription" type="text" />
+            <ErrorMessage name="expenseDescription" component="div" className="error" />
           </div>
           <div>
             <label className="form-label">Date:</label>

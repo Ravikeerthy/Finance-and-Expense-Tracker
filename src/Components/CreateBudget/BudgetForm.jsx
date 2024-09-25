@@ -7,18 +7,32 @@ import "./CreateBudgetStyle.css"
 const BudgetForm = () => {
  
     const initialValues = {
-      amount: "",
-      category: "",
+      budgetAmount: "",
+      budgetCategory: "",
+      budgetPeriod:"",
+      startDate:"",
+      endDate:""
     };
 
     const validationSchema = Yup.object({
-      amount: Yup.number().required("Budget amount is required").positive(),
-      category: Yup.string().required("Category is required"),
+      budgetAmount: Yup.number().required("Budget amount is required").positive(),
+      budgetCategory: Yup.string().required("Category is required"),
+      budgetPeriod:  Yup.string().required("Duration is required"),
+      startDate: Yup.date().required("Date is required"),
+      endDate: Yup.date().required("Date is required"),
     });
 
     const onSubmit = async (values, { resetForm }) => {
       try {
-        const response = await axios.post("https://back-end-d6p7.onrender.com/budget/newbudget", values); 
+        const response = await axios.post("https://back-end-d6p7.onrender.com/budget/newbudget", values,
+          {
+            headers: {
+              // Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          }
+        ); 
         console.log(response.data);
         resetForm();
       } catch (error) {
@@ -37,13 +51,28 @@ const BudgetForm = () => {
       <Form className="form-class">
         <div>
           <label className="form-label">Budget Amount:</label>
-          <Field name="amount" type="number" />
-          <ErrorMessage name="amount" component="div" className="error" />
+          <Field name="budgetAmount" type="number" />
+          <ErrorMessage name="budgetAmount" component="div" className="error" />
         </div>
         <div>
           <label className="form-label">Category:</label>
-          <Field name="category" type="text" />
-          <ErrorMessage name="category" component="div" className="error" />
+          <Field name="budgetCategory" type="text" />
+          <ErrorMessage name="budgetCategory" component="div" className="error" />
+        </div>
+        <div>
+          <label className="form-label">Category:</label>
+          <Field name="budgetPeriod" type="text" />
+          <ErrorMessage name="budgetPeriod" component="div" className="error" />
+        </div>
+        <div>
+          <label className="form-label">Starting Date:</label>
+          <Field name="startDate" type="date" />
+          <ErrorMessage name="startDate" component="div" className="error" />
+        </div>
+        <div>
+          <label className="form-label">Ending Date:</label>
+          <Field name="endDate" type="date" />
+          <ErrorMessage name="endDate" component="div" className="error" />
         </div>
         <button type="submit" className="form-button">Set Budget</button>
       </Form>
