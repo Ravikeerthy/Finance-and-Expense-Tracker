@@ -7,8 +7,8 @@ const DashBoard = () => {
   return (
     <div>
       <h1>Expense Tracker DashBoard</h1>
-      <div className="chart-container">
-        <div className="chart-item">
+      <div className="chart-container-1">
+        <div className="chart-item-1">
           <Chart />
         </div>
        

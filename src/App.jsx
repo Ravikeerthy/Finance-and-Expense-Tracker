@@ -1,7 +1,11 @@
 import React, { useContext } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import NavBar from "./Components/Navbar/NavBar";
-import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 import Register from "./Components/Register/Register";
 import Benefits from "./Components/Benefits/Benefits";
 import ContactUs from "./Components/contact/ContactUs";
@@ -19,71 +23,63 @@ import ExpenseForm from "./Components/CreateBudget/ExpenseForm";
 import BudgetForm from "./Components/CreateBudget/BudgetForm";
 import Logout from "./Components/LogOut/Logout";
 
-const App = () => {
+const ProtectedRoute = ({ element }) => {
   const { isAuthenticated } = useContext(AuthContext);
+  return isAuthenticated ? element : <Navigate to="/" />;
+};
 
+const App = () => {
   const router = createBrowserRouter([
+    
     {
-      element: isAuthenticated ? <LoginNavBar /> : <NavBar />,
+      element: <NavBar />, 
+      children: [
+        { path: "/", element: <About /> },
+        { path: "/register", element: <Register /> },
+        { path: "/benefits", element: <Benefits /> },
+        { path: "/contact", element: <ContactUs /> },
+      ],
+    },
+    {
+      element: <LoginNavBar />, 
       children: [
         {
-          path: "/",
-          element: <About />,
-        },
-        {
-          path: "/register",
-          element: <Register />,
-        },
-        {
-          path: "/benefits",
-          element: <Benefits />,
-        },
-        {
-          path: "/contact",
-          element: <ContactUs />,
-        },
-
-        {
           path: "/dashboard",
-          element: isAuthenticated? <DashBoard />: <Navigate to="/"/>,
+          element: <ProtectedRoute element={<DashBoard />} />,
         },
         {
           path: "/create",
-          element: isAuthenticated? <CreateBudget />: <Navigate to="/"/>,
+          element: <ProtectedRoute element={<CreateBudget />} />,
         },
-        {
-          path: "/reports",
-          element: isAuthenticated? <Reports />:<Navigate to="/"/>,
-        },
-        {
-          path: "/charts",
-          element: isAuthenticated? <Chart />:<Navigate to="/"/>,
-        },
+        { path: "/reports", element: <ProtectedRoute element={<Reports />} /> },
+        { path: "/charts", element: <ProtectedRoute element={<Chart />} /> },
         {
           path: "/settings",
-          element: isAuthenticated? <ProfileSettings />:<Navigate to="/"/>,
+          element: <ProtectedRoute element={<ProfileSettings />} />,
         },
         {
-          path:"/incomeform",
-          element: isAuthenticated?  <IncomeForm/> : <Navigate to= "/"/>,
+          path: "/incomeform",
+          element: <ProtectedRoute element={<IncomeForm />} />,
         },
         {
-          path:"/savingform",
-          element: isAuthenticated ? <SavingForm /> : <Navigate to="/"/>
+          path: "/savingform",
+          element: <ProtectedRoute element={<SavingForm />} />,
         },
         {
-          path:"/expenseform",
-          element: isAuthenticated? <ExpenseForm /> : <Navigate to ="/"/>
+          path: "/expenseform",
+          element: <ProtectedRoute element={<ExpenseForm />} />,
         },
         {
-          path:"/budgetform",
-          element: isAuthenticated ? <BudgetForm/> : <Navigate to="/"/>
+          path: "/budgetform",
+          element: <ProtectedRoute element={<BudgetForm />} />,
         },
-        {
-          path:"/logout",
-          element: <Logout/> 
-        }
+        { path: "/logout", element: <Logout /> },
       ],
+    },
+
+    {
+      path: "*",
+      element: <Navigate to="/" />,
     },
   ]);
 

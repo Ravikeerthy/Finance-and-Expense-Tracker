@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import "./CreateBudgetStyle.css";
 
-const SavingForm = () => {
+const SavingForm = ({ onSubmit }) => {
   const initialValues = {
     savingAmount: "",
     targetDate: "",
@@ -17,10 +17,11 @@ const SavingForm = () => {
     source: Yup.string().required("Source is required"),
   });
 
-  const onSubmit = async (values, { resetForm }) => {
+  const savingOnSubmit = async (values, { resetForm }) => {
     try {
       const response = await axios.post(
-        "https://back-end-d6p7.onrender.com/savings/newsaving",
+        "http://localhost:4000/savings/newsaving",
+        // "https://back-end-d6p7.onrender.com/savings/newsaving",
         values,
         {
           headers: {
@@ -31,7 +32,20 @@ const SavingForm = () => {
         }
       );
       console.log(response.data);
+      
+      alert(response.data.message);
+
+      const newSavingData = {
+        amount: values.savingAmount,
+        targetDate: values.targetDate,
+        source: values.source,
+      };
+      console.log("Submitting values to parent:", newSavingData);
+      console.log("Calling onSubmit with data..."); 
+
+      onSubmit(newSavingData);
       resetForm();
+      console.log("Form reset after submission.");
     } catch (error) {
       console.error("Failed to add income:", error);
     }
@@ -42,7 +56,7 @@ const SavingForm = () => {
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
-        onSubmit={onSubmit}
+        onSubmit={savingOnSubmit}
       >
         <Form className="form-class">
           <div>

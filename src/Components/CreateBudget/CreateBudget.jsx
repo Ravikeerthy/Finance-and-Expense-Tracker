@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./CreateBudgetStyle.css";
 import ExpenseForm from "./ExpenseForm";
 import SavingForm from "./SavingForm";
 import IncomeForm from "./IncomeForm";
 import BudgetForm from "./BudgetForm";
 import TableComp from "./TableComp";
+import Chart from "../chart/Chart";
+import axios from "axios";
 
 const CreateBudget = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,9 +17,50 @@ const CreateBudget = () => {
   const [budget, setBudget] = useState([]);
   const [saving, setSaving] = useState([]);
 
+  const _id = localStorage.getItem("_id");
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    console.log("useEffect has been called");
+    fetchAllData();
+  }, []);
+
+  const fetchAllData = async () => {
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`, 
+      withCredentials: true,
+    };
+    try {
+      const incomeGetResponse = await axios.get(
+        `http://localhost:4000/income/getIncomeByUserId/userId`,
+        headers
+      );
+      
+      const expenseGetResponse = await axios.get(
+        `http://localhost:4000/expense/expenseuserId/$`,
+        headers
+      );
+      const budgetGetResponse = await axios.get(
+        `http://localhost:4000/budget/getBudgetById`,
+       headers
+      );
+      const savingGetResponse = await axios.get(
+        `http://localhost:4000/savings/getbyid`,
+        headers
+      );
+
+      setIncome(incomeGetResponse.data);
+      setExpense(expenseGetResponse.data);
+      setBudget(budgetGetResponse.data);
+      setSaving(savingGetResponse.data);
+    } catch (error) {
+      console.error("Error fetching data from the database", error);
+    }
+  };
   const openModal = (formType) => {
-    setCurrentForm(formType); 
-    setIsModalOpen(true); 
+    setCurrentForm(formType);
+    setIsModalOpen(true);
   };
 
   const closeModal = () => {
@@ -26,30 +69,47 @@ const CreateBudget = () => {
   };
 
   const handleFormSubmit = (type, values) => {
+    console.log(`Submitting ${type} with values:`, values);
     switch (type) {
       case "income":
-        setIncome([...income, values.amount]); 
+        setIncome((preIncome) => [...preIncome, values]);
+        console.log("Updated Income:", [...income, values]);
         break;
       case "expense":
-        setExpense([...expense, values.amount]); 
+        setExpense((preExpense) => [...preExpense, values]);
+        console.log("Updated Expense:", [...expense, values]);
         break;
       case "budget":
-        setBudget([...budget, values.amount]); 
+        setBudget((preBudget) => [...preBudget, values]);
+        console.log("Updated Budget:", [...budget, values]);
         break;
       case "saving":
-        setSaving([...saving, values.amount]); 
+        setSaving((preSaving) => [...preSaving, values]);
+        console.log("Updated Saving:", [...saving, values]);
         break;
       default:
         break;
     }
-    
-   
+
     closeModal();
   };
+
+  const chartData = {
+    labels:
+      expense.length > 0
+        ? expense.map((exp) => exp.expenseCategory)
+        : ["Other"],
+    expenses: expense.map((exp) => exp.expenseAmount || 0),
+    income: income.map((inc) => inc.incomeAmount || 0),
+    budget: budget.map((bud) => bud.budgetAmount || 0),
+    saving: saving.map((sav) => sav.savingAmount || 0),
+  };
+  console.log("chartData:", chartData);
 
   return (
     <div className="create-budget-container">
       <h2 className="create-heading">Create Financial Entries</h2>
+
       <div className="button-group">
         <button onClick={() => openModal("income")} className="create-button">
           Create New Income
@@ -76,22 +136,40 @@ const CreateBudget = () => {
             </button>
 
             {currentForm === "income" && (
-              <IncomeForm onSubmit={(values) => handleFormSubmit("income", values)} />
+              <IncomeForm
+                onSubmit={(values) => handleFormSubmit("income", values)}
+              />
             )}
             {currentForm === "budget" && (
-              <BudgetForm onSubmit={(values) => handleFormSubmit("budget", values)} />
+              <BudgetForm
+                onSubmit={(values) => handleFormSubmit("budget", values)}
+              />
             )}
             {currentForm === "expense" && (
-              <ExpenseForm onSubmit={(values) => handleFormSubmit("expense", values)} />
+              <ExpenseForm
+                onSubmit={(values) => handleFormSubmit("expense", values)}
+              />
             )}
             {currentForm === "saving" && (
-              <SavingForm onSubmit={(values) => handleFormSubmit("saving", values)} />
+              <SavingForm
+                onSubmit={(values) => handleFormSubmit("saving", values)}
+              />
             )}
           </div>
         </div>
       )}
-      <div>
-      <TableComp income={income} expense={expense} budget={budget} saving={saving}  />
+      <div className="chart-table-align">
+        <div>
+          <Chart chartData={chartData} />
+        </div>
+        <div>
+          <TableComp
+            income={income}
+            expense={expense}
+            budget={budget}
+            saving={saving}
+          />
+        </div>
       </div>
     </div>
   );

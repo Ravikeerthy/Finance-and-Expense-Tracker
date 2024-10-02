@@ -12,6 +12,7 @@ const Register = () => {
   const [isSignUpActive, setIsSignUpActive] = useState(false); // State to toggle between Sign Up and Sign In
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
 
   const handleSignUpClick = () => {
     setIsSignUpActive(true);
@@ -42,6 +43,7 @@ const Register = () => {
       .matches(/^\d{10}$/, "*Contact Number must be exactly 10 digits"),
   });
   const onSubmit = async (values, { resetForm }) => {
+    setLoading(true); 
     try {
       const { firstName, lastName, userName, password, contactNumber } = values;
       const response = await axios.post(
@@ -51,9 +53,7 @@ const Register = () => {
       console.log(response.data);
 
       const message = response.data.message;
-      toast.success("User Registered Successfully", {
-        style: { backgroundColor: "purple", color: "white" },
-      });
+      toast.success("User Registered Successfully");
       resetForm();
       navigate("/register");
     } catch (error) {
@@ -64,6 +64,8 @@ const Register = () => {
         toast.error("Internal Server Error");
       }
       console.error("Registration Error: ", error);
+    }finally {
+      setLoading(false);
     }
   };
 
@@ -78,10 +80,11 @@ const Register = () => {
   });
 
   const loginOnSubmit = async (values, { resetForm }) => {
+    setLoading(true); 
     try {
       const { userName, password } = values;
-      let response = await axios.post(
-        "https://back-end-d6p7.onrender.com/user/newUser/login",
+      let response = await axios.post( "http://localhost:4000/user/newuser/login",
+        // "https://back-end-d6p7.onrender.com/user/newUser/login",
         values,
         {
           headers: {
@@ -95,15 +98,15 @@ const Register = () => {
       const message = response.data.message;
       console.log(response.data);
       localStorage.setItem("token", token);
-      toast.success( "Login Successful", {
-        style: { backgroundColor: "purple", color: "white" },
-      });
       login();
       resetForm();
+      toast.success( "Login Successful");
       navigate("/dashboard");
     } catch (error) {
       console.log(error);
       toast.error("Server Error");
+    }finally {
+      setLoading(false);
     }
   };
   return (
@@ -188,8 +191,8 @@ const Register = () => {
                   className="text-danger"
                 />
               </div>
-              <button type="submit" className="btn btn-primary w-100">
-                Sign Up
+              <button type="submit" className="btn btn-primary w-100" disabled={loading}>
+                {loading ? "Signing Up..." : "Sign Up"}
               </button>
             </Form>
           </Formik>
@@ -234,8 +237,8 @@ const Register = () => {
               <a href="#" className="small">
                 Forgot Your Password?
               </a>
-              <button type="submit" className="btn btn-primary w-100 mt-3">
-                Sign In
+              <button type="submit" className="btn btn-primary w-100 mt-3" disabled={loading}>
+                {loading ? "Signing In..." : "Sign In"}
               </button>
             </Form>
           </Formik>

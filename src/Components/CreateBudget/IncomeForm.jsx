@@ -1,25 +1,60 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import "./CreateBudgetStyle.css"
+import "./CreateBudgetStyle.css";
+import { toast, ToastContainer } from "react-toastify";
 
-const IncomeForm = () => {
+
+const IncomeForm = ({ onSubmit }) => {
+  const [incomeDetails, setIncomeDetails] = useState([]);
+  // const [loading, setLoading] = useState(true);
+
+  const fetchMonthlyIncome = async () => {
+    try {
+      const response = await axios.get("http://localhost:4000/income/monthlyIncome", {
+        withCredentials: true,
+      });
+      const monthlyIncome = response.data.monthlyIncome;
+      
+      console.log(monthlyIncome);
+    } catch (error) {
+      console.error("Error fetching monthly income data:", error);
+    }
+  };
+  
+
+  useEffect(() => {
+    fetchMonthlyIncome();
+  }, []);
+  
   const initialValues = {
     incomeAmount: "",
     incomeSource: "",
-    date:""
+    date: "",
+    isRecurring: false,
+    frequency: "",
   };
 
-  const validationSchema = Yup.object({
-    incomeAmount: Yup.number().required("Budget amount is required").positive(),
-    incomeSource: Yup.string().required("Category is required"),
-    date:  Yup.date().required("Date is required"),
+  const validationSchema = Yup.object().shape({
+    incomeAmount: Yup.number()
+      .required("Income amount is required")
+      .positive("Income amount must be positive"),
+    incomeSource: Yup.string().required("Income source is required"),
+    date: Yup.date().required("Date is required"),
+    isRecurring: Yup.boolean().required("Check the recurring"),
+    frequency: Yup.string().required("Select the frequency"),
   });
 
-  const onSubmit = async (values, { resetForm }) => {
+  const onSubmitHandler = async (values, { resetForm }) => {
+    // event.preventDefault();
+    console.log("Submitted values:", values);
+
     try {
-      const response = await axios.post("https://back-end-d6p7.onrender.com/income/newincome", values,
+      const response = await axios.post(
+        // "https://back-end-d6p7.onrender.com/income/newincome",
+        "http://localhost:4000/income/newincome",
+        values,
         {
           headers: {
             // Authorization: `Bearer ${token}`,
@@ -27,11 +62,28 @@ const IncomeForm = () => {
           },
           withCredentials: true,
         }
-      ); 
+      );
       console.log(response.data);
-      resetForm();
+
+      const addedIncome = {
+        incomeAmount: values.incomeAmount,
+        incomeSource: values.incomeSource,
+        date: values.date,
+        frequency: values.frequency,
+      };
+      
+      onSubmit(addedIncome);
+      setIncomeDetails((prevDetails) => {
+        const updatedDetails = [...prevDetails, addedIncome];
+        console.log("Updated Income Details:", updatedDetails);
+        return updatedDetails;
+      });
+      resetForm();  
+      // toast.success(response.data.message);
+      alert(response.data.message);
     } catch (error) {
       console.error("Failed to add budget:", error);
+      toast.error("Failed to add income. Please try again.");
     }
   };
   return (
@@ -41,28 +93,83 @@ const IncomeForm = () => {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={onSubmit}
+          onSubmit={onSubmitHandler}
         >
-          <Form className="form-class">
-            <div>
-              <label className="form-label">Budget Amount:</label>
-              <Field name="incomeAmount" type="number" />
-              <ErrorMessage name="incomeAmount" component="div" className="error" />
-            </div>
-            <div>
-              <label className="form-label">Category:</label>
-              <Field name="incomeSource" type="text" />
-              <ErrorMessage name="incomeSource" component="div" className="error" />
-            </div>
-            <div>
-            <label className="form-label">Date:</label>
-            <Field name="date" type="date" />
-            <ErrorMessage name="date" component="div" className="error" />
-          </div>
-            <button type="submit" className="form-button">Set Budget</button>
-          </Form>
+          {() => (
+            <Form className="form-class">
+              <div>
+                <label className="form-label">Income Amount:</label>
+                <Field name="incomeAmount" type="number" />
+                <ErrorMessage
+                  name="incomeAmount"
+                  component="div"
+                  className="error"
+                />
+              </div>
+              <div>
+                <label className="form-label">Income Source:</label>
+                <Field name="incomeSource" type="text" />
+                <ErrorMessage
+                  name="incomeSource"
+                  component="div"
+                  className="error"
+                />
+              </div>
+              <div>
+                <label className="form-label">Date:</label>
+                <Field name="date" type="date" />
+                <ErrorMessage name="date" component="div" className="error" />
+              </div>
+              <div>
+                <label className="form-label">Month:</label>
+                <Field as="select" name="month">
+                  <option value="">Select Month</option>
+                  <option value="January">January</option>
+                  <option value="February">February</option>
+                  <option value="March">March</option>
+                  <option value="April">April</option>
+                  <option value="May">May</option>
+                  <option value="June">June</option>
+                  <option value="July">July</option>
+                  <option value="August">August</option>
+                  <option value="September">September</option>
+                  <option value="October">October</option>
+                  <option value="November">November</option>
+                  <option value="December">December</option>
+                </Field>
+                <ErrorMessage name="month" component="div" className="error" />
+              </div>
+              <div>
+                <label className="form-label">Is Recurring:</label>
+                <Field name="isRecurring" type="checkbox" />
+              </div>
+
+              <div>
+                <label className="form-label">Frequency:</label>
+                <Field as="select" name="frequency">
+                  <option value="">Select Frequency</option>
+                  <option value="daily">Daily</option>
+                  <option value="weekly">Weekly</option>
+                  <option value="monthly">Monthly</option>
+                  <option value="yearly">Yearly</option>
+                </Field>
+                <ErrorMessage
+                  name="frequency"
+                  component="div"
+                  className="error"
+                />
+              </div>
+
+              <button type="submit" className="form-button">
+                Add Income
+              </button>
+            </Form>
+          )}
         </Formik>
+        
       </div>
+      
+      <ToastContainer />
     </div>
   );
 };

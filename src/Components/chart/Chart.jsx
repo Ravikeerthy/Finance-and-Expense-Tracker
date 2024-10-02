@@ -9,6 +9,7 @@ import {
   PointElement,
   LinearScale,
   CategoryScale,
+  Filler,
 } from "chart.js";
 import "./ChartStyle.css";
 
@@ -19,16 +20,17 @@ ChartJS.register(
   LineElement,
   PointElement,
   LinearScale,
-  CategoryScale
+  CategoryScale,
+  Filler
 );
 
-const Chart = ({ data = {} }) => {
+const Chart = ({ chartData }) => {
   const pieData = {
-    labels: data.labels || ["Category1", "Category2", "Category3"],
+    labels: chartData?.labels || [],
     datasets: [
       {
         label: "Expenses",
-        data: data.expenses || [100, 200, 150], 
+        data: chartData?.expenses || [], 
         backgroundColor: [
           "rgba(255, 99, 132, 0.6)",
           "rgba(54, 162, 235, 0.6)",
@@ -47,9 +49,11 @@ const Chart = ({ data = {} }) => {
       },
     ],
   };
+  console.log("Pie Expense Data: ", pieData);
+  
 
   // Line Chart Data
-  const monthlyData = {
+  const monthlyDatas = {
     labels: [
       "Jan",
       "Feb",
@@ -67,34 +71,35 @@ const Chart = ({ data = {} }) => {
     datasets: [
       {
         label: "Income",
-        data: data.income || [0,0,0,0,0,0], // Pass the actual monthly income data here
-        fill: false,
+        data: chartData?.month || [], 
+        fill: true,
         borderColor: "rgba(75, 192, 192, 1)",
         tension: 0.1,
       },
       {
         label: "Expense",
-        data: data.expense || [0,0,0,0,0,0], // Pass the actual monthly expense data here
-        fill: false,
+        data: chartData?.expenses || [], 
+        fill: true,
         borderColor: "rgba(255, 99, 132, 1)",
         tension: 0.1,
       },
       {
         label: "Budget",
-        data: data.budget || [0,0,0,0,0,0], // Pass the actual monthly budget data here
-        fill: false,
+        data: chartData?.budget || [], 
+        fill: true,
         borderColor: "rgba(255, 206, 86, 1)",
         tension: 0.1,
       },
       {
         label: "Saving",
-        data: data.saving || [0,0,0,0,0,0], // Pass the actual monthly saving data here
-        fill: false,
+        data: chartData?.saving || [], 
+        fill: true,
         borderColor: "rgba(153, 102, 255, 1)",
         tension: 0.1,
       },
     ],
   };
+console.log("Line Chart data: ", monthlyDatas);
 
   const options = {
     responsive: true,
@@ -130,7 +135,7 @@ const Chart = ({ data = {} }) => {
       </div>
       <div className="chart-item">
         <h3>Monthly Trends</h3>
-        <Line data={monthlyData} options={lineOptions} />
+        <Line data={monthlyDatas} options={lineOptions} />
       </div>
     </div>
   );

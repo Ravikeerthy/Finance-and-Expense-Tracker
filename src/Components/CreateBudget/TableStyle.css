@@ -1,18 +1,85 @@
-.financial-table {
+.table-comp {
+  /* width: 80%; */
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f9e6fe;
+  border-radius: 20px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+  border: 2px solid black;
+}
+
+.table-comp h3 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+  text-decoration: underline;
+}
+
+.table-comp h4 {
+  margin-top: 30px;
+  color: #555;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+table, th, td {
+  border: 1px solid #ddd;
+}
+
+th, td {
+  text-align: left;
+  padding: 10px;
+}
+
+th {
+  background-color: #4CAF50;
+  color: white;
+}
+
+td {
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #f1f1f1;
+}
+
+p {
+  text-align: center;
+  color: #888;
+  margin: 20px 0;
+}
+
+.table-comp table th,
+.table-comp table td {
+  text-align: center;
+}
+
+.table-comp table th {
+  background-color: #a63ac7;;
+  font-weight: bold;
+}
+
+.table-comp table td {
+  font-size: 0.9em;
+}
+
+@media screen and (max-width: 768px) {
+  .table-comp {
     width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 18px;
-    text-align: left;
+    padding: 10px;
   }
-  
-  .financial-table th, .financial-table td {
-    padding: 12px 15px;
-    border: 1px solid #ddd;
+
+  table {
+    font-size: 0.9em;
   }
-  
-  .financial-table th {
-    background-color: #f4f4f4;
-    font-weight: bold;
-  }
-  
+}
