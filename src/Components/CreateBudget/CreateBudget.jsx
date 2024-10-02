@@ -28,27 +28,34 @@ const CreateBudget = () => {
   const fetchAllData = async () => {
     const headers = {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`, 
+      Authorization: `Bearer ${token}`,
       withCredentials: true,
     };
     try {
+      setLoading(true);
       const incomeGetResponse = await axios.get(
-        `http://localhost:4000/income/getIncomeByUserId/userId`,
+        `http://localhost:4000/income/getIncomeByUserId/${_id}`,
         headers
       );
-      
+      console.log("IncomeGetData", incomeGetResponse);
+
       const expenseGetResponse = await axios.get(
-        `http://localhost:4000/expense/expenseuserId/$`,
+        `http://localhost:4000/expense/expenseuserId/${_id}`,
         headers
       );
+      console.log("ExpenseGetData", expenseGetResponse);
+
       const budgetGetResponse = await axios.get(
-        `http://localhost:4000/budget/getBudgetById`,
-       headers
-      );
-      const savingGetResponse = await axios.get(
-        `http://localhost:4000/savings/getbyid`,
+        `http://localhost:4000/budget/getBudgetById/${_id} `,
         headers
       );
+      console.log("BudgetGetData", budgetGetResponse);
+
+      const savingGetResponse = await axios.get(
+        `http://localhost:4000/savings/getbyid/${_id}`,
+        headers
+      );
+      console.log("SavingGetData", savingGetResponse);
 
       setIncome(incomeGetResponse.data);
       setExpense(expenseGetResponse.data);
@@ -56,14 +63,18 @@ const CreateBudget = () => {
       setSaving(savingGetResponse.data);
     } catch (error) {
       console.error("Error fetching data from the database", error);
+    } finally {
+      setLoading(false);
     }
   };
   const openModal = (formType) => {
+    console.log(`Opening modal for: ${formType}`);
     setCurrentForm(formType);
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
+    console.log("Closing modal");
     setIsModalOpen(false);
     setCurrentForm(null);
   };
