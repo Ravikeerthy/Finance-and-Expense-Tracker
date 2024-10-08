@@ -95,12 +95,13 @@ const Register = () => {
         }
       );
       const { token } = response.data;
+      const {user} = response.data;
       const message = response.data.message;
       console.log(response.data);
       localStorage.setItem("token", token);
-      login();
+      login(user);
       resetForm();
-      toast.success( "Login Successful");
+      toast.success( response.data.message || "Login Successful");
       navigate("/dashboard");
     } catch (error) {
       console.log(error);
@@ -109,6 +110,10 @@ const Register = () => {
       setLoading(false);
     }
   };
+
+  const handleForgotPassword = () =>{
+    navigate("/reset-password")
+  }
   return (
     <div className="vh-100 d-flex justify-content-center align-items-center bg-gradient">
       <div
@@ -234,7 +239,7 @@ const Register = () => {
                   className="text-danger"
                 />
               </div>
-              <a href="#" className="small">
+              <a href="#" className="small" onClick={handleForgotPassword}>
                 Forgot Your Password?
               </a>
               <button type="submit" className="btn btn-primary w-100 mt-3" disabled={loading}>

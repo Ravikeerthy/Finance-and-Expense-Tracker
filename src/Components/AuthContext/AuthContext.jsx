@@ -1,25 +1,46 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 
 export const AuthContext = createContext();
 
-export const AuthProvider = ({children}) =>{
-    const [isAuthenticated, setIsAuthenticated ] = useState(()=>{
-        const storedAuth = localStorage.getItem("isAuthenticated");
-        return storedAuth === "true";
-    });
+export const AuthProvider = ({ children }) => {
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    const storedAuth = localStorage.getItem("isAuthenticated");
+    return storedAuth === "true";
+  });
+  const storedUser = localStorage.getItem("user");
+  console.log(storedUser);
+  
 
-    const login = () => {
-        setIsAuthenticated(true);
-        localStorage.setItem("isAuthenticated", "true");
-    }
-    const logOut = () => {
-        setIsAuthenticated(false);
-        localStorage.removeItem("isAuthenticated", "true");
-    }
+  // return storedUser ? JSON.parse(storedUser) : null
 
-    return(
-        <AuthContext.Provider value={{isAuthenticated, login, logOut}}>
-            {children}
-        </AuthContext.Provider>
-    );
+  const [user, setUser] = useState(storedUser ? JSON.parse(storedUser) : null);
+
+  const login = (userData) => {
+    setIsAuthenticated(true);
+    setUser(userData);
+    localStorage.setItem("isAuthenticated", "true");
+    localStorage.setItem("user", JSON.stringify(userData));
+  };
+  const logOut = () => {
+    setIsAuthenticated(false);
+    setUser(null);
+    localStorage.removeItem("isAuthenticated");
+    localStorage.removeItem("user");
+  };
+
+//   useEffect(() => {
+//     const storedAuth = localStorage.getItem("isAuthenticated") === "true";
+//     const storedUser = localStorage.getItem("user");
+
+//     if (storedAuth && storedUser) {
+//       setIsAuthenticated(true);
+//       setUser(JSON.parse(storedUser));
+//     }
+//   }, []);
+
+  return (
+    <AuthContext.Provider value={{ isAuthenticated, user, login, logOut }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };

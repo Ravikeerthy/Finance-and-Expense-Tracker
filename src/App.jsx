@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import NavBar from "./Components/Navbar/NavBar";
 import {
@@ -22,58 +22,78 @@ import SavingForm from "./Components/CreateBudget/SavingForm";
 import ExpenseForm from "./Components/CreateBudget/ExpenseForm";
 import BudgetForm from "./Components/CreateBudget/BudgetForm";
 import Logout from "./Components/LogOut/Logout";
+import NotificationComp from "./Components/Notification/NotificationComp";
+import socket from "./Socket";
+import NewPasswordComp from "./Components/Register/NewPasswordComp";
+import PasswordResetComp from "./Components/Register/PasswordResetComp";
 
-const ProtectedRoute = ({ element }) => {
+const ProtectedRoute = ({ children }) => {
   const { isAuthenticated } = useContext(AuthContext);
-  return isAuthenticated ? element : <Navigate to="/" />;
+  return isAuthenticated ? children : <Navigate to="/" />;
 };
 
 const App = () => {
+  const {userId} = useContext(AuthContext)
   const router = createBrowserRouter([
     
     {
-      element: <NavBar />, 
+      element: 
+      <>
+      <NavBar />, 
+      <NotificationComp/>
+      </>,
       children: [
         { path: "/", element: <About /> },
         { path: "/register", element: <Register /> },
         { path: "/benefits", element: <Benefits /> },
         { path: "/contact", element: <ContactUs /> },
+        { path: "/reset-password", element: <PasswordResetComp /> },
       ],
     },
     {
-      element: <LoginNavBar />, 
+      element: <>
+      <LoginNavBar />, 
+      <NotificationComp/>
+      </>,
       children: [
         {
           path: "/dashboard",
-          element: <ProtectedRoute element={<DashBoard />} />,
+          element:( <ProtectedRoute>
+            <DashBoard/>
+          </ProtectedRoute>),
         },
         {
           path: "/create",
-          element: <ProtectedRoute element={<CreateBudget />} />,
+          element: (<ProtectedRoute>
+            <CreateBudget/>
+          </ProtectedRoute>) 
         },
-        { path: "/reports", element: <ProtectedRoute element={<Reports />} /> },
-        { path: "/charts", element: <ProtectedRoute element={<Chart />} /> },
+        { path: "/reports", element: ( <ProtectedRoute><Reports/> </ProtectedRoute> ) ,},
+        { path: "/charts", element: (<ProtectedRoute> <Chart /> </ProtectedRoute> )},
         {
           path: "/settings",
-          element: <ProtectedRoute element={<ProfileSettings />} />,
+          element: <ProtectedRoute><ProfileSettings/></ProtectedRoute>,
         },
         {
           path: "/incomeform",
-          element: <ProtectedRoute element={<IncomeForm />} />,
+          element: <ProtectedRoute> <IncomeForm /> </ProtectedRoute>,
         },
         {
           path: "/savingform",
-          element: <ProtectedRoute element={<SavingForm />} />,
+          element: <ProtectedRoute><SavingForm /></ProtectedRoute>,
         },
         {
           path: "/expenseform",
-          element: <ProtectedRoute element={<ExpenseForm />} />,
+          element: <ProtectedRoute><ExpenseForm /></ProtectedRoute>,
         },
         {
           path: "/budgetform",
-          element: <ProtectedRoute element={<BudgetForm />} />,
+          element: <ProtectedRoute><BudgetForm /></ProtectedRoute>,
         },
         { path: "/logout", element: <Logout /> },
+       
+        { path: "/reset/:token", element: <NewPasswordComp /> },
+       
       ],
     },
 
@@ -82,6 +102,16 @@ const App = () => {
       element: <Navigate to="/" />,
     },
   ]);
+
+  useEffect(()=>{
+    if(userId){
+      joinRoom(userId)
+    }
+
+    return()=>{
+      socket.off('transaction-update')
+    }
+  },[userId])
 
   return (
     <div>

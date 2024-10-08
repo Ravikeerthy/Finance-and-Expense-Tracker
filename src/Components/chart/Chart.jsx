@@ -49,7 +49,7 @@ const Chart = ({ chartData }) => {
       },
     ],
   };
-  console.log("Pie Expense Data: ", pieData);
+  // console.log("Pie Expense Data: ", pieData);
   
 
   // Line Chart Data
@@ -99,7 +99,7 @@ const Chart = ({ chartData }) => {
       },
     ],
   };
-console.log("Line Chart data: ", monthlyDatas);
+// console.log("Line Chart data: ", monthlyDatas);
 
   const options = {
     responsive: true,

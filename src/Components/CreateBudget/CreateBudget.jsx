@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./CreateBudgetStyle.css";
 import ExpenseForm from "./ExpenseForm";
 import SavingForm from "./SavingForm";
@@ -7,6 +7,7 @@ import BudgetForm from "./BudgetForm";
 import TableComp from "./TableComp";
 import Chart from "../chart/Chart";
 import axios from "axios";
+import { AuthContext } from "../AuthContext/AuthContext";
 
 const CreateBudget = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,56 +18,59 @@ const CreateBudget = () => {
   const [budget, setBudget] = useState([]);
   const [saving, setSaving] = useState([]);
 
-  const _id = localStorage.getItem("_id");
+  const { user, isAuthenticated } = useContext(AuthContext);
+
+  const userId = user ? user._id : null;
+  console.log("UserId", userId);
+
+  // const _id = localStorage.getItem("_id");
   const token = localStorage.getItem("token");
 
-  useEffect(() => {
-    console.log("useEffect has been called");
-    fetchAllData();
-  }, []);
+  // useEffect(() => {
+  //   // if (userId) console.log("useEffect has been called");
+  //   fetchAllData();
+  // }, [userId]);
 
-  const fetchAllData = async () => {
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-      withCredentials: true,
-    };
-    try {
-      setLoading(true);
-      const incomeGetResponse = await axios.get(
-        `http://localhost:4000/income/getIncomeByUserId/${_id}`,
-        headers
-      );
-      console.log("IncomeGetData", incomeGetResponse);
+  // const fetchAllData = async () => {
+  //   const headers = {
+  //     "Content-Type": "application/json",
+  //     Authorization: `Bearer ${token}`,
+  //   };
+  //   try {
+  //     const incomeGetResponse = await axios.get(
+  //       `http://localhost:4000/income/getIncomeByUserId/${userId}`,
+  //       {headers, withCredentials: true,}
+  //     );
+  //     console.log("IncomeGetData", incomeGetResponse);
 
-      const expenseGetResponse = await axios.get(
-        `http://localhost:4000/expense/expenseuserId/${_id}`,
-        headers
-      );
-      console.log("ExpenseGetData", expenseGetResponse);
+  //     const expenseGetResponse = await axios.get(
+  //       `http://localhost:4000/expense/expenseuserId/${userId}`,
+  //       {headers, withCredentials: true,}
+  //     );
+  //     console.log("ExpenseGetData", expenseGetResponse);
 
-      const budgetGetResponse = await axios.get(
-        `http://localhost:4000/budget/getBudgetById/${_id} `,
-        headers
-      );
-      console.log("BudgetGetData", budgetGetResponse);
+  //     const budgetGetResponse = await axios.get(
+  //       `http://localhost:4000/budget/getBudgetById/${userId} `,
+  //       {headers, withCredentials: true,}
+  //     );
+  //     console.log("BudgetGetData", budgetGetResponse);
 
-      const savingGetResponse = await axios.get(
-        `http://localhost:4000/savings/getbyid/${_id}`,
-        headers
-      );
-      console.log("SavingGetData", savingGetResponse);
+  //     const savingGetResponse = await axios.get(
+  //       `http://localhost:4000/savings/getbyid/${userId}`,
+  //       {headers, withCredentials: true,}
+  //     );
+  //     console.log("SavingGetData", savingGetResponse);
 
-      setIncome(incomeGetResponse.data);
-      setExpense(expenseGetResponse.data);
-      setBudget(budgetGetResponse.data);
-      setSaving(savingGetResponse.data);
-    } catch (error) {
-      console.error("Error fetching data from the database", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+      
+
+  //     setIncome(incomeGetResponse.data);
+  //     setExpense(expenseGetResponse.data);
+  //     setBudget(budgetGetResponse.data);
+  //     setSaving(savingGetResponse.data);
+  //   } catch (error) {
+  //     console.error("Error fetching data from the database", error);
+  //   }
+  // };
   const openModal = (formType) => {
     console.log(`Opening modal for: ${formType}`);
     setCurrentForm(formType);
@@ -83,20 +87,46 @@ const CreateBudget = () => {
     console.log(`Submitting ${type} with values:`, values);
     switch (type) {
       case "income":
-        setIncome((preIncome) => [...preIncome, values]);
-        console.log("Updated Income:", [...income, values]);
+        setIncome((preIncome) => {
+          if (Array.isArray(preIncome)) {
+            return [...preIncome, values];
+          } else {
+            console.error("preIncome is not an array", preIncome);
+            return [values];
+          }
+        });
         break;
       case "expense":
-        setExpense((preExpense) => [...preExpense, values]);
-        console.log("Updated Expense:", [...expense, values]);
+        setExpense((preExpense) => {
+          if (Array.isArray(preExpense)) {
+            return [...preExpense, values];
+          } else {
+            console.error("PreExpense is not an array", preExpense);
+            return [values];
+          }
+        });
+
         break;
       case "budget":
-        setBudget((preBudget) => [...preBudget, values]);
-        console.log("Updated Budget:", [...budget, values]);
+        setBudget((preBudget) => {
+          if (Array.isArray(preBudget)) {
+            return [...preBudget, values];
+          } else {
+            console.error("PreBudget is not an array", preBudget);
+            return [values];
+          }
+        });
+
         break;
       case "saving":
-        setSaving((preSaving) => [...preSaving, values]);
-        console.log("Updated Saving:", [...saving, values]);
+        setSaving((preSaving) => {
+          if (Array.isArray(preSaving)) {
+            return [...preSaving, values];
+          } else {
+            console.error("Presaving is not an array", preSaving);
+          }
+        });
+
         break;
       default:
         break;
@@ -107,15 +137,23 @@ const CreateBudget = () => {
 
   const chartData = {
     labels:
-      expense.length > 0
+      Array.isArray(expense) && expense.length > 0
         ? expense.map((exp) => exp.expenseCategory)
         : ["Other"],
-    expenses: expense.map((exp) => exp.expenseAmount || 0),
-    income: income.map((inc) => inc.incomeAmount || 0),
-    budget: budget.map((bud) => bud.budgetAmount || 0),
-    saving: saving.map((sav) => sav.savingAmount || 0),
+    expenses: Array.isArray(expense)
+      ? expense.map((exp) => exp.expenseAmount || 0)
+      : [],
+    income: Array.isArray(income)
+      ? income.map((inc) => inc.incomeAmount || 0)
+      : [],
+    budget: Array.isArray(budget)
+      ? budget.map((bud) => bud.budgetAmount || 0)
+      : [],
+    saving: Array.isArray(saving)
+      ? saving.map((sav) => sav.savingAmount || 0)
+      : [],
   };
-  console.log("chartData:", chartData);
+  // console.log("chartData:", chartData);
 
   return (
     <div className="create-budget-container">
