@@ -22,7 +22,7 @@ const NotificationComp = () => {
   }, [userId]);
   return (
     <div>
-      <h2>Notifications</h2>
+      {/* <h2>Notifications</h2> */}
       <ul>
         {notifications.map((notification, index) => {
           return <li key={index}>{notification.message}</li>;

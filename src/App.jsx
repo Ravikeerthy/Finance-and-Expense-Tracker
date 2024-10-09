@@ -92,7 +92,7 @@ const App = () => {
         },
         { path: "/logout", element: <Logout /> },
        
-        { path: "/reset/:token", element: <NewPasswordComp /> },
+        { path: "/reset/:id/:token", element: <NewPasswordComp /> },
        
       ],
     },

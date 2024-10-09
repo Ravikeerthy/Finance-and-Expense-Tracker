@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
 const NewPasswordComp = () => {
-    const {token} = useParams();
+  const { token } = useParams();
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -43,8 +43,8 @@ const NewPasswordComp = () => {
         { password: values.password }
       );
       setMessage(response.data.message);
-      resetForm();  
-      navigate("/register")
+      resetForm();
+      navigate("/register");
     } catch (error) {
       const errorMsg = error.response?.data?.message || "Server Error";
       setError(errorMsg);
@@ -55,43 +55,71 @@ const NewPasswordComp = () => {
 
   return (
     <div>
-      {message && <p className="text-success">{message}</p>}
-      {error && <p className="text-danger">{error}</p>}
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={onSubmit}
+      <div
+        className="container d-flex justify-content-center align-items-center"
+        style={{ minHeight: "100vh" }}
       >
-        {() => (
-          <Form>
-            <div>
-              <Field
-                name="password"
-                type="password"
-                className="form-control"
-                placeholder="Enter New Password"
-              />
-              <ErrorMessage name="password" component="div" className="text-danger" />
-            </div>
-            <div>
-              <Field
-                name="confirmPassword"
-                type="password"
-                className="form-control"
-                placeholder="Confirm New Password"
-              />
-              <ErrorMessage name="confirmPassword" component="div" className="text-danger" />
-            </div>
-            <button
-              type="submit"
-              className="btn btn-primary w-100 mt-3"
-              disabled={loading}
-            >
-              {loading ? "Updating..." : "Submit"}
-            </button>
-          </Form>
-        )}
-      </Formik>
+        <div className="card p-4 shadow-sm" style={{ width: "400px" }}>
+          <h3 className="text-center">Reset Your Password</h3>
+
+          {message && <p className="text-success">{message}</p>}
+          {error && <p className="text-danger">{error}</p>}
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={onSubmit}
+          >
+            {() => (
+              <Form>
+                <div>
+                  <Field
+                    name="password"
+                    type="password"
+                    className="form-control"
+                    placeholder="Enter New Password"
+                  />
+                  <ErrorMessage
+                    name="password"
+                    component="div"
+                    className="text-danger"
+                  />
+                </div>
+                <div>
+                  <Field
+                    name="confirmPassword"
+                    type="password"
+                    className="form-control"
+                    placeholder="Confirm New Password"
+                  />
+                  <ErrorMessage
+                    name="confirmPassword"
+                    component="div"
+                    className="text-danger"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="btn btn-primary w-100 mt-3"
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <>
+                      <span
+                        className="spinner-border spinner-border-sm"
+                        role="status"
+                        aria-hidden="true"
+                      ></span>
+                      Updating...
+                    </>
+                  ) : (
+                    "Submit"
+                  )}
+                </button>
+              </Form>
+            )}
+          </Formik>
+        </div>
+      </div>
     </div>
   );
 };

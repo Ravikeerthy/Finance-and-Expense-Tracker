@@ -8,6 +8,7 @@ import TableComp from "./TableComp";
 import Chart from "../chart/Chart";
 import axios from "axios";
 import { AuthContext } from "../AuthContext/AuthContext";
+import GetDataDisplay from "./GetDataDisplay";
 
 const CreateBudget = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,60 +18,70 @@ const CreateBudget = () => {
   const [expense, setExpense] = useState([]);
   const [budget, setBudget] = useState([]);
   const [saving, setSaving] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const [getIncome, setGetIncome] = useState([]);
+  const [getExpense, setGetExpense] = useState([]);
+  const [getSaving, setGetSaving] = useState([]);
+  const [getBudget, setGetBudget] = useState([]);
 
   const { user, isAuthenticated } = useContext(AuthContext);
 
   const userId = user ? user._id : null;
   console.log("UserId", userId);
 
-  // const _id = localStorage.getItem("_id");
   const token = localStorage.getItem("token");
+  console.log("Token", token);
+  
 
-  // useEffect(() => {
-  //   // if (userId) console.log("useEffect has been called");
-  //   fetchAllData();
-  // }, [userId]);
+  useEffect(() => {
+    fetchAllData();
+  }, [userId]);
 
-  // const fetchAllData = async () => {
-  //   const headers = {
-  //     "Content-Type": "application/json",
-  //     Authorization: `Bearer ${token}`,
-  //   };
-  //   try {
-  //     const incomeGetResponse = await axios.get(
-  //       `http://localhost:4000/income/getIncomeByUserId/${userId}`,
-  //       {headers, withCredentials: true,}
-  //     );
-  //     console.log("IncomeGetData", incomeGetResponse);
+  const fetchAllData = async () => {
+     setLoading(true); 
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+    try {
+      const incomeGetResponse = await axios.get(
+        `http://localhost:4000/income/getIncomeByUserId/${userId}`,
+        { headers, withCredentials: true }
+      );
+      setGetIncome(incomeGetResponse.data);
+      console.log("IncomeGetData", incomeGetResponse.data);
 
-  //     const expenseGetResponse = await axios.get(
-  //       `http://localhost:4000/expense/expenseuserId/${userId}`,
-  //       {headers, withCredentials: true,}
-  //     );
-  //     console.log("ExpenseGetData", expenseGetResponse);
+      const expenseGetResponse = await axios.get(
+        `http://localhost:4000/expense/expenseuserId/${userId}`,
+        { headers, withCredentials: true }
+      );
+      setGetExpense(expenseGetResponse.data);
+      console.log("ExpenseGetData", expenseGetResponse.data);
 
-  //     const budgetGetResponse = await axios.get(
-  //       `http://localhost:4000/budget/getBudgetById/${userId} `,
-  //       {headers, withCredentials: true,}
-  //     );
-  //     console.log("BudgetGetData", budgetGetResponse);
+      const budgetGetResponse = await axios.get(
+        `http://localhost:4000/budget/getBudgetByUserId/${userId} `,
+        { headers, withCredentials: true }
+      );
+      setGetBudget(budgetGetResponse.data);
+      console.log("BudgetGetData", budgetGetResponse.data);
 
-  //     const savingGetResponse = await axios.get(
-  //       `http://localhost:4000/savings/getbyid/${userId}`,
-  //       {headers, withCredentials: true,}
-  //     );
-  //     console.log("SavingGetData", savingGetResponse);
-
-      
-
-  //     setIncome(incomeGetResponse.data);
-  //     setExpense(expenseGetResponse.data);
-  //     setBudget(budgetGetResponse.data);
-  //     setSaving(savingGetResponse.data);
-  //   } catch (error) {
-  //     console.error("Error fetching data from the database", error);
-  //   }
-  // };
+      const savingGetResponse = await axios.get(
+        `http://localhost:4000/savings/getbyid/${userId}`,
+        { headers, withCredentials: true }
+      );
+      setGetSaving(savingGetResponse.data);
+      console.log("SavingGetData", savingGetResponse.data);
+    } catch (error) {
+      console.error("Error fetching data from the database", error);
+      setError("Failed to fetch data.");
+    } finally {
+      setLoading(false);
+    }
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>{error}</p>;
+  };
   const openModal = (formType) => {
     console.log(`Opening modal for: ${formType}`);
     setCurrentForm(formType);
@@ -213,10 +224,10 @@ const CreateBudget = () => {
         </div>
         <div>
           <TableComp
-            income={income}
-            expense={expense}
-            budget={budget}
-            saving={saving}
+            income={getIncome}
+            expense={getExpense}
+            budget={getBudget}
+            saving={getSaving}
           />
         </div>
       </div>
