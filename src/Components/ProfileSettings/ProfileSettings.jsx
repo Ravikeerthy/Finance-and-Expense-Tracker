@@ -20,14 +20,13 @@ const ProfileSettings = () => {
     }
   }, []);
 
-  const handleLogout = async() => {
+  const handleLogout = async () => {
     try {
-      await axios.post("");
+      await axios.post("http://localhost:4000/user/newuser/logout");
       navigate("/login");
     } catch (error) {
       console.log(error);
     }
-   
   };
 
   const toggleTheme = () => {
@@ -125,53 +124,6 @@ const ProfileSettings = () => {
         )}
       </Formik>
 
-      <Formik
-        initialValues={{ password: "", confirmPassword: "" }}
-        validationSchema={passwordSchema}
-        onSubmit={(values) => {
-          alert("Password changed successfully!");
-        }}
-      >
-        {({ isSubmitting }) => (
-          <Form>
-            <div className="changepwd-container">
-              <label>Change Password:</label>
-              <Field
-                type="password"
-                name="password"
-                placeholder="Enter new password"
-              />
-              <ErrorMessage
-                name="password"
-                component="div"
-                className="error-message"
-              />
-            </div>
-            <div className="changepwd-container">
-              <label>Confirm Password:</label>
-              <Field
-                type="password"
-                name="confirmPassword"
-                placeholder="Confirm new password"
-              />
-              <ErrorMessage
-                name="confirmPassword"
-                component="div"
-                className="error-message"
-              />
-            </div>
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="submit-button"
-            >
-              Change Password
-            </button>
-          </Form>
-        )}
-      </Formik>     
-     
-
       {/* Theme Toggle */}
       <div className="theme-toggle">
         <label>Theme:</label>
@@ -185,7 +137,10 @@ const ProfileSettings = () => {
         Logout
       </button>
 
-      <button className="delete-button" onClick={() => alert("Delete account functionality here!")}>
+      <button
+        className="delete-button"
+        onClick={() => alert("Delete account functionality here!")}
+      >
         Delete Account
       </button>
     </div>

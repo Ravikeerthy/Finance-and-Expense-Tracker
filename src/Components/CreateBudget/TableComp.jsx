@@ -1,17 +1,21 @@
 import React from "react";
 import "./TableStyle.css";
 
-
 const TableComp = ({ income, expense, budget, saving }) => {
   console.log("TableComp incomedata:", income);
   console.log("TableComp expensedata:", expense);
   console.log("TableComp savingdata:", saving);
   console.log("TableComp budgetdata:", budget);
 
-  const incomeData = Array.isArray(income) ? income : [];
-  const expenseData = Array.isArray(expense) ? expense : [];
-  const budgetData = Array.isArray(budget) ? budget : [];
-  const savingData = Array.isArray(saving) ? saving : [];
+  const incomeData = Array.isArray(income.userIncome) ? income : [];
+  const expenseData = Array.isArray(expense.expenseByUserId) ? expense : [];
+  const budgetData = Array.isArray(budget.userBudget) ? budget : [];
+  const savingData = Array.isArray(saving.savingGoals) ? saving : [];
+
+  console.log("IncomeData", incomeData);
+  console.log("expenseData", expenseData);
+  console.log("budgetData", budgetData);
+  console.log("savingData", savingData);
 
   return (
     <div className="table-comp">
@@ -35,8 +39,12 @@ const TableComp = ({ income, expense, budget, saving }) => {
                 <td>{inc.incomeSource}</td>
                 <td>{inc.date}</td>
                 <td>{inc.frequency}</td>
-                <td><i class="fa-solid fa-pen-to-square"></i></td>
-                <td><i class="fa-solid fa-trash"></i></td>
+                <td>
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </td>
+                <td>
+                  <i class="fa-solid fa-trash"></i>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -64,8 +72,12 @@ const TableComp = ({ income, expense, budget, saving }) => {
                 <td>{exp.expenseCategory}</td>
                 <td>{exp.expenseDescription}</td>
                 <td>{exp.date}</td>
-                <td><i class="fa-solid fa-pen-to-square"></i></td>
-                <td><i class="fa-solid fa-trash"></i></td>
+                <td>
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </td>
+                <td>
+                  <i class="fa-solid fa-trash"></i>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -91,8 +103,12 @@ const TableComp = ({ income, expense, budget, saving }) => {
                 <td>{bud.budgetAmount}</td>
                 <td>{bud.budgetCategory}</td>
                 <td>{bud.budgetPeriod}</td>
-                <td><i class="fa-solid fa-pen-to-square"></i></td>
-                <td><i class="fa-solid fa-trash"></i></td>
+                <td>
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </td>
+                <td>
+                  <i class="fa-solid fa-trash"></i>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -118,8 +134,12 @@ const TableComp = ({ income, expense, budget, saving }) => {
                 <td>{sav.savingAmount}</td>
                 <td>{sav.source}</td>
                 <td>{sav.targetDate}</td>
-                <td><i class="fa-solid fa-pen-to-square"></i></td>
-                <td><i class="fa-solid fa-trash"></i></td>
+                <td>
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </td>
+                <td>
+                  <i class="fa-solid fa-trash"></i>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -127,7 +147,6 @@ const TableComp = ({ income, expense, budget, saving }) => {
       ) : (
         <p>No saving records yet.</p>
       )}
-      
     </div>
   );
 };

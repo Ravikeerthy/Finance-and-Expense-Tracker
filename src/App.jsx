@@ -23,7 +23,6 @@ import ExpenseForm from "./Components/CreateBudget/ExpenseForm";
 import BudgetForm from "./Components/CreateBudget/BudgetForm";
 import Logout from "./Components/LogOut/Logout";
 import NotificationComp from "./Components/Notification/NotificationComp";
-import socket from "./Socket";
 import NewPasswordComp from "./Components/Register/NewPasswordComp";
 import PasswordResetComp from "./Components/Register/PasswordResetComp";
 
@@ -103,15 +102,15 @@ const App = () => {
     },
   ]);
 
-  useEffect(()=>{
-    if(userId){
-      joinRoom(userId)
-    }
+  // useEffect(()=>{
+  //   if(userId){
+  //     joinRoom(userId)
+  //   }
 
-    return()=>{
-      socket.off('transaction-update')
-    }
-  },[userId])
+  //   return()=>{
+  //     socket.off('transaction-update')
+  //   }
+  // },[userId])
 
   return (
     <div>
