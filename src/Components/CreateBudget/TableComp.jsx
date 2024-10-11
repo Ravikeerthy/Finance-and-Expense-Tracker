@@ -1,22 +1,203 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./TableStyle.css";
+import { AuthContext } from "../AuthContext/AuthContext";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import EditValues from "./EditValues";
 
 const TableComp = ({ income, expense, budget, saving }) => {
-  console.log("TableComp incomedata:", income);
-  console.log("TableComp expensedata:", expense);
-  console.log("TableComp savingdata:", saving);
-  console.log("TableComp budgetdata:", budget);
+  const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
+  const userId = user ? user._id : null;
+  const [deletedData, setDeletedData] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [getIncome, setGetIncome] = useState([]);
+  const [getExpense, setGetExpense] = useState([]);
+  const [getBudget, setGetBudget] = useState([]);
+  const [getSaving, setGetSaving] = useState([]);
+  const [isEditing, setIsEditing] = useState({ type: null, item: null });
 
-  const incomeData = Array.isArray(income.userIncome) ? income : [];
-  const expenseData = Array.isArray(expense.expenseByUserId) ? expense : [];
-  const budgetData = Array.isArray(budget.userBudget) ? budget : [];
-  const savingData = Array.isArray(saving.savingGoals) ? saving : [];
+  const token = localStorage.getItem("token");
 
-  console.log("IncomeData", incomeData);
-  console.log("expenseData", expenseData);
-  console.log("budgetData", budgetData);
-  console.log("savingData", savingData);
+  const incomeData = Array.isArray(income.userIncome)? income.userIncome : [];
+  const expenseData = Array.isArray(expense.expenseByUserId)? expense.expenseByUserId: [];
+  const budgetData = Array.isArray(budget.userBudget)? budget.userBudget : [];
+  const savingData = Array.isArray(saving.savingGoals)? saving.savingGoals: [];
 
+  useEffect(() => {
+    fetchtingData();
+    setDeletedData(false);
+
+  }, [userId, token]);
+
+  const fetchtingData = async () => {
+    setLoading(true);
+    setError(null);
+
+    if (!token || !userId) {
+      setError("Unauthorized or user not logged in");
+      setLoading(false);
+      return;
+    }
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+    try {
+      const incomeGetResponse = await axios.get(
+        `http://localhost:4000/income/getIncomeByUserId/${userId}`,
+        { headers, withCredentials: true }
+      );
+      setGetIncome(incomeGetResponse.data);
+      console.log("IncomeGetData", incomeGetResponse.data);
+
+      const expenseGetResponse = await axios.get(
+        `http://localhost:4000/expense/expenseuserId/${userId}`,
+        { headers, withCredentials: true }
+      );
+      setGetExpense(expenseGetResponse.data);
+      console.log("ExpenseGetData", expenseGetResponse.data);
+
+      const budgetGetResponse = await axios.get(
+        `http://localhost:4000/budget/getBudgetByUserId/${userId} `,
+        { headers, withCredentials: true }
+      );
+      setGetBudget(budgetGetResponse.data);
+      console.log("BudgetGetData", budgetGetResponse.data);
+
+      const savingGetResponse = await axios.get(
+        `http://localhost:4000/savings/getbyid/${userId}`,
+        { headers, withCredentials: true }
+      );
+      setGetSaving(savingGetResponse.data);
+      console.log("SavingGetData", savingGetResponse.data);
+    } catch (error) {
+      console.error("Error fetching data from the database", error);
+      setError("Failed to fetch data.");
+    } finally {
+      setLoading(false);
+    }
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>{error}</p>;
+  };
+  // const token = localStorage.getItem("token");
+
+  const handleIncomeDelete = async (id) => {
+    try {
+      const deleteIncome = await axios.delete(
+        `http://localhost:4000/income/delete/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+      // setDeletedData((prev)=>[...prev, id]);
+      setGetIncome((prevIncome) => {
+       
+        return prevIncome.userIncome.filter((inc) => inc._id !== id);
+      });
+      setDeletedData(true);
+
+      alert(deleteIncome.data.message);
+    } catch (error) {
+      console.log(error);
+      alert("Server Error");
+    }
+    console.log("Deleting income with id:", id);
+  };
+
+  const handleExpenseDelete = async (id) => {
+    try {
+      const deleteExpense = await axios.delete(
+        `http://localhost:4000/expense/delete/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+      // setDeletedData((prev)=>[...prev, id]);
+      setGetExpense((prevExpense) => {
+        return prevExpense.expenseByUserId.filter((exp) => exp._id !== id);
+      });
+
+      fetchtingData();
+      alert(deleteExpense.data.message);
+    } catch (error) {
+      console.log(error);
+      alert("Server Error");
+    }
+    console.log("Deleting expense with id:", id);
+  };
+
+  const handleBudgetDelete = async (id) => {
+    try {
+      const deletebudget = await axios.delete(
+        `http://localhost:4000/budget/delete/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+      // setDeletedData((prev)=>[...prev, id]);
+      setGetBudget((prevBudget) =>
+        prevBudget.userBudget.filter((bud) => bud._id !== id)
+      );
+
+      fetchtingData();
+      alert(deletebudget.data.message);
+    } catch (error) {
+      console.log(error);
+      alert("Server Error");
+    }
+    console.log("Deleting budget with id:", id);
+  };
+
+  const handleSavingDelete = async (id) => {
+    try {
+      const deleteSaving = await axios.delete(
+        `http://localhost:4000/savings/delete/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+      // setDeletedData((prev)=>[...prev, id]);
+      setGetSaving((prevSaving) =>
+        prevSaving.savingGoals.filter((save) => save._id !== id)
+      );
+      fetchtingData();
+      alert(deleteSaving.data.message);
+    } catch (error) {
+      console.log(error);
+      alert("Server Error");
+    }
+    console.log("Deleting saving with id:", id);
+  };
+
+const handleEdit = (item, type) =>{
+  setIsEditing({item, type})
+}
+
+const handleClose = () =>{
+  setIsEditing({type:null, item:null})
+}
+
+const handleSave = () =>{
+  fetchtingData();
+}
   return (
     <div className="table-comp">
       <h3>Financial Overview</h3>
@@ -30,6 +211,8 @@ const TableComp = ({ income, expense, budget, saving }) => {
               <th>Source</th>
               <th>Date</th>
               <th>Frequency</th>
+              <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -40,10 +223,20 @@ const TableComp = ({ income, expense, budget, saving }) => {
                 <td>{inc.date}</td>
                 <td>{inc.frequency}</td>
                 <td>
-                  <i class="fa-solid fa-pen-to-square"></i>
+                  <button
+                    onClick={() => handleEdit(inc, "income")}
+                    type="button"
+                  >
+                    <i className="fa-solid fa-pen-to-square"></i>
+                  </button>
                 </td>
                 <td>
-                  <i class="fa-solid fa-trash"></i>
+                  <button
+                    onClick={() => handleIncomeDelete(inc._id)}
+                    type="button"
+                  >
+                    <i className="fa-solid fa-trash"></i>
+                  </button>
                 </td>
               </tr>
             ))}
@@ -63,6 +256,8 @@ const TableComp = ({ income, expense, budget, saving }) => {
               <th>Category</th>
               <th>Description</th>
               <th>Date</th>
+              <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -73,10 +268,20 @@ const TableComp = ({ income, expense, budget, saving }) => {
                 <td>{exp.expenseDescription}</td>
                 <td>{exp.date}</td>
                 <td>
-                  <i class="fa-solid fa-pen-to-square"></i>
+                  <button
+                    onClick={() => handleEdit(exp, "expense")}
+                    type="button"
+                  >
+                    <i className="fa-solid fa-pen-to-square"></i>
+                  </button>
                 </td>
                 <td>
-                  <i class="fa-solid fa-trash"></i>
+                  <button
+                    onClick={() => handleExpenseDelete(exp._id)}
+                    type="button"
+                  >
+                    <i className="fa-solid fa-trash"></i>
+                  </button>
                 </td>
               </tr>
             ))}
@@ -95,6 +300,8 @@ const TableComp = ({ income, expense, budget, saving }) => {
               <th>Amount</th>
               <th>Category</th>
               <th>Budget Period</th>
+              <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -104,10 +311,20 @@ const TableComp = ({ income, expense, budget, saving }) => {
                 <td>{bud.budgetCategory}</td>
                 <td>{bud.budgetPeriod}</td>
                 <td>
-                  <i class="fa-solid fa-pen-to-square"></i>
+                  <button
+                    onClick={() => handleEdit(bud, "budget")}
+                    type="button"
+                  >
+                    <i className="fa-solid fa-pen-to-square"></i>
+                  </button>
                 </td>
                 <td>
-                  <i class="fa-solid fa-trash"></i>
+                  <button
+                    onClick={() => handleBudgetDelete(bud._id)}
+                    type="button"
+                  >
+                    <i className="fa-solid fa-trash"></i>
+                  </button>
                 </td>
               </tr>
             ))}
@@ -126,6 +343,8 @@ const TableComp = ({ income, expense, budget, saving }) => {
               <th>Amount</th>
               <th>Source</th>
               <th>Target Date</th>
+              <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -135,10 +354,19 @@ const TableComp = ({ income, expense, budget, saving }) => {
                 <td>{sav.source}</td>
                 <td>{sav.targetDate}</td>
                 <td>
-                  <i class="fa-solid fa-pen-to-square"></i>
+                  <button
+                    onClick={() => handleEdit(sav, "saving")}
+                  >
+                    <i className="fa-solid fa-pen-to-square"></i>
+                  </button>
                 </td>
                 <td>
-                  <i class="fa-solid fa-trash"></i>
+                  <button
+                    onClick={() => handleSavingDelete(sav._id)}
+                    type="button"
+                  >
+                    <i className="fa-solid fa-trash"></i>
+                  </button>
                 </td>
               </tr>
             ))}
@@ -146,6 +374,14 @@ const TableComp = ({ income, expense, budget, saving }) => {
         </table>
       ) : (
         <p>No saving records yet.</p>
+      )}
+      {isEditing.type && (
+        <EditValues 
+        item = {isEditing.item}
+        type = {isEditing.type}
+        onClose = {handleClose}
+        onSave = {handleSave}
+        />
       )}
     </div>
   );

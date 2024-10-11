@@ -58,11 +58,11 @@ const LoginNavBar = () => {
                     Reports
                   </NavLink>
                 </li>
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <NavLink className="nav-link" to="/charts">
                     Charts
                   </NavLink>
-                </li>
+                </li> */}
                 <li className="nav-item">
                   <NavLink className="nav-link" to="/settings">
                     Settings

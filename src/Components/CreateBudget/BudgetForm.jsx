@@ -21,6 +21,7 @@ const BudgetForm = ({onSubmit}) => {
   });
 
   const budgetOnSubmit = async (values, { resetForm }) => {
+    console.log("Form Values:", values);
     try {
       const response = await axios.post(
         // "https://back-end-d6p7.onrender.com/budget/newbudget",

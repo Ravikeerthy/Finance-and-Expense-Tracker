@@ -25,6 +25,8 @@ import Logout from "./Components/LogOut/Logout";
 import NotificationComp from "./Components/Notification/NotificationComp";
 import NewPasswordComp from "./Components/Register/NewPasswordComp";
 import PasswordResetComp from "./Components/Register/PasswordResetComp";
+import EditValues from "./Components/CreateBudget/EditValues";
+
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated } = useContext(AuthContext);
@@ -32,15 +34,15 @@ const ProtectedRoute = ({ children }) => {
 };
 
 const App = () => {
-  const {userId} = useContext(AuthContext)
+  const { userId } = useContext(AuthContext);
   const router = createBrowserRouter([
-    
     {
-      element: 
-      <>
-      <NavBar />, 
-      <NotificationComp/>
-      </>,
+      element: (
+        <>
+          <NavBar />,
+          <NotificationComp />
+        </>
+      ),
       children: [
         { path: "/", element: <About /> },
         { path: "/register", element: <Register /> },
@@ -50,49 +52,92 @@ const App = () => {
       ],
     },
     {
-      element: <>
-      <LoginNavBar />, 
-      <NotificationComp/>
-      </>,
+      element: (
+        <>
+          <LoginNavBar />,
+          <NotificationComp />
+        </>
+      ),
       children: [
         {
           path: "/dashboard",
-          element:( <ProtectedRoute>
-            <DashBoard/>
-          </ProtectedRoute>),
+          element: (
+            <ProtectedRoute>
+              <DashBoard />
+            </ProtectedRoute>
+          ),
         },
         {
           path: "/create",
-          element: (<ProtectedRoute>
-            <CreateBudget/>
-          </ProtectedRoute>) 
+          element: (
+            <ProtectedRoute>
+              <CreateBudget />
+            </ProtectedRoute>
+          ),
         },
-        { path: "/reports", element: ( <ProtectedRoute><Reports/> </ProtectedRoute> ) ,},
-        { path: "/charts", element: (<ProtectedRoute> <Chart /> </ProtectedRoute> )},
+        {
+          path: "/reports",
+          element: (
+            <ProtectedRoute>
+              <Reports />{" "}
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "/charts",
+          element: (
+            <ProtectedRoute>
+              {" "}
+              <Chart />{" "}
+            </ProtectedRoute>
+          ),
+        },
         {
           path: "/settings",
-          element: <ProtectedRoute><ProfileSettings/></ProtectedRoute>,
+          element: (
+            <ProtectedRoute>
+              <ProfileSettings />
+            </ProtectedRoute>
+          ),
         },
         {
           path: "/incomeform",
-          element: <ProtectedRoute> <IncomeForm /> </ProtectedRoute>,
+          element: (
+            <ProtectedRoute>
+              {" "}
+              <IncomeForm />{" "}
+            </ProtectedRoute>
+          ),
         },
         {
           path: "/savingform",
-          element: <ProtectedRoute><SavingForm /></ProtectedRoute>,
+          element: (
+            <ProtectedRoute>
+              <SavingForm />
+            </ProtectedRoute>
+          ),
         },
         {
           path: "/expenseform",
-          element: <ProtectedRoute><ExpenseForm /></ProtectedRoute>,
+          element: (
+            <ProtectedRoute>
+              <ExpenseForm />
+            </ProtectedRoute>
+          ),
         },
         {
           path: "/budgetform",
-          element: <ProtectedRoute><BudgetForm /></ProtectedRoute>,
+          element: (
+            <ProtectedRoute>
+              <BudgetForm />
+            </ProtectedRoute>
+          ),
         },
+        { path: "/edit_values/:id", element: <EditValues /> },
+       
         { path: "/logout", element: <Logout /> },
-       
+
         { path: "/reset/:id/:token", element: <NewPasswordComp /> },
-       
       ],
     },
 

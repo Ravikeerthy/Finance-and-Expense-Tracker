@@ -8,7 +8,6 @@ import TableComp from "./TableComp";
 import Chart from "../chart/Chart";
 import axios from "axios";
 import { AuthContext } from "../AuthContext/AuthContext";
-import GetDataDisplay from "./GetDataDisplay";
 
 const CreateBudget = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -26,21 +25,34 @@ const CreateBudget = () => {
   const [getSaving, setGetSaving] = useState([]);
   const [getBudget, setGetBudget] = useState([]);
 
-  const { user, isAuthenticated } = useContext(AuthContext);
+  const [chartsData, setChartsData] = useState({
+    labels: [],
+    expenses: [],
+    income: [],
+    budget: [],
+    saving: [],
+  });
+
+  const { user } = useContext(AuthContext);
 
   const userId = user ? user._id : null;
-  console.log("UserId", userId);
+  // console.log("UserId", userId);
 
   const token = localStorage.getItem("token");
-  console.log("Token", token);
-  
+  // console.log("Token", token);
 
   useEffect(() => {
     fetchAllData();
-  }, [userId]);
+  }, [userId, token]);
+
+  useEffect(() => {
+    fetchChartData();
+  }, [getExpense, getIncome, getBudget, getSaving]);
 
   const fetchAllData = async () => {
-     setLoading(true); 
+    setLoading(true);
+    setError(null);
+
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
@@ -52,6 +64,7 @@ const CreateBudget = () => {
       );
       setGetIncome(incomeGetResponse.data);
       console.log("IncomeGetData", incomeGetResponse.data);
+      console.log("Intial Valies of getIncome: ", getIncome);
 
       const expenseGetResponse = await axios.get(
         `http://localhost:4000/expense/expenseuserId/${userId}`,
@@ -79,8 +92,45 @@ const CreateBudget = () => {
     } finally {
       setLoading(false);
     }
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>{error}</p>;
+  };
+
+  const fetchChartData = async () => {
+    const monthlyExpenses = Array(12).fill(0);
+    const monthlyIncome = Array(12).fill(0);
+
+    if (getExpense.expenseByUserId && getIncome.userIncome) {
+      console.log("Expenses Data:", getExpense.expenseByUserId);
+      console.log("Income Data:", getIncome.userIncome);
+      getExpense.expenseByUserId.forEach((exp) => {
+        const expenseDate = new Date(exp.date); 
+      const monthIndex = expenseDate.getMonth()+1;
+        console.log(`Processing Expense: ${exp.expenseAmount} for month ${monthIndex}`);
+        monthlyExpenses[monthIndex] += exp.expenseAmount;
+      });
+
+      getIncome.userIncome.forEach((inc) => {
+        const incomeDate = new Date(inc.date); 
+        const monthIndex = incomeDate.getMonth()+1;
+        console.log(`Processing Income: ${inc.incomeAmount} for month ${monthIndex}`);
+
+        monthlyIncome[monthIndex] += inc.incomeAmount;
+      });
+    }
+   
+
+    setChartsData({
+      labels: getExpense.expenseByUserId.map(
+        (exp) => exp.expenseCategory || "other",
+        expense
+      ),
+      expenses: monthlyExpenses,
+      expense: getExpense.expenseByUserId.map((exp) => exp.expenseAmount || 0),
+      income: getIncome.userIncome.map((inc) => inc.incomeAmount || 0),
+      budget: getBudget.userBudget.map((bud) => bud.budgetAmount || 0),
+      saving: getSaving.savingGoals.map((sav) => sav.savingAmount || 0),
+      month: monthlyIncome,
+    });
+    console.log("setChartedData", chartsData);
   };
   const openModal = (formType) => {
     console.log(`Opening modal for: ${formType}`);
@@ -94,141 +144,132 @@ const CreateBudget = () => {
     setCurrentForm(null);
   };
 
-  const handleFormSubmit = (type, values) => {
+  const updateStateArray = (stateSetter, prevState, newValue) => {
+    if (Array.isArray(prevState)) {
+      stateSetter([...prevState, newValue]);
+    } else {
+      console.error("State is not an array", prevState);
+      stateSetter([newValue]);
+    }
+  };
+
+  const handleFormSubmit = async (type, values) => {
     console.log(`Submitting ${type} with values:`, values);
     switch (type) {
       case "income":
-        setIncome((preIncome) => {
-          if (Array.isArray(preIncome)) {
-            return [...preIncome, values];
-          } else {
-            console.error("preIncome is not an array", preIncome);
-            return [values];
-          }
-        });
+        updateStateArray(setIncome, income, values);
         break;
       case "expense":
-        setExpense((preExpense) => {
-          if (Array.isArray(preExpense)) {
-            return [...preExpense, values];
-          } else {
-            console.error("PreExpense is not an array", preExpense);
-            return [values];
-          }
-        });
+        updateStateArray(setExpense, expense, values);
 
         break;
       case "budget":
-        setBudget((preBudget) => {
-          if (Array.isArray(preBudget)) {
-            return [...preBudget, values];
-          } else {
-            console.error("PreBudget is not an array", preBudget);
-            return [values];
-          }
-        });
+        updateStateArray(setBudget, budget, values);
 
         break;
       case "saving":
-        setSaving((preSaving) => {
-          if (Array.isArray(preSaving)) {
-            return [...preSaving, values];
-          } else {
-            console.error("Presaving is not an array", preSaving);
-          }
-        });
+        updateStateArray(setSaving, saving, values);
 
         break;
       default:
         break;
     }
-
+    await fetchAllData();
     closeModal();
   };
 
   const chartData = {
-    labels:
-      Array.isArray(expense) && expense.length > 0
-        ? expense.map((exp) => exp.expenseCategory)
-        : ["Other"],
-    expenses: Array.isArray(expense)
-      ? expense.map((exp) => exp.expenseAmount || 0)
-      : [],
-    income: Array.isArray(income)
-      ? income.map((inc) => inc.incomeAmount || 0)
-      : [],
-    budget: Array.isArray(budget)
-      ? budget.map((bud) => bud.budgetAmount || 0)
-      : [],
-    saving: Array.isArray(saving)
-      ? saving.map((sav) => sav.savingAmount || 0)
-      : [],
+    labels: chartsData.labels,
+    expenses: chartsData.expenses,
+    income: chartsData.income,
+    budget: chartsData.budget,
+    saving: chartsData.saving,
   };
-  // console.log("chartData:", chartData);
+  console.log("chartData:", chartData);
 
   return (
     <div className="create-budget-container">
       <h2 className="create-heading">Create Financial Entries</h2>
 
-      <div className="button-group">
-        <button onClick={() => openModal("income")} className="create-button">
-          Create New Income
-        </button>
-        <button onClick={() => openModal("budget")} className="create-button">
-          Create New Budget
-        </button>
-        <button onClick={() => openModal("expense")} className="create-button">
-          Create New Expense
-        </button>
-        <button onClick={() => openModal("saving")} className="create-button">
-          Create New Saving
-        </button>
-      </div>
+      {loading && <p>Loading data...</p>}
+      {error && <p>{error}</p>}
 
-      {isModalOpen && (
-        <div className="modal-overlay" onClick={closeModal}>
-          <div
-            className="modal-content animate-modal"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button onClick={closeModal} className="close-button">
-              <i className="fa-solid fa-xmark"></i>
+      {!loading && !error && (
+        <>
+          <div className="button-group">
+            <button
+              onClick={() => openModal("income")}
+              className="create-button"
+            >
+              Create New Income
             </button>
-
-            {currentForm === "income" && (
-              <IncomeForm
-                onSubmit={(values) => handleFormSubmit("income", values)}
-              />
-            )}
-            {currentForm === "budget" && (
-              <BudgetForm
-                onSubmit={(values) => handleFormSubmit("budget", values)}
-              />
-            )}
-            {currentForm === "expense" && (
-              <ExpenseForm
-                onSubmit={(values) => handleFormSubmit("expense", values)}
-              />
-            )}
-            {currentForm === "saving" && (
-              <SavingForm
-                onSubmit={(values) => handleFormSubmit("saving", values)}
-              />
-            )}
+            <button
+              onClick={() => openModal("budget")}
+              className="create-button"
+            >
+              Create New Budget
+            </button>
+            <button
+              onClick={() => openModal("expense")}
+              className="create-button"
+            >
+              Create New Expense
+            </button>
+            <button
+              onClick={() => openModal("saving")}
+              className="create-button"
+            >
+              Create New Saving
+            </button>
           </div>
-        </div>
+
+          {isModalOpen && (
+            <div className="modal-overlay" onClick={closeModal}>
+              <div
+                className="modal-content animate-modal"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button onClick={closeModal} className="close-button">
+                  <i className="fa-solid fa-xmark"></i>
+                </button>
+
+                {currentForm === "income" && (
+                  <IncomeForm
+                    onSubmit={(values) => handleFormSubmit("income", values)}
+                  />
+                )}
+                {currentForm === "budget" && (
+                  <BudgetForm
+                    onSubmit={(values) => handleFormSubmit("budget", values)}
+                  />
+                )}
+                {currentForm === "expense" && (
+                  <ExpenseForm
+                    onSubmit={(values) => handleFormSubmit("expense", values)}
+                  />
+                )}
+                {currentForm === "saving" && (
+                  <SavingForm
+                    onSubmit={(values) => handleFormSubmit("saving", values)}
+                  />
+                )}
+              </div>
+            </div>
+          )}
+        </>
       )}
+
+      <div>
+        <TableComp
+          income={getIncome}
+          expense={getExpense}
+          budget={getBudget}
+          saving={getSaving}
+        />
+      </div>
       <div className="chart-table-align">
         <div>
-          <Chart chartData={chartData} />
-        </div>
-        <div>
-          <TableComp
-            income={getIncome}
-            expense={getExpense}
-            budget={getBudget}
-            saving={getSaving}
-          />
+          <Chart chartsData={chartsData} />
         </div>
       </div>
     </div>
