@@ -39,7 +39,7 @@ const NewPasswordComp = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:4000/user/newuser/newPassword/${token}`,
+        `https://back-end-d6p7.onrender.com/user/newuser/newPassword/${token}`,
         { password: values.password }
       );
       setMessage(response.data.message);

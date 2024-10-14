@@ -25,7 +25,7 @@ const PasswordResetComp = () => {
     try {
       const { userName } = values;
       const response = await axios.post(
-        "http://localhost:4000/user/newuser/resetpassword",
+        "https://back-end-d6p7.onrender.com/user/newuser/resetpassword",
         values
       );
       console.log(response.data);

@@ -22,7 +22,7 @@ const SavingForm = ({ onSubmit }) => {
     setLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:4000/savings/newsaving",
+        "https://back-end-d6p7.onrender.com/savings/newsaving",
         // "https://back-end-d6p7.onrender.com/savings/newsaving",
         values,
         {

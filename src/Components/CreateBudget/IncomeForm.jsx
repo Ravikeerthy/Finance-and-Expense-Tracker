@@ -25,17 +25,15 @@ const IncomeForm = ({ onSubmit }) => {
     date: Yup.date().required("Date is required"),
     isRecurring: Yup.boolean().required("Check the recurring"),
     frequency: Yup.string().required("Select the frequency"),
-    // month: Yup.string().required("Select a month"),
   });
 
   const onSubmitHandler = async (values, { resetForm }) => {
-    // event.preventDefault();
     console.log("Submitted values:", values);
 
     try {
       const response = await axios.post(
         // "https://back-end-d6p7.onrender.com/income/newincome",
-        "http://localhost:4000/income/newincome",
+        "https://back-end-d6p7.onrender.com/income/newincome",
         values,
         {
           headers: {
@@ -52,7 +50,6 @@ const IncomeForm = ({ onSubmit }) => {
         incomeSource: values.incomeSource,
         date: values.date,
         frequency: values.frequency,
-        // month: values.month,
       };
       console.log("Income Form: ", addedIncome);
 
@@ -63,7 +60,7 @@ const IncomeForm = ({ onSubmit }) => {
         return updatedDetails;
       });
       resetForm();
-      // toast.success(response.data.message);
+      toast.success(response.data.message);
       alert(response.data.message);
     } catch (error) {
       console.error("Failed to add budget:", error);

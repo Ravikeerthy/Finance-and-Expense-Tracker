@@ -61,28 +61,28 @@ const CreateBudget = () => {
     try {
       // console.log(`Fetching Income for userId: ${userId}`);
       const incomeGetResponse = await axios.get(
-        `http://localhost:4000/income/getIncomeByUserId/${userId}`,
+        `https://back-end-d6p7.onrender.com/income/getIncomeByUserId/${userId}`,
         { headers, withCredentials: true }
       );
       setGetIncome(incomeGetResponse.data);
       console.log("IncomeGetData", incomeGetResponse.data);
 
       const expenseGetResponse = await axios.get(
-        `http://localhost:4000/expense/expenseuserId/${userId}`,
+        `https://back-end-d6p7.onrender.com/expense/expenseuserId/${userId}`,
         { headers, withCredentials: true }
       );
       setGetExpense(expenseGetResponse.data);
       console.log("ExpenseGetData", expenseGetResponse.data);
 
       const budgetGetResponse = await axios.get(
-        `http://localhost:4000/budget/getBudgetByUserId/${userId} `,
+        `https://back-end-d6p7.onrender.com/budget/getBudgetByUserId/${userId} `,
         { headers, withCredentials: true }
       );
       setGetBudget(budgetGetResponse.data);
       console.log("BudgetGetData", budgetGetResponse.data);
 
       const savingGetResponse = await axios.get(
-        `http://localhost:4000/savings/getbyid/${userId}`,
+        `https://back-end-d6p7.onrender.com/savings/getbyid/${userId}`,
         { headers, withCredentials: true }
       );
       setGetSaving(savingGetResponse.data);
@@ -170,7 +170,7 @@ const CreateBudget = () => {
   };
 
   const handleFormSubmit = async (type, values) => {
-    console.log(`Submitting ${type} with values:`, values);
+    // console.log(`Submitting ${type} with values:`, values);
     switch (type) {
       case "income":
         updateStateArray(setIncome, income, values);
@@ -231,10 +231,10 @@ const CreateBudget = () => {
       )
     : 0;
 
-  console.log("Total Income:", totalIncome);
-  console.log("Total Expenses:", totalExpenses);
-  console.log("Total Budget:", totalBudget);
-  console.log("Total Savings:", totalSavings);
+  // console.log("Total Income:", totalIncome);
+  // console.log("Total Expenses:", totalExpenses);
+  // console.log("Total Budget:", totalBudget);
+  // console.log("Total Savings:", totalSavings);
 
   const reportData = {
     income: totalIncome,
@@ -243,7 +243,7 @@ const CreateBudget = () => {
     savings: totalSavings,
   };
 
-  console.log("Report Data: ", reportData);
+  // console.log("Report Data: ", reportData);
 
   return (
     <div className="create-budget-container">

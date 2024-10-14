@@ -22,16 +22,16 @@ const EditValues = ({ item, type='', onClose, onSave }) => {
 
     switch (type) {
       case "income":
-        updateURL = `http://localhost:4000/income/update/${formData._id}`;
+        updateURL = `https://back-end-d6p7.onrender.com/income/update/${formData._id}`;
         break;
       case "expense":
-        updateURL = `http://localhost:4000/expense/update/${formData._id}`;
+        updateURL = `https://back-end-d6p7.onrender.com/expense/update/${formData._id}`;
         break;
       case "budget":
-        updateURL = `http://localhost:4000/budget/update/${formData._id}`;
+        updateURL = `https://back-end-d6p7.onrender.com/budget/update/${formData._id}`;
         break;
       case "saving":
-        updateURL = `http://localhost:4000/savings/update/${formData._id}`;
+        updateURL = `https://back-end-d6p7.onrender.com/savings/update/${formData._id}`;
         break;
       default:
         return;

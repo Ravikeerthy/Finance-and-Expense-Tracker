@@ -50,7 +50,7 @@ const Register = () => {
       const { firstName, lastName, userName, password, contactNumber } = values;
       const response = await axios.post(
         // "https://back-end-d6p7.onrender.com/user/newUser/register",
-        "http://localhost:4000/user/newUser/register",
+        "https://back-end-d6p7.onrender.com/user/newUser/register",
         values
       );
       console.log(response.data);
@@ -84,24 +84,19 @@ const Register = () => {
 
   const loginOnSubmit = async (values, { resetForm }) => {
     setLoading(true);
-    console.log("Debugging.....");
 
     try {
       const { userName, password } = values;
       console.log("Login Values: ", values);
 
       let response = await axios.post(
-        "http://localhost:4000/user/newuser/login",
+        "https://back-end-d6p7.onrender.com/user/newuser/login",
         // "https://back-end-d6p7.onrender.com/user/newuser/login",
         values,
         {
           headers: {
             // Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
-            // " Access-Control-Allow-Headers":
-            //   "Origin, X-Requested-With, Content-Type, Accept",
-            // "Access-Control-Allow-Methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-            // "Access-Control-Allow-Origin": "*",
           },
           withCredentials: true,
         }

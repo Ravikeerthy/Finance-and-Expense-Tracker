@@ -8,7 +8,7 @@ const ExcelReport = ({income, expenses, budget, savings}) => {
   const downloadExcelReport = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:4000/generatereport/generate_excel",
+        "https://back-end-d6p7.onrender.com/generatereport/generate_excel",
         {
           income: income || 0,
           expenses: expenses || 0,

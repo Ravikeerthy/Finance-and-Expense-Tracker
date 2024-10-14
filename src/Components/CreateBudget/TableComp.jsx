@@ -50,28 +50,28 @@ const TableComp = ({ income, expense, budget, saving }) => {
     try {
       console.log(`Fetching Income for userId: ${userId}`);
       const incomeGetResponse = await axios.get(
-        `http://localhost:4000/income/getIncomeByUserId/${userId}`,
+        `https://back-end-d6p7.onrender.com/income/getIncomeByUserId/${userId}`,
         { headers, withCredentials: true }
       );
       setGetIncome(incomeGetResponse.data);
       console.log("IncomeGetData", incomeGetResponse.data);
 
       const expenseGetResponse = await axios.get(
-        `http://localhost:4000/expense/expenseuserId/${userId}`,
+        `https://back-end-d6p7.onrender.com/expense/expenseuserId/${userId}`,
         { headers, withCredentials: true }
       );
       setGetExpense(expenseGetResponse.data);
       console.log("ExpenseGetData", expenseGetResponse.data);
 
       const budgetGetResponse = await axios.get(
-        `http://localhost:4000/budget/getBudgetByUserId/${userId} `,
+        `https://back-end-d6p7.onrender.com/budget/getBudgetByUserId/${userId} `,
         { headers, withCredentials: true }
       );
       setGetBudget(budgetGetResponse.data);
       console.log("BudgetGetData", budgetGetResponse.data);
 
       const savingGetResponse = await axios.get(
-        `http://localhost:4000/savings/getbyid/${userId}`,
+        `https://back-end-d6p7.onrender.com/savings/getbyid/${userId}`,
         { headers, withCredentials: true }
       );
       setGetSaving(savingGetResponse.data);
@@ -85,12 +85,12 @@ const TableComp = ({ income, expense, budget, saving }) => {
     if (loading) return <p>Loading...</p>;
     if (error) return <p>{error}</p>;
   };
-  // const token = localStorage.getItem("token");
+  
 
   const handleIncomeDelete = async (id) => {
     try {
       const deleteIncome = await axios.delete(
-        `http://localhost:4000/income/delete/${id}`,
+        `https://back-end-d6p7.onrender.com/income/delete/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -116,7 +116,7 @@ const TableComp = ({ income, expense, budget, saving }) => {
   const handleExpenseDelete = async (id) => {
     try {
       const deleteExpense = await axios.delete(
-        `http://localhost:4000/expense/delete/${id}`,
+        `https://back-end-d6p7.onrender.com/expense/delete/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -142,7 +142,7 @@ const TableComp = ({ income, expense, budget, saving }) => {
   const handleBudgetDelete = async (id) => {
     try {
       const deletebudget = await axios.delete(
-        `http://localhost:4000/budget/delete/${id}`,
+        `https://back-end-d6p7.onrender.com/budget/delete/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -168,7 +168,7 @@ const TableComp = ({ income, expense, budget, saving }) => {
   const handleSavingDelete = async (id) => {
     try {
       const deleteSaving = await axios.delete(
-        `http://localhost:4000/savings/delete/${id}`,
+        `https://back-end-d6p7.onrender.com/savings/delete/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

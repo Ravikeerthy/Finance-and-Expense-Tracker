@@ -14,7 +14,7 @@ const ExpenseForm = ({ onSubmit }) => {
     date: "",
     isRecurring: false,
     frequency: "",
-    // month: "",
+    
   };
 
   const validationSchema = Yup.object({
@@ -24,7 +24,7 @@ const ExpenseForm = ({ onSubmit }) => {
     date: Yup.date().required("Date is required"),
     isRecurring: Yup.boolean().required("Check the Recurring"),
     frequency: Yup.string().required("Select the frequency"),
-    // month: Yup.string().required("Select a month"),
+    
   });
 
   const expenseOnSubmit = async (values, { resetForm }) => {
@@ -32,7 +32,7 @@ const ExpenseForm = ({ onSubmit }) => {
     try {
       const response = await axios.post(
         // "https://back-end-d6p7.onrender.com/expense/newexpense",
-        "http://localhost:4000/expense/newexpense",
+        "https://back-end-d6p7.onrender.com/expense/newexpense",
         values,
         {
           headers: {
@@ -49,7 +49,7 @@ const ExpenseForm = ({ onSubmit }) => {
         expenseCategory: values.expenseCategory,
         expenseDescription: values.expenseDescription,
         date: values.date,
-        // month: values.month,
+        
       };
       onSubmit(newExpenseData);
       resetForm();

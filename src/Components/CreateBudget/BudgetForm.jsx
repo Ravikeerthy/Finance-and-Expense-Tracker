@@ -21,11 +21,11 @@ const BudgetForm = ({onSubmit}) => {
   });
 
   const budgetOnSubmit = async (values, { resetForm }) => {
-    console.log("Form Values:", values);
+    // console.log("Form Values:", values);
     try {
       const response = await axios.post(
         // "https://back-end-d6p7.onrender.com/budget/newbudget",
-        "http://localhost:4000/budget/newbudget",
+        "https://back-end-d6p7.onrender.com/budget/newbudget",
         values,
         {
           headers: {
@@ -45,8 +45,8 @@ const BudgetForm = ({onSubmit}) => {
        console.log("newBudgetData: ", newBudgetData);
        
       onSubmit(newBudgetData);
-      resetForm();
       toast.success(response.data.message)
+      resetForm();
     } catch (error) {
       console.error("Failed to add budget:", error);
       toast.error("Failed to add budget")
