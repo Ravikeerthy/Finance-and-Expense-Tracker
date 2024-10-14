@@ -26,6 +26,7 @@ import NotificationComp from "./Components/Notification/NotificationComp";
 import NewPasswordComp from "./Components/Register/NewPasswordComp";
 import PasswordResetComp from "./Components/Register/PasswordResetComp";
 import EditValues from "./Components/CreateBudget/EditValues";
+import { NotificationProvider } from "./Components/AuthContext/NotificationContext";
 
 
 const ProtectedRoute = ({ children }) => {
@@ -148,20 +149,14 @@ const App = () => {
     },
   ]);
 
-  // useEffect(()=>{
-  //   if(userId){
-  //     joinRoom(userId)
-  //   }
 
-  //   return()=>{
-  //     socket.off('transaction-update')
-  //   }
-  // },[userId])
 
   return (
+    <NotificationProvider>
     <div>
       <RouterProvider router={router} />
     </div>
+  </NotificationProvider>
   );
 };
 
