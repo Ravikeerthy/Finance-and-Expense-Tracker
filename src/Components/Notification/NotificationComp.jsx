@@ -3,7 +3,7 @@ import {
   getNotificationsByUserId,
   markNotificationAsRead,
   deleteNotification,
-} from "../services/notificationService"; // Import the services
+} from "../AuthContext/NotificationContext";
 import { AuthContext } from "../AuthContext/AuthContext";
 
 const NotificationComp = () => {
