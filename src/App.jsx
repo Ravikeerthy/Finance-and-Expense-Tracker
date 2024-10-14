@@ -135,6 +135,7 @@ const App = () => {
         },
         { path: "/edit_values/:id", element: <EditValues /> },
        
+        {path:"/notifications", element:<NotificationComp/>},
         { path: "/logout", element: <Logout /> },
 
         { path: "/reset/:id/:token", element: <NewPasswordComp /> },

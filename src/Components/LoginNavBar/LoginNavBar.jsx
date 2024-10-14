@@ -53,16 +53,10 @@ const LoginNavBar = () => {
                     Create
                   </NavLink>
                 </li>
-                <li className="nav-item">
-                  <NavLink className="nav-link" to="/reports">
-                    Reports
-                  </NavLink>
+                <li>
+                  <NavLink to="/notifications" className="nav-link">Notifications</NavLink>
                 </li>
-                {/* <li className="nav-item">
-                  <NavLink className="nav-link" to="/charts">
-                    Charts
-                  </NavLink>
-                </li> */}
+
                 <li className="nav-item">
                   <NavLink className="nav-link" to="/settings">
                     Settings

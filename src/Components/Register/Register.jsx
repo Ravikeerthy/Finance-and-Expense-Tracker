@@ -14,6 +14,8 @@ const Register = () => {
   const { login } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
 
+  // const token = localStorage.getItem("token");
+
   const handleSignUpClick = () => {
     setIsSignUpActive(true);
   };
@@ -43,11 +45,12 @@ const Register = () => {
       .matches(/^\d{10}$/, "*Contact Number must be exactly 10 digits"),
   });
   const onSubmit = async (values, { resetForm }) => {
-    setLoading(true); 
+    setLoading(true);
     try {
       const { firstName, lastName, userName, password, contactNumber } = values;
       const response = await axios.post(
-        "https://back-end-d6p7.onrender.com/user/newUser/register",
+        // "https://back-end-d6p7.onrender.com/user/newUser/register",
+        "http://localhost:4000/user/newUser/register",
         values
       );
       console.log(response.data);
@@ -64,7 +67,7 @@ const Register = () => {
         toast.error("Internal Server Error");
       }
       console.error("Registration Error: ", error);
-    }finally {
+    } finally {
       setLoading(false);
     }
   };
@@ -80,40 +83,49 @@ const Register = () => {
   });
 
   const loginOnSubmit = async (values, { resetForm }) => {
-    setLoading(true); 
+    setLoading(true);
+    console.log("Debugging.....");
+
     try {
       const { userName, password } = values;
-      let response = await axios.post( "http://localhost:4000/user/newuser/login",
-        // "https://back-end-d6p7.onrender.com/user/newUser/login",
+      console.log("Login Values: ", values);
+
+      let response = await axios.post(
+        "http://localhost:4000/user/newuser/login",
+        // "https://back-end-d6p7.onrender.com/user/newuser/login",
         values,
         {
           headers: {
             // Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            // " Access-Control-Allow-Headers":
+            //   "Origin, X-Requested-With, Content-Type, Accept",
+            // "Access-Control-Allow-Methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+            // "Access-Control-Allow-Origin": "*",
           },
           withCredentials: true,
         }
       );
       const { token } = response.data;
-      const {user} = response.data;
+      const { user } = response.data;
       const message = response.data.message;
-      console.log(response.data);
+      console.log("Response login data: ", response.data);
       localStorage.setItem("token", token);
       login(user);
       resetForm();
-      toast.success( response.data.message || "Login Successful");
+      toast.success(response.data.message || "Login Successful");
       navigate("/dashboard");
     } catch (error) {
       console.log(error);
       toast.error("Server Error");
-    }finally {
+    } finally {
       setLoading(false);
     }
   };
 
-  const handleForgotPassword = () =>{
-    navigate("/reset-password")
-  }
+  const handleForgotPassword = () => {
+    navigate("/reset-password");
+  };
   return (
     <div className="vh-100 d-flex justify-content-center align-items-center bg-gradient">
       <div
@@ -196,7 +208,11 @@ const Register = () => {
                   className="text-danger"
                 />
               </div>
-              <button type="submit" className="btn btn-primary w-100" disabled={loading}>
+              <button
+                type="submit"
+                className="btn btn-primary w-100"
+                disabled={loading}
+              >
                 {loading ? "Signing Up..." : "Sign Up"}
               </button>
             </Form>
@@ -242,7 +258,11 @@ const Register = () => {
               <a href="#" className="small" onClick={handleForgotPassword}>
                 Forgot Your Password?
               </a>
-              <button type="submit" className="btn btn-primary w-100 mt-3" disabled={loading}>
+              <button
+                type="submit"
+                className="btn btn-primary w-100 mt-3"
+                disabled={loading}
+              >
                 {loading ? "Signing In..." : "Sign In"}
               </button>
             </Form>

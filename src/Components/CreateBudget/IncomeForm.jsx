@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
@@ -9,33 +9,12 @@ const IncomeForm = ({ onSubmit }) => {
   const [incomeDetails, setIncomeDetails] = useState([]);
   // const [loading, setLoading] = useState(true);
 
-  const fetchMonthlyIncome = async () => {
-    try {
-      const response = await axios.get(
-        "http://localhost:4000/income/monthlyIncome",
-        {
-          withCredentials: true,
-        }
-      );
-      const monthlyIncome = response.data.monthlyIncome;
-
-      console.log(monthlyIncome);
-    } catch (error) {
-      console.error("Error fetching monthly income data:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchMonthlyIncome();
-  }, []);
-
   const initialValues = {
     incomeAmount: "",
     incomeSource: "",
     date: "",
     isRecurring: false,
     frequency: "",
-    // month:""
   };
 
   const validationSchema = Yup.object().shape({
@@ -76,7 +55,6 @@ const IncomeForm = ({ onSubmit }) => {
         // month: values.month,
       };
       console.log("Income Form: ", addedIncome);
-      
 
       onSubmit(addedIncome);
       setIncomeDetails((prevDetails) => {
@@ -101,7 +79,7 @@ const IncomeForm = ({ onSubmit }) => {
           validationSchema={validationSchema}
           onSubmit={onSubmitHandler}
         >
-          {({values}) => (
+          {({ values }) => (
             <Form className="form-class">
               <div>
                 <label className="form-label">Income Amount:</label>
@@ -126,7 +104,7 @@ const IncomeForm = ({ onSubmit }) => {
                 <Field name="date" type="date" />
                 <ErrorMessage name="date" component="div" className="error" />
               </div>
-             
+
               <div>
                 <label className="form-label">Is Recurring:</label>
                 <Field name="isRecurring" type="checkbox" />

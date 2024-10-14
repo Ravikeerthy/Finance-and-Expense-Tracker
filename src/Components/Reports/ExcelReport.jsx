@@ -2,20 +2,24 @@ import React from "react";
 import axios from "axios";
 import "./ReportStyle.css";
 
-const ExcelReport = () => {
-  const downloadExcelReport = async (req, res) => {
+const ExcelReport = ({income, expenses, budget, savings}) => {
+  console.log("Receiving report vales: ", income, expenses, budget, savings);
+  
+  const downloadExcelReport = async () => {
     try {
       const response = await axios.post(
         "http://localhost:4000/generatereport/generate_excel",
         {
-          income: 5000,
-          expenses: 3000,
-          savings: 2000,
+          income: income || 0,
+          expenses: expenses || 0,
+          savings: savings || 0,
+          budget: budget || 0,
         },
         {
           responseType: "blob",
         }
       );
+      console.log("Generate report values: ", response.data)
 
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");

@@ -20,15 +20,18 @@ const TableComp = ({ income, expense, budget, saving }) => {
 
   const token = localStorage.getItem("token");
 
-  const incomeData = Array.isArray(income.userIncome)? income.userIncome : [];
-  const expenseData = Array.isArray(expense.expenseByUserId)? expense.expenseByUserId: [];
-  const budgetData = Array.isArray(budget.userBudget)? budget.userBudget : [];
-  const savingData = Array.isArray(saving.savingGoals)? saving.savingGoals: [];
+  const incomeData = Array.isArray(income.userIncome) ? income.userIncome : [];
+  const expenseData = Array.isArray(expense.expenseByUserId)
+    ? expense.expenseByUserId
+    : [];
+  const budgetData = Array.isArray(budget.userBudget) ? budget.userBudget : [];
+  const savingData = Array.isArray(saving.savingGoals)
+    ? saving.savingGoals
+    : [];
 
   useEffect(() => {
     fetchtingData();
     setDeletedData(false);
-
   }, [userId, token]);
 
   const fetchtingData = async () => {
@@ -45,6 +48,7 @@ const TableComp = ({ income, expense, budget, saving }) => {
       Authorization: `Bearer ${token}`,
     };
     try {
+      console.log(`Fetching Income for userId: ${userId}`);
       const incomeGetResponse = await axios.get(
         `http://localhost:4000/income/getIncomeByUserId/${userId}`,
         { headers, withCredentials: true }
@@ -97,7 +101,6 @@ const TableComp = ({ income, expense, budget, saving }) => {
       );
       // setDeletedData((prev)=>[...prev, id]);
       setGetIncome((prevIncome) => {
-       
         return prevIncome.userIncome.filter((inc) => inc._id !== id);
       });
       setDeletedData(true);
@@ -187,17 +190,17 @@ const TableComp = ({ income, expense, budget, saving }) => {
     console.log("Deleting saving with id:", id);
   };
 
-const handleEdit = (item, type) =>{
-  setIsEditing({item, type})
-}
+  const handleEdit = (item, type) => {
+    setIsEditing({ item, type });
+  };
 
-const handleClose = () =>{
-  setIsEditing({type:null, item:null})
-}
+  const handleClose = () => {
+    setIsEditing({ type: null, item: null });
+  };
 
-const handleSave = () =>{
-  fetchtingData();
-}
+  const handleSave = () => {
+    fetchtingData();
+  };
   return (
     <div className="table-comp">
       <h3>Financial Overview</h3>
@@ -207,6 +210,7 @@ const handleSave = () =>{
         <table>
           <thead>
             <tr>
+              <th>S.No</th>
               <th>Amount</th>
               <th>Source</th>
               <th>Date</th>
@@ -218,6 +222,7 @@ const handleSave = () =>{
           <tbody>
             {incomeData.map((inc, index) => (
               <tr key={index}>
+                <td>{index + 1} </td>
                 <td>{inc.incomeAmount}</td>
                 <td>{inc.incomeSource}</td>
                 <td>{inc.date}</td>
@@ -252,6 +257,7 @@ const handleSave = () =>{
         <table>
           <thead>
             <tr>
+              <th>S.No</th>
               <th>Amount</th>
               <th>Category</th>
               <th>Description</th>
@@ -263,6 +269,7 @@ const handleSave = () =>{
           <tbody>
             {expenseData.map((exp, index) => (
               <tr key={index}>
+                <td>{index+1} </td>
                 <td>{exp.expenseAmount}</td>
                 <td>{exp.expenseCategory}</td>
                 <td>{exp.expenseDescription}</td>
@@ -297,6 +304,7 @@ const handleSave = () =>{
         <table>
           <thead>
             <tr>
+              <th>S.No</th>
               <th>Amount</th>
               <th>Category</th>
               <th>Budget Period</th>
@@ -307,6 +315,7 @@ const handleSave = () =>{
           <tbody>
             {budgetData.map((bud, index) => (
               <tr key={index}>
+                <td>{index + 1} </td>
                 <td>{bud.budgetAmount}</td>
                 <td>{bud.budgetCategory}</td>
                 <td>{bud.budgetPeriod}</td>
@@ -340,6 +349,7 @@ const handleSave = () =>{
         <table>
           <thead>
             <tr>
+              <th>S.No</th>
               <th>Amount</th>
               <th>Source</th>
               <th>Target Date</th>
@@ -350,13 +360,12 @@ const handleSave = () =>{
           <tbody>
             {savingData.map((sav, index) => (
               <tr key={index}>
+                <td>{index+1} </td>
                 <td>{sav.savingAmount}</td>
                 <td>{sav.source}</td>
                 <td>{sav.targetDate}</td>
                 <td>
-                  <button
-                    onClick={() => handleEdit(sav, "saving")}
-                  >
+                  <button onClick={() => handleEdit(sav, "saving")}>
                     <i className="fa-solid fa-pen-to-square"></i>
                   </button>
                 </td>
@@ -376,12 +385,19 @@ const handleSave = () =>{
         <p>No saving records yet.</p>
       )}
       {isEditing.type && (
-        <EditValues 
-        item = {isEditing.item}
-        type = {isEditing.type}
-        onClose = {handleClose}
-        onSave = {handleSave}
-        />
+        <div className="edit-modal">
+          <div className="edit-modal-content">
+            <span className="edit-close-button" onClick={handleClose}>
+              &times;
+            </span>
+            <EditValues
+              item={isEditing.item}
+              type={isEditing.type}
+              onClose={handleClose}
+              onSave={handleSave}
+            />
+          </div>
+        </div>
       )}
     </div>
   );
