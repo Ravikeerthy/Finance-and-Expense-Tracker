@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import {
-  getNotificationsByUserId,
-  markNotificationAsRead,
+  fetchNotifications,
+  markAsRead,
   deleteNotification,
 } from "../AuthContext/NotificationContext";
 import { AuthContext } from "../AuthContext/AuthContext";
@@ -18,10 +18,10 @@ const NotificationComp = () => {
   const userId = user ? user._id : null;
 
   useEffect(() => {
-    const fetchNotifications = async () => {
+    const fetchingNotifications = async () => {
       setLoading(true);
       try {
-        const response = await getNotificationsByUserId(userId, 1, 10);
+        const response = await fetchNotifications(userId, 1, 10);
         setNotifications((prev) => [...prev, ...response.data.notification]);
         setHasMore(response.data.notification.length > 0);
       } catch (error) {
@@ -32,13 +32,13 @@ const NotificationComp = () => {
       }
     };
     if (userId) {
-      fetchNotifications();
+      fetchingNotifications();
     }
   }, [userId]);
 
   const handleMarkAsRead = async (id) => {
     try {
-      await markNotificationAsRead(id);
+      await markAsRead(id);
       setNotifications((prev) =>
         prev.map((n) => (n._id === id ? { ...n, read: true } : n))
       );
