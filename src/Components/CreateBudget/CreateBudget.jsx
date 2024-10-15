@@ -46,9 +46,9 @@ const CreateBudget = () => {
     fetchAllData();
   }, [userId, token]);
 
-  // useEffect(() => {
-  //   fetchChartData();
-  // }, [getExpense, getIncome, getBudget, getSaving]);
+  useEffect(() => {
+    fetchChartData();
+  }, [getExpense, getIncome, getBudget, getSaving]);
 
   const fetchAllData = async () => {
     setLoading(true);
@@ -87,9 +87,7 @@ const CreateBudget = () => {
       );
       setGetSaving(savingGetResponse.data);
       console.log("SavingGetData", savingGetResponse.data);
-
-      fetchChartData();
-
+      
     } catch (error) {
       console.error("Error fetching data from the database", error);
       setError("Failed to fetch data.");
