@@ -1,9 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import NotificationContext from "../AuthContext/NotificationContext";
 import { AuthContext } from "../AuthContext/AuthContext";
-import { Socket } from "socket.io-client";
-
-
 
 const NotificationComp = () => {
   const [loading, setLoading] = useState(true);
@@ -17,32 +14,17 @@ const NotificationComp = () => {
 
   const userId = user ? user._id : null;
 
+  
   useEffect(() => {
     if (userId) {
       fetchingNotifications();
     }
   }, [userId, page, fetchNotifications]);
 
-  useEffect(() => {
-    if (userId) {
-      Socket.emit("joinRoom", userId);
-
-      const handleTransactionUpdate = (data) => {
-        fetchNotifications(userId);
-      };
-
-      Socket.on("transaction-update", handleTransactionUpdate);
-
-      return () => {
-        Socket.off("transaction-update", handleTransactionUpdate);
-      };
-    }
-  }, [userId]);
-
   const fetchingNotifications = async () => {
     setLoading(true);
     try {
-      const response = await fetchNotifications(userId, 1, 10);
+      const response = await fetchNotifications(userId, page, 10); 
 
       setHasMore(response.data.notification.length > 0);
     } catch (error) {
@@ -56,6 +38,7 @@ const NotificationComp = () => {
   const handleMarkAsRead = async (id) => {
     try {
       await markAsRead(id);
+      fetchingNotifications(); // Refresh notifications after marking as read
     } catch (error) {
       console.error("Error marking notification as read:", error);
       setError("Failed to mark notification as read.");
@@ -65,6 +48,7 @@ const NotificationComp = () => {
   const handleDeleteNotification = async (id) => {
     try {
       await deleteNotification(id);
+      fetchingNotifications(); // Refresh notifications after deletion
     } catch (error) {
       console.error("Error deleting notification:", error);
       setError("Failed to delete notification.");
@@ -76,8 +60,8 @@ const NotificationComp = () => {
       setPage((prevPage) => prevPage + 1);
     }
   };
-  if (loading && notifications.length === 0)
-    return <div>Loading notifications...</div>;
+
+  if (loading && notifications.length === 0) return <div>Loading notifications...</div>;
 
   return (
     <div>
@@ -91,21 +75,13 @@ const NotificationComp = () => {
             <li key={notification._id} style={{ marginBottom: "10px" }}>
               <p>{notification.message}</p>
               <p>Status: {notification.isRead ? "Read" : "Unread"}</p>
-              <button onClick={() => handleMarkAsRead(notification._id)}>
-                Mark as Read
-              </button>
-              <button
-                onClick={() => handleDeleteNotification(notification._id)}
-              >
-                Delete
-              </button>
+              <button onClick={() => handleMarkAsRead(notification._id)}>Mark as Read</button>
+              <button onClick={() => handleDeleteNotification(notification._id)}>Delete</button>
             </li>
           ))}
         </ul>
       )}
-      {hasMore && !loading && (
-        <button onClick={loadMoreNotifications}>Load More</button>
-      )}
+      {hasMore && !loading && <button onClick={loadMoreNotifications}>Load More</button>}
       {loading && <div>Loading more notifications...</div>}
     </div>
   );
