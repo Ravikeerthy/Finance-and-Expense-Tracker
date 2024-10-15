@@ -27,7 +27,7 @@ import NewPasswordComp from "./Components/Register/NewPasswordComp";
 import PasswordResetComp from "./Components/Register/PasswordResetComp";
 import EditValues from "./Components/CreateBudget/EditValues";
 import { NotificationProvider } from "./Components/AuthContext/NotificationContext";
-
+import TransactionComponent from "./Components/Notification/TransactionComponent ";
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated } = useContext(AuthContext);
@@ -40,8 +40,7 @@ const App = () => {
     {
       element: (
         <>
-          <NavBar />,
-          <NotificationComp />
+          <NavBar />,{/* <NotificationComp /> */}
         </>
       ),
       children: [
@@ -55,8 +54,7 @@ const App = () => {
     {
       element: (
         <>
-          <LoginNavBar />,
-          <NotificationComp />
+          <LoginNavBar />,{/* <NotificationComp /> */}
         </>
       ),
       children: [
@@ -135,8 +133,9 @@ const App = () => {
           ),
         },
         { path: "/edit_values/:id", element: <EditValues /> },
-       
-        {path:"/notifications", element:<NotificationComp/>},
+        { path: "/transcomp", element: <TransactionComponent /> },
+
+        { path: "/notifications", element: <NotificationComp /> },
         { path: "/logout", element: <Logout /> },
 
         { path: "/reset/:id/:token", element: <NewPasswordComp /> },
@@ -149,14 +148,12 @@ const App = () => {
     },
   ]);
 
-
-
   return (
     <NotificationProvider>
-    <div>
-      <RouterProvider router={router} />
-    </div>
-  </NotificationProvider>
+      <div>
+        <RouterProvider router={router} />
+      </div>
+    </NotificationProvider>
   );
 };
 

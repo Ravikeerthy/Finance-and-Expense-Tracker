@@ -1,6 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import NotificationContext from "../AuthContext/NotificationContext";
 import { AuthContext } from "../AuthContext/AuthContext";
+import { Socket } from "socket.io-client";
+
+
 
 const NotificationComp = () => {
   const [loading, setLoading] = useState(true);
@@ -15,28 +18,44 @@ const NotificationComp = () => {
   const userId = user ? user._id : null;
 
   useEffect(() => {
-    const fetchingNotifications = async () => {
-      setLoading(true);
-      try {
-        const response = await fetchNotifications(userId, 1, 10);
-
-        setHasMore(response.data.notification.length > 0);
-      } catch (error) {
-        console.error("Error fetching notifications:", error);
-        setError("Failed to load notifications.");
-      } finally {
-        setLoading(false);
-      }
-    };
     if (userId) {
       fetchingNotifications();
     }
   }, [userId, page, fetchNotifications]);
 
+  useEffect(() => {
+    if (userId) {
+      Socket.emit("joinRoom", userId);
+
+      const handleTransactionUpdate = (data) => {
+        fetchNotifications(userId);
+      };
+
+      Socket.on("transaction-update", handleTransactionUpdate);
+
+      return () => {
+        Socket.off("transaction-update", handleTransactionUpdate);
+      };
+    }
+  }, [userId]);
+
+  const fetchingNotifications = async () => {
+    setLoading(true);
+    try {
+      const response = await fetchNotifications(userId, 1, 10);
+
+      setHasMore(response.data.notification.length > 0);
+    } catch (error) {
+      console.error("Error fetching notifications:", error);
+      setError("Failed to load notifications.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleMarkAsRead = async (id) => {
     try {
       await markAsRead(id);
-      
     } catch (error) {
       console.error("Error marking notification as read:", error);
       setError("Failed to mark notification as read.");
@@ -46,7 +65,6 @@ const NotificationComp = () => {
   const handleDeleteNotification = async (id) => {
     try {
       await deleteNotification(id);
-     
     } catch (error) {
       console.error("Error deleting notification:", error);
       setError("Failed to delete notification.");
@@ -65,7 +83,7 @@ const NotificationComp = () => {
     <div>
       <h2>Notifications</h2>
       {error && <p style={{ color: "red" }}>{error}</p>}
-      {notifications.length === 0 ? (
+      {notifications && notifications.length === 0 ? (
         <p>No notifications available</p>
       ) : (
         <ul>
@@ -76,7 +94,9 @@ const NotificationComp = () => {
               <button onClick={() => handleMarkAsRead(notification._id)}>
                 Mark as Read
               </button>
-              <button onClick={() => handleDeleteNotification(notification._id)}>
+              <button
+                onClick={() => handleDeleteNotification(notification._id)}
+              >
                 Delete
               </button>
             </li>

@@ -9,12 +9,13 @@ export const NotificationProvider = ({ children }) => {
   const fetchNotifications = async (userId, page = 1, limit = 10) => {
     try {
       const notificationResponse = await axios.get(
-        `https://back-end-d6p7.onrender.com/notification/userId/${userId}`
+        `https://back-end-d6p7.onrender.com/notification/userId/${userId}?page=${page}&limit=${limit}`
       );
       setNotifications(notificationResponse.data.notifications);
       return notificationResponse;
     } catch (error) {
       console.error("Error fetching notifications:", error);
+      throw error;
     }
   };
   const markAsRead = async (notificationId) => {
