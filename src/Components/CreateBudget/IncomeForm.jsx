@@ -60,11 +60,11 @@ const IncomeForm = ({ onSubmit }) => {
         return updatedDetails;
       });
       resetForm();
-      toast.success(response.data.message);
+      // toast.success(response.data.message);
       alert(response.data.message);
     } catch (error) {
       console.error("Failed to add budget:", error);
-      toast.error("Failed to add income. Please try again.");
+      // toast.error("Failed to add income. Please try again.");
     }
   };
   return (
