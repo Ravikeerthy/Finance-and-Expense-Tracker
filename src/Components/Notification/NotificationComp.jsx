@@ -1,19 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
-import {
-  fetchNotifications,
-  markAsRead,
-  deleteNotification,
-} from "../AuthContext/NotificationContext";
+import NotificationContext from "../AuthContext/NotificationContext";
 import { AuthContext } from "../AuthContext/AuthContext";
 
 const NotificationComp = () => {
-  const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
   const { user } = useContext(AuthContext);
+  const { notifications, fetchNotifications, markAsRead, deleteNotification } =
+    useContext(NotificationContext);
 
   const userId = user ? user._id : null;
 
@@ -22,7 +19,7 @@ const NotificationComp = () => {
       setLoading(true);
       try {
         const response = await fetchNotifications(userId, 1, 10);
-        setNotifications((prev) => [...prev, ...response.data.notification]);
+
         setHasMore(response.data.notification.length > 0);
       } catch (error) {
         console.error("Error fetching notifications:", error);
@@ -34,14 +31,12 @@ const NotificationComp = () => {
     if (userId) {
       fetchingNotifications();
     }
-  }, [userId]);
+  }, [userId, page, fetchNotifications]);
 
   const handleMarkAsRead = async (id) => {
     try {
       await markAsRead(id);
-      setNotifications((prev) =>
-        prev.map((n) => (n._id === id ? { ...n, read: true } : n))
-      );
+      
     } catch (error) {
       console.error("Error marking notification as read:", error);
       setError("Failed to mark notification as read.");
@@ -51,7 +46,7 @@ const NotificationComp = () => {
   const handleDeleteNotification = async (id) => {
     try {
       await deleteNotification(id);
-      setNotifications((prev) => prev.filter((n) => n._id !== id));
+     
     } catch (error) {
       console.error("Error deleting notification:", error);
       setError("Failed to delete notification.");
@@ -77,13 +72,11 @@ const NotificationComp = () => {
           {notifications.map((notification) => (
             <li key={notification._id} style={{ marginBottom: "10px" }}>
               <p>{notification.message}</p>
-              <p>Status: {notification.read ? "Read" : "Unread"}</p>
+              <p>Status: {notification.isRead ? "Read" : "Unread"}</p>
               <button onClick={() => handleMarkAsRead(notification._id)}>
                 Mark as Read
               </button>
-              <button
-                onClick={() => handleDeleteNotification(notification._id)}
-              >
+              <button onClick={() => handleDeleteNotification(notification._id)}>
                 Delete
               </button>
             </li>

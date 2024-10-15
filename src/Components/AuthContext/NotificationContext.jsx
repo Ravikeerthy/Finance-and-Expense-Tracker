@@ -6,12 +6,13 @@ const NotificationContext = createContext();
 export const NotificationProvider = ({ children }) => {
   const [notifications, setNotifications] = useState([]);
 
-  const fetchNotifications = async (userId) => {
+  const fetchNotifications = async (userId, page = 1, limit = 10) => {
     try {
       const notificationResponse = await axios.get(
         `https://back-end-d6p7.onrender.com/notification/userId/${userId}`
       );
-      setNotifications(notificationResponse.data);
+      setNotifications(notificationResponse.data.notifications);
+      return notificationResponse;
     } catch (error) {
       console.error("Error fetching notifications:", error);
     }

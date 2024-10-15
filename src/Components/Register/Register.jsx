@@ -90,7 +90,7 @@ const Register = () => {
       console.log("Login Values: ", values);
 
       let response = await axios.post(
-        "https://back-end-d6p7.onrender.com/user/newuser/login",
+        "https://localhost:4000/user/newuser/login",
         // "https://back-end-d6p7.onrender.com/user/newuser/login",
         values,
         {
