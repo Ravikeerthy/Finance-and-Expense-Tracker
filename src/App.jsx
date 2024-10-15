@@ -27,6 +27,7 @@ import NewPasswordComp from "./Components/Register/NewPasswordComp";
 import PasswordResetComp from "./Components/Register/PasswordResetComp";
 import EditValues from "./Components/CreateBudget/EditValues";
 import { NotificationProvider } from "./Components/AuthContext/NotificationContext";
+import { io } from "socket.io-client";
 
 
 const ProtectedRoute = ({ children }) => {
@@ -36,11 +37,29 @@ const ProtectedRoute = ({ children }) => {
 
 const App = () => {
   const { userId } = useContext(AuthContext);
+  useEffect(() => {
+    const socket = io("https://back-end-d6p7.onrender.com", { 
+      withCredentials: true,
+    });
+
+    socket.on("connect", () => {
+      console.log("Connected to the server:", socket.id);
+    });
+
+    socket.on("disconnect", () => {
+      console.log("Disconnected from the server");
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
   const router = createBrowserRouter([
     {
       element: (
         <>
-          <NavBar />,{/* <NotificationComp /> */}
+          <NavBar />,
         </>
       ),
       children: [

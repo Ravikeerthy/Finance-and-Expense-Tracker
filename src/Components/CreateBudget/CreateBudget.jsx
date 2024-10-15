@@ -274,6 +274,8 @@ const CreateBudget = () => {
             <div
               className="modal-content animate-modal"
               onClick={(e) => e.stopPropagation()}
+              tabIndex={0}
+              onKeyDown={(e)=>e.key === 'Escape' && closeModal()}
             >
               <button onClick={closeModal} className="close-button">
                 <i className="fa-solid fa-xmark"></i>

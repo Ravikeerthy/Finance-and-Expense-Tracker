@@ -1,0 +1,56 @@
+.comparative-report {
+    margin: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #f9f9f9; 
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .comparative-report h3 {
+    font-size: 24px;
+    margin-bottom: 16px;
+    color: #333; 
+  }
+  
+  .comparative-report h4 {
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #555; 
+  }
+  
+  .comparative-report p {
+    font-size: 16px;
+    margin: 5px 0;
+    color: #666; 
+  }
+  
+  .comparative-report .income, 
+  .comparative-report .expense {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 4px;
+  }
+  
+  .comparative-report .income {
+    background-color: #dff0d8; 
+  }
+  
+  .comparative-report .expense {
+    background-color: #f2dede; 
+  }
+  
+  .comparative-report .difference {
+    font-weight: bold;
+  }
+  
+  .comparative-report .difference.positive {
+    color: #3c763d; 
+  }
+  
+  .comparative-report .difference.negative {
+    color: #a94442; 
+  }
+  
