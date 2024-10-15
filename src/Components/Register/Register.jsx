@@ -50,7 +50,7 @@ const Register = () => {
       const { firstName, lastName, userName, password, contactNumber } = values;
       const response = await axios.post(
         // "https://back-end-d6p7.onrender.com/user/newUser/register",
-        "https://back-end-d6p7.onrender.com/user/newUser/register",
+        "https://back-end-d6p7.onrender.com/user/newuser/register",
         values
       );
       console.log(response.data);
