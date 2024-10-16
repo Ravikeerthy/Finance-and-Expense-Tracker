@@ -1,108 +1,59 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s, color 0.3s; 
+}
+
 .settings-page {
-    padding: 50px;
-    margin: 5%;
-    border: 2px solid black;
-    text-align: center;
-    border-radius: 30px;
-  }
-  
-  .setting-heading {
-    text-align: center;
-    padding: 30px;
-    font-weight: bolder;
-    color: purple;
-  }
-  
-  .forms-container {
-    display: flex;
-    flex-wrap: wrap; 
-    justify-content: space-between;
-    margin: 20px;
-    padding: 30px;
-  }
-  
-  .changepwd-container,
-  .updatingEmail-container,
-  .update-container {
-    display: flex;
-    justify-content: space-around;
-    margin: 10px;
-  }
-  
-  .form-section {
-    flex: 1;
-    margin: 0 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
- 
-  .submit-button,
-  .theme-button,
-  .logout-button,
-  .delete-button {
-    margin: 10px;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-  }
-  
-  .submit-button {
-    display: flex;
-    justify-content: center;
-    background-color: rgb(242, 215, 250);
-    width: 100%; 
-  }
-  
-  .theme-button {
-    background-color: #d058f1;
-    color: white;
-  }
-  
-  .logout-button {
-    background-color: #dc3545;
-    color: white;
-  }
-  
-  .delete-button {
-    background-color: #dc3545;
-    color: white;
-  }
-  
- 
-  @media (max-width: 768px) {
-    .settings-page {
-      padding: 20px;
-      margin: 5%; 
-    }
-  
-    .forms-container {
-      flex-direction: column; 
-    }
-  
-    .form-section {
-      width: 100%; 
-      margin-bottom: 20px; 
-    }
-  
-    .submit-button {
-      width: auto; 
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .submit-button {
-      padding: 8px 12px; 
-    }
-  
-    .theme-button,
-    .logout-button,
-    .delete-button {
-      width: 100%;
-      margin: 5px 0; 
-    }
-  }
-  
+  max-width: 400px; 
+  margin: 20px auto; 
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff; 
+  color: #333; 
+}
+
+.settings-page.dark {
+  background-color: #1e1e1e; 
+  color: #f0f0f0;
+}
+
+.setting-heading {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.theme-toggle {
+  display: flex;
+  justify-content: space-between; 
+  margin-bottom: 20px; 
+}
+
+.theme-button,
+.delete-button {
+  padding: 10px 15px; 
+  border: none; 
+  border-radius: 5px; 
+  cursor: pointer; 
+  transition: background-color 0.3s; 
+}
+
+.theme-button {
+  background-color: #007bff; 
+  color: white; 
+}
+
+.theme-button:hover {
+  background-color: #0056b3; 
+}
+
+.delete-button {
+  background-color: #dc3545; 
+  color: white; 
+}
+
+.delete-button:hover {
+  background-color: #c82333; 
+}

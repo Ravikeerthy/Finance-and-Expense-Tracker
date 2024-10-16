@@ -28,6 +28,7 @@ import PasswordResetComp from "./Components/Register/PasswordResetComp";
 import EditValues from "./Components/CreateBudget/EditValues";
 import { NotificationProvider } from "./Components/AuthContext/NotificationContext";
 import { io } from "socket.io-client";
+import ThemeProvider from "./Components/AuthContext/ThemeMode";
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated } = useContext(AuthContext);
@@ -171,9 +172,11 @@ const App = () => {
 
   return (
     <NotificationProvider>
+      <ThemeProvider>
       <div>
         <RouterProvider router={router} />
       </div>
+      </ThemeProvider>
     </NotificationProvider>
   );
 };
