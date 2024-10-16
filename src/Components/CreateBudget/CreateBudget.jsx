@@ -9,6 +9,7 @@ import Chart from "../chart/Chart";
 import axios from "axios";
 import { AuthContext } from "../AuthContext/AuthContext";
 import ExcelReport from "../Reports/ExcelReport";
+import Dashboard from "../DashBoard/DashBoard";
 
 const CreateBudget = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -337,6 +338,13 @@ const CreateBudget = () => {
           savings={reportData.savings}
         />
       </div>
+      <Dashboard 
+        income={getIncome.userIncome} 
+        expense={getExpense.expenseByUserId} 
+        budget={getBudget.userBudget} 
+        savings={getSaving.savingGoals} 
+        username={username} 
+      />
     </div>
   );
 };
