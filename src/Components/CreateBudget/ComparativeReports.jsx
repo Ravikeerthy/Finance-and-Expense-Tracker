@@ -35,7 +35,6 @@ const ComparativeReports = () => {
     };
 
     try {
-      // Fetch data concurrently
       const [
         previousMonthResponse,
         previousExpensesResponse,
@@ -80,15 +79,16 @@ const ComparativeReports = () => {
         ),
       ]);
 
-     
-      setPreviousMonthIncome(previousMonthResponse.data.totalIncome);
-      setPreviousMonthExpense(previousExpensesResponse.data.totalExpense);
-      setTotalIncome(currentMonthResponse.data.totalIncome);
-      setTotalExpenses(currentExpensesResponse.data.totalExpense);
-      setPreviousWeekIncome(previousWeekIncomeResponse.data.totalIncome);
-      setPreviousWeekExpense(previousWeekExpenseResponse.data.totalExpense);
-      setCurrentWeekIncome(currentWeekIncomeResponse.data.totalIncome);
-      setCurrentWeekExpense(currentWeekExpenseResponse.data.totalExpense);
+      setPreviousMonthIncome(previousMonthResponse.data.totalIncome || 0);
+      setPreviousMonthExpense(previousExpensesResponse.data.totalExpense || 0);
+      setTotalIncome(currentMonthResponse.data.totalIncome || 0);
+      setTotalExpenses(currentExpensesResponse.data.totalExpense || 0);
+      setPreviousWeekIncome(previousWeekIncomeResponse.data.totalIncome || 0);
+      setPreviousWeekExpense(
+        previousWeekExpenseResponse.data.totalExpense || 0
+      );
+      setCurrentWeekIncome(currentWeekIncomeResponse.data.totalIncome || 0);
+      setCurrentWeekExpense(currentWeekExpenseResponse.data.totalExpense || 0);
     } catch (error) {
       console.error("Error fetching comparative data:", error);
       setError("Failed to fetch comparative data.");
@@ -101,30 +101,38 @@ const ComparativeReports = () => {
     return {
       monthComparison: {
         income: {
-          current: totalIncome,
-          previous: previousMonthIncome,
-          difference: totalIncome - previousMonthIncome,
+          current: totalIncome || 0,
+          previous: previousMonthIncome || 0,
+          difference: (totalIncome || 0) - (previousMonthIncome || 0),
         },
         expense: {
-          current: totalExpenses,
-          previous: previousMonthExpense,
-          difference: totalExpenses - previousMonthExpense,
+          current: totalExpenses || 0,
+          previous: previousMonthExpense || 0,
+          difference: (totalExpenses || 0) - (previousMonthExpense || 0),
         },
       },
       weekComparison: {
         income: {
-          current: currentWeekIncome,
-          previous: previousWeekIncome,
-          difference: currentWeekIncome - previousWeekIncome,
+          current: currentWeekIncome || 0,
+          previous: previousWeekIncome || 0,
+          difference: (currentWeekIncome || 0) - (previousWeekIncome || 0),
         },
         expense: {
-          current: currentWeekExpense,
-          previous: previousWeekExpense,
-          difference: currentWeekExpense - previousWeekExpense,
+          current: currentWeekExpense || 0,
+          previous: previousWeekExpense || 0,
+          difference: (currentWeekExpense || 0) - (previousWeekExpense || 0),
         },
       },
     };
   };
+  console.log("Previous Month Income:", previousMonthIncome);
+  console.log("Previous Month Expense:", previousMonthExpense);
+  console.log("Total Income:", totalIncome);
+  console.log("Total Expenses:", totalExpenses);
+  console.log("Previous Week Income:", previousWeekIncome);
+  console.log("Previous Week Expense:", previousWeekExpense);
+  console.log("Current Week Income:", currentWeekIncome);
+  console.log("Current Week Expense:", currentWeekExpense);
 
   const comparativeData = getComparativeReportData();
 
@@ -137,46 +145,52 @@ const ComparativeReports = () => {
       <h4>Monthly Comparison</h4>
       <div>
         <p>
-          Current Month Income: ${comparativeData.monthComparison.income.current}
+          Current Month Income: INR
+          {comparativeData.monthComparison.income.current}
         </p>
         <p>
-          Previous Month Income: ${comparativeData.monthComparison.income.previous}
+          Previous Month Income: INR
+          {comparativeData.monthComparison.income.previous}
         </p>
         <p>
-          Difference: ${comparativeData.monthComparison.income.difference}
+          Difference: INR{comparativeData.monthComparison.income.difference}
         </p>
 
         <p>
-          Current Month Expense: ${comparativeData.monthComparison.expense.current}
+          Current Month Expense: INR
+          {comparativeData.monthComparison.expense.current}
         </p>
         <p>
-          Previous Month Expense: ${comparativeData.monthComparison.expense.previous}
+          Previous Month Expense: INR
+          {comparativeData.monthComparison.expense.previous}
         </p>
         <p>
-          Difference: ${comparativeData.monthComparison.expense.difference}
+          Difference: INR{comparativeData.monthComparison.expense.difference}
         </p>
       </div>
 
       <h4>Weekly Comparison</h4>
       <div>
         <p>
-          Current Week Income: ${comparativeData.weekComparison.income.current}
+          Current Week Income: INR
+          {comparativeData.weekComparison.income.current}
         </p>
         <p>
-          Previous Week Income: ${comparativeData.weekComparison.income.previous}
+          Previous Week Income: INR
+          {comparativeData.weekComparison.income.previous}
         </p>
-        <p>
-          Difference: ${comparativeData.weekComparison.income.difference}
-        </p>
+        <p>Difference: INR{comparativeData.weekComparison.income.difference}</p>
 
         <p>
-          Current Week Expense: ${comparativeData.weekComparison.expense.current}
+          Current Week Expense: INR
+          {comparativeData.weekComparison.expense.current}
         </p>
         <p>
-          Previous Week Expense: ${comparativeData.weekComparison.expense.previous}
+          Previous Week Expense: INR
+          {comparativeData.weekComparison.expense.previous}
         </p>
         <p>
-          Difference: ${comparativeData.weekComparison.expense.difference}
+          Difference: INR{comparativeData.weekComparison.expense.difference}
         </p>
       </div>
     </div>
