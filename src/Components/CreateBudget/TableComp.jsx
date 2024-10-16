@@ -200,6 +200,7 @@ const TableComp = ({ income, expense, budget, saving }) => {
 
   const handleSave = () => {
     fetchtingData();
+    handleClose();
   };
   return (
     <div className="table-comp">

@@ -161,12 +161,16 @@ const CreateBudget = () => {
     setCurrentForm(null);
   };
 
-  const updateStateArray = (stateSetter, prevState, newValue) => {
+  const updateStateArray = (stateSetter, prevState, updatedItem) => {
     if (Array.isArray(prevState)) {
-      stateSetter([...prevState, newValue]);
-    } else {
-      console.error("State is not an array", prevState);
-      stateSetter([newValue]);
+      
+      const index = prevState.findIndex(item => item._id === updatedItem._id);
+      if (index !== -1) {
+        
+        const updatedArray = [...prevState];
+        updatedArray[index] = updatedItem;
+        stateSetter(updatedArray);
+      }
     }
   };
 
