@@ -106,6 +106,7 @@ const TableComp = ({ income, expense, budget, saving }) => {
       setDeletedData(true);
 
       alert(deleteIncome.data.message);
+     await fetchtingData();
     } catch (error) {
       console.log(error);
       alert("Server Error");
@@ -130,7 +131,7 @@ const TableComp = ({ income, expense, budget, saving }) => {
         prevExpense.filter((inc) => inc._id !== id)
       });
 
-      fetchtingData();
+      await fetchtingData();
       alert(deleteExpense.data.message);
     } catch (error) {
       console.log(error);
@@ -156,7 +157,7 @@ const TableComp = ({ income, expense, budget, saving }) => {
         prevBudget.filter((inc) => inc._id !== id)
       );
 
-      fetchtingData();
+      await fetchtingData();
       alert(deletebudget.data.message);
     } catch (error) {
       console.log(error);
@@ -181,7 +182,7 @@ const TableComp = ({ income, expense, budget, saving }) => {
       setGetSaving((prevSaving) =>
         prevSaving.filter((inc) => inc._id !== id)
       );
-      fetchtingData();
+     await  fetchtingData();
       alert(deleteSaving.data.message);
     } catch (error) {
       console.log(error);
