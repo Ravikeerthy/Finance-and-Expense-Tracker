@@ -46,7 +46,7 @@ const EditValues = ({ item, type='', onClose, onSave }) => {
         withCredentials: true,
       });
       console.log("Edited values", editedValues);
-      if (response.status === 200) {
+      if (editedValues.status === 200) {
         onSave(); 
       }
     

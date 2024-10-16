@@ -22,7 +22,7 @@ const ProfileSettings = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post("http://localhost:4000/user/newuser/logout");
+      await axios.post("http://back-end-d6p7.onrender.com/user/newuser/logout");
       navigate("/login");
     } catch (error) {
       console.log(error);

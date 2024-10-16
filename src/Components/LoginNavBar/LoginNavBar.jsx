@@ -31,7 +31,7 @@ const LoginNavBar = () => {
                     alt=""
                     className="img-thumbnail mb-2"
                   />
-                  <NavLink className="nav-link" aria-current="page" to="/">
+                  <NavLink className="nav-link" aria-current="page" to="/dashboard">
                     Expense Tracker
                   </NavLink>
                 </li>

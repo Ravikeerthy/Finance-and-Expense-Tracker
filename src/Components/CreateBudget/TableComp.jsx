@@ -101,7 +101,7 @@ const TableComp = ({ income, expense, budget, saving }) => {
       );
       // setDeletedData((prev)=>[...prev, id]);
       setGetIncome((prevIncome) => {
-        return prevIncome.userIncome.filter((inc) => inc._id !== id);
+        prevIncome.filter((inc) => inc._id !== id)
       });
       setDeletedData(true);
 
@@ -127,7 +127,7 @@ const TableComp = ({ income, expense, budget, saving }) => {
       );
       // setDeletedData((prev)=>[...prev, id]);
       setGetExpense((prevExpense) => {
-        return prevExpense.expenseByUserId.filter((exp) => exp._id !== id);
+        prevExpense.filter((inc) => inc._id !== id)
       });
 
       fetchtingData();
@@ -153,7 +153,7 @@ const TableComp = ({ income, expense, budget, saving }) => {
       );
       // setDeletedData((prev)=>[...prev, id]);
       setGetBudget((prevBudget) =>
-        prevBudget.userBudget.filter((bud) => bud._id !== id)
+        prevBudget.filter((inc) => inc._id !== id)
       );
 
       fetchtingData();
@@ -179,7 +179,7 @@ const TableComp = ({ income, expense, budget, saving }) => {
       );
       // setDeletedData((prev)=>[...prev, id]);
       setGetSaving((prevSaving) =>
-        prevSaving.savingGoals.filter((save) => save._id !== id)
+        prevSaving.filter((inc) => inc._id !== id)
       );
       fetchtingData();
       alert(deleteSaving.data.message);
