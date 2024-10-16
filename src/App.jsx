@@ -28,7 +28,7 @@ import PasswordResetComp from "./Components/Register/PasswordResetComp";
 import EditValues from "./Components/CreateBudget/EditValues";
 import { NotificationProvider } from "./Components/AuthContext/NotificationContext";
 import { io } from "socket.io-client";
-
+import { DataProvider } from "./Components/AuthContext/DataContext";
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated } = useContext(AuthContext);
@@ -38,22 +38,21 @@ const ProtectedRoute = ({ children }) => {
 const App = () => {
   const { userId } = useContext(AuthContext);
   useEffect(() => {
-    const socket = io("https://back-end-d6p7.onrender.com", { 
+    const socket = io("https://back-end-d6p7.onrender.com", {
       withCredentials: true,
     });
 
     socket.on("connect", () => {
       console.log("Connected to the server:", socket.id);
     });
-  
+
     socket.on("connect_error", (err) => {
       console.error("Connection error:", err.message);
     });
-  
+
     socket.on("disconnect", () => {
       console.log("Disconnected from the server");
     });
-  
 
     return () => {
       socket.disconnect();
@@ -157,7 +156,7 @@ const App = () => {
           ),
         },
         { path: "/edit_values/:id", element: <EditValues /> },
-       
+
         { path: "/notifications", element: <NotificationComp /> },
         { path: "/logout", element: <Logout /> },
 
@@ -173,9 +172,11 @@ const App = () => {
 
   return (
     <NotificationProvider>
-      <div>
-        <RouterProvider router={router} />
-      </div>
+      <DataProvider>
+        <div>
+          <RouterProvider router={router} />
+        </div>
+      </DataProvider>
     </NotificationProvider>
   );
 };
