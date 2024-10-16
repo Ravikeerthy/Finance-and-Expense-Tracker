@@ -1,41 +1,37 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./SettingStyle.css";
 import { useNavigate } from "react-router-dom";
-import { ThemeContext } from "../AuthContext/ThemeMode";
 import axios from "axios";
 import { AuthContext } from "../AuthContext/AuthContext";
 
 const ProfileSettings = () => {
-  const { theme, toggleTheme } = useContext(ThemeContext);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const { user } = useContext(AuthContext);
+  const userId = user ? user._id : null;
   const navigate = useNavigate();
 
-  const { user } = useContext(AuthContext);
-
-  const userId = user ? user._id : null;
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    const storedTheme = localStorage.getItem("theme");
+    return storedTheme === "dark";
+  });
 
   useEffect(() => {
-    const storedTheme = localStorage.getItem("theme");
-    if (storedTheme === "dark") {
-      setIsDarkMode(true);
-      document.body.classList.add("dark");
-    }
-  }, []);
+    document.body.className = isDarkMode ? "dark" : "light"; // Set body class on mount
+  }, [isDarkMode]);
 
   const toggleDarkMode = () => {
     const newTheme = isDarkMode ? "light" : "dark";
     setIsDarkMode(!isDarkMode);
     localStorage.setItem("theme", newTheme);
-    document.body.className = newTheme;
   };
 
   const handleDeleteAccount = async () => {
+    if (!userId) return; // Prevent deletion if no user ID is available
     try {
       await axios.delete(
         `http://back-end-d6p7.onrender.com/user/newuser/delete/${userId}`
       );
       alert("Account deleted successfully.");
-      navigate("/login"); 
+      navigate("/login");
     } catch (error) {
       console.log(error);
       alert("Error deleting account. Please try again.");
