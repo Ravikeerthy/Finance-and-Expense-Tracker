@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "../AuthContext/AuthContext";
-import "./ComparativeStyle.css";
+import "./ComparaticeStyle.css";
 
 const ComparativeReports = () => {
   const [previousMonthIncome, setPreviousMonthIncome] = useState(0);
