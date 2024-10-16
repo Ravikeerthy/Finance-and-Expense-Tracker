@@ -45,10 +45,15 @@ const App = () => {
     socket.on("connect", () => {
       console.log("Connected to the server:", socket.id);
     });
-
+  
+    socket.on("connect_error", (err) => {
+      console.error("Connection error:", err.message);
+    });
+  
     socket.on("disconnect", () => {
       console.log("Disconnected from the server");
     });
+  
 
     return () => {
       socket.disconnect();
