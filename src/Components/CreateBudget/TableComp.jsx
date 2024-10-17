@@ -2,11 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import "./TableStyle.css";
 import { AuthContext } from "../AuthContext/AuthContext";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import EditValues from "./EditValues";
 
 const TableComp = ({ income, expense, budget, saving }) => {
-  const navigate = useNavigate();
+  console.log("TableComp props:", { income, expense, budget, saving });
+
   const { user } = useContext(AuthContext);
   const userId = user ? user._id : null;
   const [deletedData, setDeletedData] = useState(false);

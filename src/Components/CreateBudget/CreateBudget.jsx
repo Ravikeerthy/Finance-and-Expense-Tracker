@@ -39,6 +39,8 @@ const CreateBudget = () => {
 
   const userId = user ? user._id : null;
   const userName = user ? user.firstName : null;
+  console.log("UserName: ", userName);
+  
   // console.log("User ID from context:", userId);
 
   const token = localStorage.getItem("token");
