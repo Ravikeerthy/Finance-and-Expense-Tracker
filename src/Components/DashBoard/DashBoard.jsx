@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./DashboardStyle.css";
 
 const DashBoard = ({
@@ -7,6 +7,8 @@ const DashBoard = ({
   budget = [],
   savings = [],
   username,
+  userId,
+  token,
 }) => {
   console.log("Dashboard props:", {
     income,
@@ -15,6 +17,57 @@ const DashBoard = ({
     savings,
     username,
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetchAllData();
+  }, [userId, token]);
+
+  const fetchAllData = async () => {
+    setLoading(true);
+    setError(null);
+
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+    try {
+      // console.log(`Fetching Income for userId: ${userId}`);
+      const incomeGetResponse = await axios.get(
+        `https://back-end-d6p7.onrender.com/income/getIncomeByUserId/${userId}`,
+        { headers, withCredentials: true }
+      );
+
+      console.log("IncomeGetData", incomeGetResponse.data);
+
+      const expenseGetResponse = await axios.get(
+        `https://back-end-d6p7.onrender.com/expense/expenseuserId/${userId}`,
+        { headers, withCredentials: true }
+      );
+
+      console.log("ExpenseGetData", expenseGetResponse.data);
+
+      const budgetGetResponse = await axios.get(
+        `https://back-end-d6p7.onrender.com/budget/getBudgetByUserId/${userId} `,
+        { headers, withCredentials: true }
+      );
+
+      console.log("BudgetGetData", budgetGetResponse.data);
+
+      const savingGetResponse = await axios.get(
+        `https://back-end-d6p7.onrender.com/savings/getbyid/${userId}`,
+        { headers, withCredentials: true }
+      );
+
+      console.log("SavingGetData", savingGetResponse.data);
+    } catch (error) {
+      console.error("Error fetching data from the database", error);
+      setError("Failed to fetch data.");
+    } finally {
+      setLoading(false);
+    }
+  };
   // Calculating totals
   const totalIncome = income.reduce(
     (acc, curr) => acc + (curr.incomeAmount || 0),
@@ -113,6 +166,8 @@ const DashBoard = ({
           ))}
         </ul>
       </div>
+      {loading && <p>Loading...</p>}
+      {error && <p className="error">{error}</p>}
     </div>
   );
 };

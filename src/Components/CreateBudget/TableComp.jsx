@@ -9,6 +9,7 @@ const TableComp = ({ income, expense, budget, saving }) => {
 
   const { user } = useContext(AuthContext);
   const userId = user ? user._id : null;
+  
   const [deletedData, setDeletedData] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);

@@ -48,7 +48,7 @@ const NotificationComp = () => {
   const handleDeleteNotification = async (id) => {
     try {
       await deleteNotification(id);
-      fetchingNotifications(); // Refresh notifications after deletion
+      fetchingNotifications();
     } catch (error) {
       console.error("Error deleting notification:", error);
       setError("Failed to delete notification.");

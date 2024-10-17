@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import "./ReportStyle.css";
 
-const ExcelReport = ({income, expenses, budget, savings}) => {
+const ExcelReport = ({income, expenses, budget, savings, userId, token}) => {
   console.log("Receiving report vales: ", income, expenses, budget, savings);
   
   const downloadExcelReport = async () => {
@@ -14,8 +14,13 @@ const ExcelReport = ({income, expenses, budget, savings}) => {
           expenses: expenses || 0,
           savings: savings || 0,
           budget: budget || 0,
+          userId
         },
         {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, 
+          },
           responseType: "blob",
         }
       );
@@ -30,6 +35,7 @@ const ExcelReport = ({income, expenses, budget, savings}) => {
       document.body.removeChild(link);
     } catch (error) {
       console.error("Error downloading Excel report:", error);
+      alert("Failed to download the report. Please try again.");
     }
   };
   return (

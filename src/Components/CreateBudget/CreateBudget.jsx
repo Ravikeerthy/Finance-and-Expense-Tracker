@@ -327,6 +327,8 @@ const CreateBudget = () => {
             expenses: chartsData.expenses,
             incomeLabels: chartsData.incomeLabels,
             income: chartsData.income,
+            userId:{userId},
+            token:{token}
           }}
         />
       </div>
@@ -336,6 +338,8 @@ const CreateBudget = () => {
           expenses={reportData.expenses}
           budget={reportData.budget}
           savings={reportData.savings}
+          userId={userId}
+          token={token}
         />
       </div>
       <Dashboard
@@ -344,6 +348,8 @@ const CreateBudget = () => {
         budget={getBudget.userBudget}
         savings={getSaving.savingGoals}
         username={userName}
+        userId={userId}
+        token={token}
       />
     </div>
   );
