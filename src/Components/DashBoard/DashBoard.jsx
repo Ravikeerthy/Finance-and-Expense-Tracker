@@ -8,7 +8,13 @@ const DashBoard = ({
   savings = [],
   username,
 }) => {
-  console.log("Dashboard props:", { income, expense, budget, savings, username });
+  console.log("Dashboard props:", {
+    income,
+    expense,
+    budget,
+    savings,
+    username,
+  });
   // Calculating totals
   const totalIncome = income.reduce(
     (acc, curr) => acc + (curr.incomeAmount || 0),
@@ -51,10 +57,6 @@ const DashBoard = ({
     .sort((a, b) => new Date(b.date) - new Date(a.date))
     .slice(0, 5);
   console.log("Recent transactions: ", recentTransactions);
-
-  // Financial Goals Progress Calculation
-  const savingsProgress = (totalSavings / savings) * 100;
-  console.log("SavingProgress: ", savingsProgress);
 
   return (
     <div className="dashboard">
@@ -110,20 +112,6 @@ const DashBoard = ({
             </li>
           ))}
         </ul>
-      </div>
-
-      {/* Financial Goals Progress */}
-      <div className="card">
-        <h3>Financial Goals Progress</h3>
-        <p>
-          {savingsProgress.toFixed(2)}% of ${savings.toFixed(2)}
-        </p>
-        <div className="progress-bar">
-          <div
-            className="progress"
-            style={{ width: `${savingsProgress}%` }}
-          ></div>
-        </div>
       </div>
     </div>
   );
