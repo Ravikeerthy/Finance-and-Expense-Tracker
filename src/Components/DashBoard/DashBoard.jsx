@@ -22,7 +22,7 @@ const DashBoard = ({ income = [], expense =[], budget=[], savings=[], username }
   }, {});
    console.log("Expense category: ", expenseByCategory);
    
-    // Get recent transactions (showing last 5)
+    // Get recent transactions
     const recentTransactions = [...income, ...expense]
     .sort((a, b) => new Date(b.date) - new Date(a.date))
     .slice(0, 5);
@@ -37,23 +37,23 @@ const DashBoard = ({ income = [], expense =[], budget=[], savings=[], username }
     <div className="dashboard-cards">
       <div className="card">
         <h3>Total Income</h3>
-        <p>${totalIncome.toFixed(2)}</p>
+        <p>{totalIncome.toFixed(2)}</p>
       </div>
       <div className="card">
         <h3>Total Expenses</h3>
-        <p>${totalExpenses.toFixed(2)}</p>
+        <p>{totalExpenses.toFixed(2)}</p>
       </div>
       <div className="card">
         <h3>Total Budget</h3>
-        <p>${totalBudget.toFixed(2)}</p>
+        <p>{totalBudget.toFixed(2)}</p>
       </div>
       <div className="card">
         <h3>Total Savings</h3>
-        <p>${totalSavings.toFixed(2)}</p>
+        <p>{totalSavings.toFixed(2)}</p>
       </div>
       <div className="card">
         <h3>Net Balance</h3>
-        <p>${netBalance.toFixed(2)}</p>
+        <p>{netBalance.toFixed(2)}</p>
       </div>
     </div>
 
@@ -63,7 +63,7 @@ const DashBoard = ({ income = [], expense =[], budget=[], savings=[], username }
       <ul>
         {Object.entries(expenseByCategory).map(([category, amount]) => (
           <li key={category}>
-            {category}: ${amount.toFixed(2)}
+            {category}: {amount.toFixed(2)}
           </li>
         ))}
       </ul>
@@ -75,7 +75,7 @@ const DashBoard = ({ income = [], expense =[], budget=[], savings=[], username }
       <ul>
         {recentTransactions.map((transaction, index) => (
           <li key={index}>
-            {transaction.date}: {transaction.incomeAmount ? `Income - $${transaction.incomeAmount}` : `Expense - $${transaction.expenseAmount}`}
+            {transaction.date}: {transaction.incomeAmount ? `Income - ${transaction.incomeAmount}` : `Expense - ${transaction.expenseAmount}`}
           </li>
         ))}
       </ul>
