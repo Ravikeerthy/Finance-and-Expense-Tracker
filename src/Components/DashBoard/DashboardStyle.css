@@ -1,42 +1,113 @@
 .dashboard {
-    padding: 20px;
-  }
-  
-  .dashboard-header {
-    display: flex;
-    justify-content: space-between; 
-    align-items: center; 
-  }
-  
-  .username {
-    font-size: 1em;
-    color: #555; 
-    margin-left: auto; 
-  }
-  
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.dashboard-header h2 {
+  font-size: 24px;
+  color: #333;
+}
+
+.username {
+  font-size: 16px;
+  color: #666;
+}
+
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card h3 {
+  font-size: 18px;
+  color: #444;
+  margin-bottom: 10px;
+}
+
+.card p {
+  font-size: 20px;
+  color: #2d87ff;
+}
+
+.expense-breakdown,
+.recent-transactions {
+  margin-top: 30px;
+}
+
+.expense-breakdown h3,
+.recent-transactions h3 {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.expense-breakdown ul,
+.recent-transactions ul {
+  list-style: none;
+  padding: 0;
+}
+
+.expense-breakdown li,
+.recent-transactions li {
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.expense-breakdown li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.expense-breakdown li::before {
+  content: '•';
+  color: #ff6b6b;
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.recent-transactions li {
+  font-size: 14px;
+  color: #555;
+}
+
+.recent-transactions li span {
+  font-weight: bold;
+  color: #333;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
   .dashboard-cards {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   }
-  
-  .card {
-    background: #f9f9f9;
-    border: 1px solid #e0e0e0;
-    border-radius: 5px;
-    padding: 20px;
-    margin: 10px;
-    width: 200px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .card h3 {
-    margin: 0;
-    font-size: 1.2em;
-  }
-  
-  .card p {
-    font-size: 1.5em;
-    color: #333;
-  }
-  
+}

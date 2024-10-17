@@ -38,6 +38,7 @@ const CreateBudget = () => {
   const { user } = useContext(AuthContext);
 
   const userId = user ? user._id : null;
+  const userName = user ? user.firstName : null;
   // console.log("User ID from context:", userId);
 
   const token = localStorage.getItem("token");
@@ -88,7 +89,6 @@ const CreateBudget = () => {
       );
       setGetSaving(savingGetResponse.data);
       console.log("SavingGetData", savingGetResponse.data);
-      
     } catch (error) {
       console.error("Error fetching data from the database", error);
       setError("Failed to fetch data.");
@@ -164,10 +164,8 @@ const CreateBudget = () => {
 
   const updateStateArray = (stateSetter, prevState, updatedItem) => {
     if (Array.isArray(prevState)) {
-      
-      const index = prevState.findIndex(item => item._id === updatedItem._id);
+      const index = prevState.findIndex((item) => item._id === updatedItem._id);
       if (index !== -1) {
-        
         const updatedArray = [...prevState];
         updatedArray[index] = updatedItem;
         stateSetter(updatedArray);
@@ -280,7 +278,7 @@ const CreateBudget = () => {
               className="modal-content animate-modal"
               onClick={(e) => e.stopPropagation()}
               tabIndex={0}
-              onKeyDown={(e)=>e.key === 'Escape' && closeModal()}
+              onKeyDown={(e) => e.key === "Escape" && closeModal()}
             >
               <button onClick={closeModal} className="close-button">
                 <i className="fa-solid fa-xmark"></i>
@@ -338,12 +336,12 @@ const CreateBudget = () => {
           savings={reportData.savings}
         />
       </div>
-      <Dashboard 
-        income={getIncome.userIncome} 
-        expense={getExpense.expenseByUserId} 
-        budget={getBudget.userBudget} 
-        savings={getSaving.savingGoals} 
-        username={username} 
+      <Dashboard
+        income={getIncome.userIncome}
+        expense={getExpense.expenseByUserId}
+        budget={getBudget.userBudget}
+        savings={getSaving.savingGoals}
+        username={userName}
       />
     </div>
   );
