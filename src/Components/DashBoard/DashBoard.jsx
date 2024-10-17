@@ -1,7 +1,7 @@
 import React from 'react'
 import "./DashboardStyle.css"
 
-const DashBoard = ({ income, expense, budget, savings, username }) => {
+const DashBoard = ({ income = [], expense =[], budget=[], savings=[], username }) => {
   const totalIncome = income.reduce((acc, curr) => acc + (curr.incomeAmount || 0), 0);
   const totalExpenses = expense.reduce((acc, curr) => acc + (curr.expenseAmount || 0), 0);
   const totalBudget = budget.reduce((acc, curr) => acc + (curr.budgetAmount || 0), 0);
