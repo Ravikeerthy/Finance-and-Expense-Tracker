@@ -53,7 +53,7 @@ const DashBoard = ({
   console.log("Recent transactions: ", recentTransactions);
 
   // Financial Goals Progress Calculation
-  const savingsProgress = (totalSavings / savingsGoal) * 100;
+  const savingsProgress = (totalSavings / savingGoals) * 100;
   console.log("SavingProgress: ", savingsProgress);
 
   return (
@@ -116,7 +116,7 @@ const DashBoard = ({
       <div className="card">
         <h3>Financial Goals Progress</h3>
         <p>
-          {savingsProgress.toFixed(2)}% of ${savingsGoal.toFixed(2)}
+          {savingsProgress.toFixed(2)}% of ${savingGoals.toFixed(2)}
         </p>
         <div className="progress-bar">
           <div
