@@ -6,6 +6,7 @@ import IncomeForm from "./IncomeForm";
 import BudgetForm from "./BudgetForm";
 import { AuthContext } from "../AuthContext/AuthContext";
 import { FinanceContext } from "../AuthContext/FinanceContext ";
+import TableComp from "./TableComp";
 
 const CreateBudget = () => {
   const {
@@ -208,10 +209,10 @@ const CreateBudget = () => {
           </div>
         )}
       </>
-      {/* )} */}
+     
 
       <div className="chart-table-align"></div>
-     
+     <TableComp />
     </div>
   );
 };
