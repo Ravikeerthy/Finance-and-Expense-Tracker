@@ -48,9 +48,9 @@ const EditValues = ({ item, type='', onClose, onSave }) => {
       console.log("Edited values", editedValues);
       if (editedValues.status === 200) {
         onSave(); 
+        alert("Values updated successfully!");
       }
     
-      alert("Values updated successfully!");
     } catch (error) {
       console.error("Error updating record", error);
       alert("Failed to update Values.");

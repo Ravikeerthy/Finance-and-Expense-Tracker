@@ -29,6 +29,7 @@ import EditValues from "./Components/CreateBudget/EditValues";
 import { NotificationProvider } from "./Components/AuthContext/NotificationContext";
 import { io } from "socket.io-client";
 import ThemeProvider from "./Components/AuthContext/ThemeMode";
+import { FinanceProvider } from "./Components/AuthContext/FinanceContext ";
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated } = useContext(AuthContext);
@@ -173,9 +174,11 @@ const App = () => {
   return (
     <NotificationProvider>
       <ThemeProvider>
-      <div>
-        <RouterProvider router={router} />
-      </div>
+        <FinanceProvider>
+          <div>
+            <RouterProvider router={router} />
+          </div>
+        </FinanceProvider>
       </ThemeProvider>
     </NotificationProvider>
   );

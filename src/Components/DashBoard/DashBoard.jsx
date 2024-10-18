@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./DashboardStyle.css";
+import { FinanceContext } from "../AuthContext/FinanceContext ";
+import Chart from "../chart/Chart";
 
 const DashBoard = ({
   income = [],
@@ -17,6 +19,7 @@ const DashBoard = ({
     savings,
     username,
   });
+  const { income, expense, budget, savings, userId, token } = useContext(FinanceContext);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -152,6 +155,8 @@ const DashBoard = ({
         </ul>
       </div>
 
+      <Chart userId={userId} token={token} />
+
       {/* Recent Transactions */}
       <div className="recent-transactions">
         <h3>Recent Transactions</h3>
@@ -166,8 +171,7 @@ const DashBoard = ({
           ))}
         </ul>
       </div>
-      {loading && <p>Loading...</p>}
-      {error && <p className="error">{error}</p>}
+      
     </div>
   );
 };
