@@ -28,13 +28,13 @@ export const FinanceProvider = ({ children }) => {
 
   useEffect(() => {
     fetchData();
-  }, [userId, token]);
+  }, [userId]);
 
   const fetchData = async () => {
     setLoading(true);
     setError(null);
 
-    if (!token || !userId) {
+    if (!userId) {
       setError("Unauthorized or user not logged in");
       setLoading(false);
       return;
@@ -43,7 +43,7 @@ export const FinanceProvider = ({ children }) => {
 
     const headers = {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+    //   Authorization: `Bearer ${token}`,
     };
 
     try {
@@ -129,7 +129,7 @@ export const FinanceProvider = ({ children }) => {
 
       await axios.delete(endpointMap[type], {
         headers: {
-          Authorization: `Bearer ${token}`,
+        //   Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       });
@@ -152,7 +152,7 @@ export const FinanceProvider = ({ children }) => {
   };
 
   const editItem = async (type, item) => {
-    const token = user ? user.token : null;
+    // const token = user ? user.token : null;
     let updateURL;
     switch (type) {
       case "income":
@@ -171,7 +171,7 @@ export const FinanceProvider = ({ children }) => {
       const response = await axios.put(updateURL, item, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+        //   Authorization: `Bearer ${token}`,
         },
         withCredentials: true,
       });
