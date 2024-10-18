@@ -6,10 +6,14 @@ export const FinanceContext = createContext();
 
 export const FinanceProvider = ({ children }) => {
   const { user } = useContext(AuthContext);
-  const [income, setIncome] = useState({ userIncome: [] });
-  const [expense, setExpense] = useState({ expenseByUserId: [] });
-  const [budget, setBudget] = useState({ userBudget: [] });
-  const [saving, setSaving] = useState({ savingGoals: [] });
+  //   const [income, setIncome] = useState({ userIncome: [] });
+  const [income, setIncome] = useState([]);
+  //   const [expense, setExpense] = useState({ expenseByUserId: [] });
+  const [expense, setExpense] = useState([]);
+  //   const [budget, setBudget] = useState({ userBudget: [] });
+  const [budget, setBudget] = useState([]);
+//   const [saving, setSaving] = useState({ savingGoals: [] });
+  const [saving, setSaving] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [chartData, setChartData] = useState({
@@ -39,11 +43,10 @@ export const FinanceProvider = ({ children }) => {
       setLoading(false);
       return;
     }
-   
 
     const headers = {
       "Content-Type": "application/json",
-    //   Authorization: `Bearer ${token}`,
+      //   Authorization: `Bearer ${token}`,
     };
 
     try {
@@ -51,27 +54,32 @@ export const FinanceProvider = ({ children }) => {
         `https://back-end-d6p7.onrender.com/income/getIncomeByUserId/${userId}`,
         { headers }
       );
-      setIncome(incomeResponse.data);
+      setIncome(incomeResponse.data.userIncome || []);
 
       const expenseResponse = await axios.get(
         `https://back-end-d6p7.onrender.com/expense/expenseuserId/${userId}`,
         { headers }
       );
-      setExpense(expenseResponse.data);
+      setExpense(expenseResponse.data.expenseByUserId || []);
 
       const budgetResponse = await axios.get(
         `https://back-end-d6p7.onrender.com/budget/getBudgetByUserId/${userId}`,
         { headers }
       );
-      setBudget(budgetResponse.data);
+      setBudget(budgetResponse.data.userBudget || []);
 
       const savingResponse = await axios.get(
         `https://back-end-d6p7.onrender.com/savings/getbyid/${userId}`,
         { headers }
       );
-      setSaving(savingResponse.data);
+      setSaving(savingResponse.data.savingGoals || []);
 
-      updateChartData(incomeResponse.data.userIncome, expenseResponse.data.expenseByUserId, budgetResponse.data.userBudget, savingResponse.data.savingGoals);
+      updateChartData(
+        incomeResponse.data.userIncome,
+        expenseResponse.data.expenseByUserId,
+        budgetResponse.data.userBudget,
+        savingResponse.data.savingGoals
+      );
     } catch (error) {
       console.error("Error fetching data", error);
       setError("Failed to fetch data");
@@ -79,7 +87,7 @@ export const FinanceProvider = ({ children }) => {
       setLoading(false);
     }
   };
-  
+
   const updateChartData = (incomeData, expenseData) => {
     const currentMonth = new Date().getMonth();
     const expenseLabelsSet = new Set();
@@ -87,36 +95,35 @@ export const FinanceProvider = ({ children }) => {
     let totalExpenses = 0;
     let totalIncome = 0;
     expenseData.forEach((exp) => {
-        const expenseDate = new Date(exp.date);
-        if (expenseDate.getMonth() === currentMonth) {
-          totalExpenses += exp.expenseAmount;
-          const category = exp.expenseCategory || "Other";
-          expenseLabelsSet.add(category);
-  
-          if (!expensesByCategory[category]) {
-            expensesByCategory[category] = 0;
-          }
-          expensesByCategory[category] += exp.expenseAmount;
+      const expenseDate = new Date(exp.date);
+      if (expenseDate.getMonth() === currentMonth) {
+        totalExpenses += exp.expenseAmount;
+        const category = exp.expenseCategory || "Other";
+        expenseLabelsSet.add(category);
+
+        if (!expensesByCategory[category]) {
+          expensesByCategory[category] = 0;
         }
-      });
-  
-      incomeData.forEach((inc) => {
-        const incomeDate = new Date(inc.date);
-        if (incomeDate.getMonth() === currentMonth) {
-          totalIncome += inc.incomeAmount;
-        }
-      });
-  
-      const expenseLabelsArray = Array.from(expenseLabelsSet);
-      const expenseValuesArray = Object.values(expensesByCategory);
-  
-     
-      setChartData({
-        labels: expenseLabelsArray,
-        expenses: expenseValuesArray,
-        income: [totalIncome],
-      });
-  }
+        expensesByCategory[category] += exp.expenseAmount;
+      }
+    });
+
+    incomeData.forEach((inc) => {
+      const incomeDate = new Date(inc.date);
+      if (incomeDate.getMonth() === currentMonth) {
+        totalIncome += inc.incomeAmount;
+      }
+    });
+
+    const expenseLabelsArray = Array.from(expenseLabelsSet);
+    const expenseValuesArray = Object.values(expensesByCategory);
+
+    setChartData({
+      labels: expenseLabelsArray,
+      expenses: expenseValuesArray,
+      income: [totalIncome],
+    });
+  };
 
   const handleDelete = async (type, id) => {
     try {
@@ -129,7 +136,7 @@ export const FinanceProvider = ({ children }) => {
 
       await axios.delete(endpointMap[type], {
         headers: {
-        //   Authorization: `Bearer ${token}`,
+          //   Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       });
@@ -171,7 +178,7 @@ export const FinanceProvider = ({ children }) => {
       const response = await axios.put(updateURL, item, {
         headers: {
           "Content-Type": "application/json",
-        //   Authorization: `Bearer ${token}`,
+          //   Authorization: `Bearer ${token}`,
         },
         withCredentials: true,
       });
