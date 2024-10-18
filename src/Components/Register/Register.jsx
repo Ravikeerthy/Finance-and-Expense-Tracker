@@ -95,7 +95,7 @@ const Register = () => {
         values,
         {
           headers: {
-            // Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
           withCredentials: true,
@@ -106,9 +106,10 @@ const Register = () => {
       const message = response.data.message;
       console.log("Response login data: ", response.data);
       localStorage.setItem("token", token);
-      login(user);
+      login(user, token);
       resetForm();
-      toast.success(response.data.message || "Login Successful");
+      // toast.success(response.data.message || "Login Successful");
+      alert("Login Successfull")
       navigate("/dashboard");
     } catch (error) {
       console.log(error);
