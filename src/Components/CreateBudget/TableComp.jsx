@@ -13,6 +13,7 @@ const TableComp = () => {
     saving,
     loading,
     error,
+    fetchData,
     handleDelete,
     editItem,
   } = useContext(FinanceContext);
