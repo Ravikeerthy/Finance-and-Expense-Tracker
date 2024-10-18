@@ -311,45 +311,21 @@ import { FinanceContext } from "../AuthContext/FinanceContext ";
         </>
         {/* )} */}
 
-        {/* <div>
-          <TableComp
-            income={getIncome}
-            expense={getExpense}
-            budget={getBudget}
-            saving={getSaving}
-          />
-        </div> */}
+       
         <div className="chart-table-align">
-          {/* <Chart
-            chartsData={{
-              expenseLabels: chartsData.expenseLabels,
-              expenses: chartsData.expenses,
-              incomeLabels: chartsData.incomeLabels,
-              income: chartsData.income,
-              userId:  userId ,
-              token:  token ,
-            }}
-          /> */}
+         
         </div>
         <div>
-          <ExcelReport
+          {/* <ExcelReport
             income={reportData.income}
             expenses={reportData.expenses}
             budget={reportData.budget}
             savings={reportData.savings}
             userId={userId}
             token={token}
-          />
+          /> */}
         </div>
-        <Dashboard
-          income={getIncome.userIncome}
-          expense={getExpense.expenseByUserId}
-          budget={getBudget.userBudget}
-          savings={getSaving.savingGoals}
-          username={userName}
-          userId={userId}
-          token={token}
-        />
+       
       </div>
     );
   };
