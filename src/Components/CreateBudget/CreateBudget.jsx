@@ -30,7 +30,7 @@ const CreateBudget = () => {
 
   const [chartsData, setChartsData] = useState({
     labels: [],
-    expenses: [],
+    expense: [],
     income: [],
     budget: [],
     saving: [],
@@ -55,103 +55,7 @@ const CreateBudget = () => {
     chartData();
   }, [income, expense, chartData]);
 
-  // const fetchAllData = async () => {
-  //   setLoading(true);
-  //   setError(null);
-
-  //   const headers = {
-  //     "Content-Type": "application/json",
-  //     Authorization: `Bearer ${token}`,
-  //   };
-  //   try {
-  //     // console.log(`Fetching Income for userId: ${userId}`);
-  //     const incomeGetResponse = await axios.get(
-  //       `https://back-end-d6p7.onrender.com/income/getIncomeByUserId/${userId}`,
-  //       { headers, withCredentials: true }
-  //     );
-  //     setGetIncome(incomeGetResponse.data);
-  //     console.log("IncomeGetData", incomeGetResponse.data);
-
-  //     const expenseGetResponse = await axios.get(
-  //       `https://back-end-d6p7.onrender.com/expense/expenseuserId/${userId}`,
-  //       { headers, withCredentials: true }
-  //     );
-  //     setGetExpense(expenseGetResponse.data);
-  //     console.log("ExpenseGetData", expenseGetResponse.data);
-
-  //     const budgetGetResponse = await axios.get(
-  //       `https://back-end-d6p7.onrender.com/budget/getBudgetByUserId/${userId} `,
-  //       { headers, withCredentials: true }
-  //     );
-  //     setGetBudget(budgetGetResponse.data);
-  //     console.log("BudgetGetData", budgetGetResponse.data);
-
-  //     const savingGetResponse = await axios.get(
-  //       `https://back-end-d6p7.onrender.com/savings/getbyid/${userId}`,
-  //       { headers, withCredentials: true }
-  //     );
-  //     setGetSaving(savingGetResponse.data);
-  //     console.log("SavingGetData", savingGetResponse.data);
-  //   } catch (error) {
-  //     console.error("Error fetching data from the database", error);
-  //     setError("Failed to fetch data.");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  // const fetchChartData = async () => {
-  //   const currentMonth = new Date().getMonth();
-  //   let totalExpenses = 0;
-  //   let totalIncome = 0;
-
-  //   const expenseLabelsSet = new Set();
-  //   const incomeLabelsSet = new Set();
-
-  //   const expensesByCategory = {};
-
-  //   if (getExpense.expenseByUserId && getIncome.userIncome) {
-  //     console.log("Monthly Expenses Data:", getExpense.expenseByUserId);
-  //     console.log("Monthly Income Data:", getIncome.userIncome);
-
-  //     getExpense.expenseByUserId.forEach((exp) => {
-  //       const expenseDate = new Date(exp.date);
-  //       if (expenseDate.getMonth() === currentMonth) {
-  //         totalExpenses += exp.expenseAmount;
-  //         const category = exp.expenseCategory || "Other";
-  //         expenseLabelsSet.add(category);
-
-  //         if (!expensesByCategory[category]) {
-  //           expensesByCategory[category] = 0;
-  //         }
-  //         expensesByCategory[category] += exp.expenseAmount;
-  //       }
-  //     });
-
-  //     getIncome.userIncome.forEach((inc) => {
-  //       const incomeDate = new Date(inc.date);
-  //       if (incomeDate.getMonth() === currentMonth) {
-  //         totalIncome += inc.incomeAmount;
-  //         incomeLabelsSet.add(inc.incomeSource || "Other");
-  //       }
-  //     });
-
-  //     const expenseLabelsArray = Array.from(expenseLabelsSet);
-  //     const incomeLabelsArray = Array.from(incomeLabelsSet);
-
-  //     const expenseValuesArray = Object.values(expensesByCategory);
-
-  //     setChartsData({
-  //       expenseLabels: expenseLabelsArray,
-  //       incomeLabels: incomeLabelsArray,
-
-  //       expenses: expenseValuesArray,
-  //       income: [totalIncome],
-  //     });
-
-  //     console.log("Chart Data Set:", chartsData);
-  //   }
-  // };
+  
 
   const openModal = (formType) => {
     console.log(`Opening modal for: ${formType}`);
@@ -207,7 +111,7 @@ const CreateBudget = () => {
 
   const chartDatas = {
     labels: chartsData.labels,
-    expenses: chartsData.expenses,
+    expense: chartsData.expense,
     income: chartsData.income,
     budget: chartsData.budget,
     saving: chartsData.saving,
@@ -229,23 +133,20 @@ const CreateBudget = () => {
     ? budget.userBudget.reduce((acc, curr) => acc + (curr.budgetAmount || 0), 0)
     : 0;
 
-  const totalSavings = Array.isArray(saving.savingGoals)
+  const totalSaving = Array.isArray(saving.savingGoals)
     ? saving.savingGoals.reduce(
         (acc, curr) => acc + (curr.savingAmount || 0),
         0
       )
     : 0;
 
-  // console.log("Total Income:", totalIncome);
-  // console.log("Total Expenses:", totalExpenses);
-  // console.log("Total Budget:", totalBudget);
-  // console.log("Total Savings:", totalSavings);
+  
 
   const reportData = {
     income: totalIncome,
-    expenses: totalExpenses,
+    expense: totalExpenses,
     budget: totalBudget,
-    saving: totalSavings,
+    saving: totalSaving,
   };
 
   // console.log("Report Data: ", reportData);
@@ -312,16 +213,7 @@ const CreateBudget = () => {
       {/* )} */}
 
       <div className="chart-table-align"></div>
-      <div>
-        {/* <ExcelReport
-            income={reportData.income}
-            expenses={reportData.expenses}
-            budget={reportData.budget}
-            savings={reportData.savings}
-            userId={userId}
-            token={token}
-          /> */}
-      </div>
+     
     </div>
   );
 };
