@@ -39,7 +39,7 @@ export const FinanceProvider = ({ children }) => {
       setLoading(false);
       return;
     }
-    const token = user ? user.token : null;
+   
 
     const headers = {
       "Content-Type": "application/json",
