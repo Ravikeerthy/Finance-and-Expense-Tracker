@@ -49,25 +49,25 @@ export const FinanceProvider = ({ children }) => {
     try {
       const incomeResponse = await axios.get(
         `https://back-end-d6p7.onrender.com/income/getIncomeByUserId/${userId}`,
-        { headers }
+        { headers, withCredentials:true }
       );
       setIncome(incomeResponse.data.userIncome || []);
 
       const expenseResponse = await axios.get(
         `https://back-end-d6p7.onrender.com/expense/expenseuserId/${userId}`,
-        { headers }
+        { headers, withCredentials:true }
       );
       setExpense(expenseResponse.data.expenseByUserId || []);
 
       const budgetResponse = await axios.get(
         `https://back-end-d6p7.onrender.com/budget/getBudgetByUserId/${userId}`,
-        { headers }
+        { headers, withCredentials:true }
       );
       setBudget(budgetResponse.data.userBudget || []);
 
       const savingResponse = await axios.get(
         `https://back-end-d6p7.onrender.com/savings/getbyid/${userId}`,
-        { headers }
+        { headers, withCredentials:true }
       );
       setSaving(savingResponse.data.savingGoals || []);
 
