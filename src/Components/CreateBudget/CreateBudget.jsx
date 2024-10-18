@@ -5,8 +5,6 @@ import SavingForm from "./SavingForm";
 import IncomeForm from "./IncomeForm";
 import BudgetForm from "./BudgetForm";
 import { AuthContext } from "../AuthContext/AuthContext";
-import ExcelReport from "../Reports/ExcelReport";
-import Dashboard from "../DashBoard/DashBoard";
 import { FinanceContext } from "../AuthContext/FinanceContext ";
 
 const CreateBudget = () => {
@@ -51,9 +49,9 @@ const CreateBudget = () => {
     fetchData();
   }, [fetchData]);
 
-  useEffect(() => {
-    chartData();
-  }, [income, expense, chartData]);
+  // useEffect(() => {
+  //   chartData;
+  // }, [income, expense]);
 
   
 
@@ -109,13 +107,13 @@ const CreateBudget = () => {
     }
   };
 
-  const chartDatas = {
-    labels: chartsData.labels,
-    expense: chartsData.expense,
-    income: chartsData.income,
-    budget: chartsData.budget,
-    saving: chartsData.saving,
-  };
+  // const chartDatas = {
+  //   labels: chartsData.labels,
+  //   expense: chartsData.expense,
+  //   income: chartsData.income,
+  //   budget: chartsData.budget,
+  //   saving: chartsData.saving,
+  // };
   // console.log("chartData:", chartData);
 
   const totalIncome = Array.isArray(income.userIncome)
@@ -142,12 +140,12 @@ const CreateBudget = () => {
 
   
 
-  const reportData = {
-    income: totalIncome,
-    expense: totalExpenses,
-    budget: totalBudget,
-    saving: totalSaving,
-  };
+  // const reportData = {
+  //   income: totalIncome,
+  //   expense: totalExpenses,
+  //   budget: totalBudget,
+  //   saving: totalSaving,
+  // };
 
   // console.log("Report Data: ", reportData);
 
