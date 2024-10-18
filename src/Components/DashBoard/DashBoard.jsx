@@ -2,24 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import "./DashboardStyle.css";
 import { FinanceContext } from "../AuthContext/FinanceContext ";
 import Chart from "../chart/Chart";
+import axios from "axios";
 
-const DashBoard = ({
-  income = [],
-  expense = [],
-  budget = [],
-  savings = [],
-  username,
-  userId,
-  token,
-}) => {
-  console.log("Dashboard props:", {
-    income,
-    expense,
-    budget,
-    savings,
-    username,
-  });
-  const { income, expense, budget, savings, userId, token } = useContext(FinanceContext);
+const DashBoard = ({}) => {
+  const { income, expense, budget, savings, userId, token } =
+    useContext(FinanceContext);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -171,7 +158,6 @@ const DashBoard = ({
           ))}
         </ul>
       </div>
-      
     </div>
   );
 };
