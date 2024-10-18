@@ -18,9 +18,9 @@ const TableComp = () => {
     editItem,
   } = useContext(FinanceContext);
 
-  const { user } = useContext(AuthContext);
+  const { user, token } = useContext(AuthContext);
   const userId = user ? user._id : null;
-  const token = localStorage.getItem("token");
+ 
   console.log("Token: ", token);
   
 

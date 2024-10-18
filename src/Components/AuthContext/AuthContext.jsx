@@ -8,29 +8,35 @@ export const AuthProvider = ({ children }) => {
     return storedAuth === "true";
   });
   const storedUser = localStorage.getItem("user");
+  const storedToken = localStorage.getItem("token")
   // console.log("storedUser in AUth: ", storedUser);
   
 
   // return storedUser ? JSON.parse(storedUser) : null
 
   const [user, setUser] = useState(storedUser ? JSON.parse(storedUser) : null);
+  const [token, setToken] = useState(storedToken);
 
-  const login = (userData) => {
+  const login = (userData, userToken) => {
     setIsAuthenticated(true);
     setUser(userData);
+    setToken( userToken)
     localStorage.setItem("isAuthenticated", "true");
     localStorage.setItem("user", JSON.stringify(userData));
+    localStorage.setItem("token", tokenData)
   };
   const logOut = () => {
     setIsAuthenticated(false);
     setUser(userData);
-    localStorage.removeItem("isAuthenticated", "true");
-    localStorage.removeItem("user", JSON.stringify(userData));
+    setToken(null);
+    localStorage.removeItem("isAuthenticated");
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
   };
 
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login, logOut }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, token, login, logOut }}>
       {children}
     </AuthContext.Provider>
   );

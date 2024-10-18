@@ -5,7 +5,7 @@ import { AuthContext } from "./AuthContext";
 export const FinanceContext = createContext();
 
 export const FinanceProvider = ({ children }) => {
-  const { user } = useContext(AuthContext);
+  const { user, token } = useContext(AuthContext);
   //   const [income, setIncome] = useState({ userIncome: [] });
   const [income, setIncome] = useState([]);
   //   const [expense, setExpense] = useState({ expenseByUserId: [] });
@@ -43,7 +43,7 @@ export const FinanceProvider = ({ children }) => {
 
     const headers = {
       "Content-Type": "application/json",
-      //   Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
     };
 
     try {
@@ -138,7 +138,7 @@ export const FinanceProvider = ({ children }) => {
 
       await axios.delete(endpointMap[type], {
         headers: {
-          //   Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       });
@@ -180,7 +180,7 @@ export const FinanceProvider = ({ children }) => {
       const response = await axios.put(updateURL, item, {
         headers: {
           "Content-Type": "application/json",
-          //   Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
         },
         withCredentials: true,
       });
