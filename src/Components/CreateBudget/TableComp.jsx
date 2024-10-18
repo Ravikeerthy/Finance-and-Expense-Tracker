@@ -20,7 +20,9 @@ const TableComp = () => {
 
   const { user } = useContext(AuthContext);
   const userId = user ? user._id : null;
-  const token = user ? user.token : null;
+  const token = localStorage.getItem("token");
+
+  
 
   const [data, setData] = useState({
     income: [],
