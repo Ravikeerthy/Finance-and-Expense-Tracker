@@ -4,7 +4,6 @@
   import SavingForm from "./SavingForm";
   import IncomeForm from "./IncomeForm";
   import BudgetForm from "./BudgetForm";
-  // import axios from "axios";
   import { AuthContext } from "../AuthContext/AuthContext";
   import ExcelReport from "../Reports/ExcelReport";
   import Dashboard from "../DashBoard/DashBoard";
@@ -12,7 +11,7 @@ import { FinanceContext } from "../AuthContext/FinanceContext ";
   
 
   const CreateBudget = () => {
-    const { income, expense, budget, saving, fetchAllData, loading, error } =
+    const { income, expense, budget, saving, fetchData, chartData, loading, error } =
       useContext(FinanceContext);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentForm, setCurrentForm] = useState(null);
@@ -42,12 +41,12 @@ import { FinanceContext } from "../AuthContext/FinanceContext ";
     // console.log("Token", token);
 
     useEffect(() => {
-      fetchAllData();
-    }, []);
+      fetchData();
+    }, [fetchData]);
 
     useEffect(() => {
-      fetchChartData();
-    }, [getExpense, getIncome, getBudget, getSaving]);
+      chartData();
+    }, [income, expense, chartData]);
 
     // const fetchAllData = async () => {
     //   setLoading(true);
@@ -94,58 +93,58 @@ import { FinanceContext } from "../AuthContext/FinanceContext ";
     //   }
     // };
 
-    const fetchChartData = async () => {
-      const currentMonth = new Date().getMonth();
-      let totalExpenses = 0;
-      let totalIncome = 0;
+    // const fetchChartData = async () => {
+    //   const currentMonth = new Date().getMonth();
+    //   let totalExpenses = 0;
+    //   let totalIncome = 0;
 
-      const expenseLabelsSet = new Set();
-      const incomeLabelsSet = new Set();
+    //   const expenseLabelsSet = new Set();
+    //   const incomeLabelsSet = new Set();
 
-      const expensesByCategory = {};
+    //   const expensesByCategory = {};
 
-      if (getExpense.expenseByUserId && getIncome.userIncome) {
-        console.log("Monthly Expenses Data:", getExpense.expenseByUserId);
-        console.log("Monthly Income Data:", getIncome.userIncome);
+    //   if (getExpense.expenseByUserId && getIncome.userIncome) {
+    //     console.log("Monthly Expenses Data:", getExpense.expenseByUserId);
+    //     console.log("Monthly Income Data:", getIncome.userIncome);
 
-        getExpense.expenseByUserId.forEach((exp) => {
-          const expenseDate = new Date(exp.date);
-          if (expenseDate.getMonth() === currentMonth) {
-            totalExpenses += exp.expenseAmount;
-            const category = exp.expenseCategory || "Other";
-            expenseLabelsSet.add(category);
+    //     getExpense.expenseByUserId.forEach((exp) => {
+    //       const expenseDate = new Date(exp.date);
+    //       if (expenseDate.getMonth() === currentMonth) {
+    //         totalExpenses += exp.expenseAmount;
+    //         const category = exp.expenseCategory || "Other";
+    //         expenseLabelsSet.add(category);
 
-            if (!expensesByCategory[category]) {
-              expensesByCategory[category] = 0;
-            }
-            expensesByCategory[category] += exp.expenseAmount;
-          }
-        });
+    //         if (!expensesByCategory[category]) {
+    //           expensesByCategory[category] = 0;
+    //         }
+    //         expensesByCategory[category] += exp.expenseAmount;
+    //       }
+    //     });
 
-        getIncome.userIncome.forEach((inc) => {
-          const incomeDate = new Date(inc.date);
-          if (incomeDate.getMonth() === currentMonth) {
-            totalIncome += inc.incomeAmount;
-            incomeLabelsSet.add(inc.incomeSource || "Other");
-          }
-        });
+    //     getIncome.userIncome.forEach((inc) => {
+    //       const incomeDate = new Date(inc.date);
+    //       if (incomeDate.getMonth() === currentMonth) {
+    //         totalIncome += inc.incomeAmount;
+    //         incomeLabelsSet.add(inc.incomeSource || "Other");
+    //       }
+    //     });
 
-        const expenseLabelsArray = Array.from(expenseLabelsSet);
-        const incomeLabelsArray = Array.from(incomeLabelsSet);
+    //     const expenseLabelsArray = Array.from(expenseLabelsSet);
+    //     const incomeLabelsArray = Array.from(incomeLabelsSet);
 
-        const expenseValuesArray = Object.values(expensesByCategory);
+    //     const expenseValuesArray = Object.values(expensesByCategory);
 
-        setChartsData({
-          expenseLabels: expenseLabelsArray,
-          incomeLabels: incomeLabelsArray,
+    //     setChartsData({
+    //       expenseLabels: expenseLabelsArray,
+    //       incomeLabels: incomeLabelsArray,
 
-          expenses: expenseValuesArray,
-          income: [totalIncome],
-        });
+    //       expenses: expenseValuesArray,
+    //       income: [totalIncome],
+    //     });
 
-        console.log("Chart Data Set:", chartsData);
-      }
-    };
+    //     console.log("Chart Data Set:", chartsData);
+    //   }
+    // };
 
     const openModal = (formType) => {
       console.log(`Opening modal for: ${formType}`);
@@ -172,30 +171,35 @@ import { FinanceContext } from "../AuthContext/FinanceContext ";
 
     const handleFormSubmit = async (type, values) => {
       // console.log(`Submitting ${type} with values:`, values);
-      switch (type) {
-        case "income":
-          updateStateArray(setIncome, income, values);
-          break;
-        case "expense":
-          updateStateArray(setExpense, expense, values);
-
-          break;
-        case "budget":
-          updateStateArray(setBudget, budget, values);
-
-          break;
-        case "saving":
-          updateStateArray(setSaving, saving, values);
-
-          break;
-        default:
-          break;
+      try {
+        switch (type) {
+          case "income":
+            updateStateArray(income, income, values);
+            break;
+          case "expense":
+            updateStateArray(expense, expense, values);
+  
+            break;
+          case "budget":
+            updateStateArray(budget, budget, values);
+  
+            break;
+          case "saving":
+            updateStateArray(saving, saving, values);
+  
+            break;
+          default:
+            break;
+        }
+        await fetchData();
+        closeModal();
+      } catch (error) {
+        console.error("Failed to fetch data after submitting form", error);
       }
-      await fetchAllData();
-      closeModal();
+      
     };
 
-    const chartData = {
+    const chartDatas = {
       labels: chartsData.labels,
       expenses: chartsData.expenses,
       income: chartsData.income,
@@ -204,29 +208,29 @@ import { FinanceContext } from "../AuthContext/FinanceContext ";
     };
     // console.log("chartData:", chartData);
 
-    const totalIncome = Array.isArray(getIncome.userIncome)
-      ? getIncome.userIncome.reduce(
+    const totalIncome = Array.isArray(income.userIncome)
+      ? income.userIncome.reduce(
           (acc, curr) => acc + (curr.incomeAmount || 0),
           0
         )
       : 0;
 
-    const totalExpenses = Array.isArray(getExpense.expenseByUserId)
-      ? getExpense.expenseByUserId.reduce(
+    const totalExpenses = Array.isArray(expense.expenseByUserId)
+      ? expense.expenseByUserId.reduce(
           (acc, curr) => acc + (curr.expenseAmount || 0),
           0
         )
       : 0;
 
-    const totalBudget = Array.isArray(getBudget.userBudget)
-      ? getBudget.userBudget.reduce(
+    const totalBudget = Array.isArray(budget.userBudget)
+      ? budget.userBudget.reduce(
           (acc, curr) => acc + (curr.budgetAmount || 0),
           0
         )
       : 0;
 
-    const totalSavings = Array.isArray(getSaving.savingGoals)
-      ? getSaving.savingGoals.reduce(
+    const totalSavings = Array.isArray(saving.savingGoals)
+      ? saving.savingGoals.reduce(
           (acc, curr) => acc + (curr.savingAmount || 0),
           0
         )

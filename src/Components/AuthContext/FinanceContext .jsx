@@ -24,12 +24,12 @@ export const FinanceProvider = ({ children }) => {
 
   const [financeData, setFinanceData] = useState({
     incomes: [],
-    expenses: [],
+    expenses: [],   
     budgets: [],
   });
 
   const userId = user ? user._id : null;
-  const username = user? user.firstName : null;
+  const username = user? user.firstName : "Guest";
 
   useEffect(() => {
     fetchData();
