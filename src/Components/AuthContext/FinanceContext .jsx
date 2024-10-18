@@ -22,11 +22,7 @@ export const FinanceProvider = ({ children }) => {
     income: [],
   });
 
-  const [financeData, setFinanceData] = useState({
-    incomes: [],
-    expenses: [],   
-    budgets: [],
-  });
+  
 
   const userId = user ? user._id : null;
   const username = user? user.firstName : "Guest";
