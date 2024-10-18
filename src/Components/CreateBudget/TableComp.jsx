@@ -21,6 +21,8 @@ const TableComp = () => {
   const { user } = useContext(AuthContext);
   const userId = user ? user._id : null;
   const token = localStorage.getItem("token");
+  console.log("Token: ", token);
+  
 
   
 
