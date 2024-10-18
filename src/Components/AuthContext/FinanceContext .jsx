@@ -74,6 +74,11 @@ export const FinanceProvider = ({ children }) => {
       );
       setSaving(savingResponse.data.savingGoals || []);
 
+      console.log("Income:", income); 
+      console.log("Expense:", expense); 
+      console.log("Budget:", budget); 
+      console.log("Savings:", saving); 
+      
       updateChartData(
         incomeResponse.data.userIncome,
         expenseResponse.data.expenseByUserId,

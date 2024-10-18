@@ -5,7 +5,7 @@ import Chart from "../chart/Chart";
 import axios from "axios";
 
 const DashBoard = ({}) => {
-  const { income, expense, budget, savings, userId, token } =
+  const { income, expense, budget, saving, userId, token } =
     useContext(FinanceContext);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -59,22 +59,22 @@ const DashBoard = ({}) => {
     }
   };
   // Calculating totals
-  const totalIncome = income.reduce(
-    (acc, curr) => acc + (curr.incomeAmount || 0),
-    0
-  );
-  const totalExpenses = expense.reduce(
-    (acc, curr) => acc + (curr.expenseAmount || 0),
-    0
-  );
-  const totalBudget = budget.reduce(
-    (acc, curr) => acc + (curr.budgetAmount || 0),
-    0
-  );
-  const totalSavings = savings.reduce(
-    (acc, curr) => acc + (curr.savingAmount || 0),
-    0
-  );
+  const totalIncome = Array.isArray(income)
+  ? income.reduce((acc, curr) => acc + (curr.incomeAmount || 0), 0)
+  : 0;
+
+const totalExpenses = Array.isArray(expense)
+  ? expense.reduce((acc, curr) => acc + (curr.expenseAmount || 0), 0)
+  : 0;
+
+const totalBudget = Array.isArray(budget)
+  ? budget.reduce((acc, curr) => acc + (curr.budgetAmount || 0), 0)
+  : 0;
+
+const totalSavings = Array.isArray(saving)
+  ? saving.reduce((acc, curr) => acc + (curr.savingAmount || 0), 0)
+  : 0;
+
   console.log(
     "Dash board amounts: ",
     totalIncome,
