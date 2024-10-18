@@ -29,6 +29,7 @@ export const FinanceProvider = ({ children }) => {
   });
 
   const userId = user ? user._id : null;
+  const username = user? user.firstName : null;
 
   useEffect(() => {
     fetchData();
@@ -222,6 +223,7 @@ export const FinanceProvider = ({ children }) => {
   return (
     <FinanceContext.Provider
       value={{
+        username,
         income,
         expense,
         budget,

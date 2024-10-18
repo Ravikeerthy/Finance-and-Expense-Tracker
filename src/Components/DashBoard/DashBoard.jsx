@@ -5,7 +5,7 @@ import Chart from "../chart/Chart";
 import axios from "axios";
 
 const DashBoard = ({}) => {
-  const { income, expense, budget, saving, userId, token } =
+  const { income, expense, budget, saving, userId, token, username } =
     useContext(FinanceContext);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
