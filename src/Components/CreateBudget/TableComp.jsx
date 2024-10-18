@@ -232,7 +232,7 @@ const TableComp = () => {
       <h3>Financial Overview</h3>
 
       <h4>Income</h4>
-      {incomeData.length > 0 ? (
+      {income.length > 0 ? (
         <table>
           <thead>
             <tr>
@@ -246,7 +246,7 @@ const TableComp = () => {
             </tr>
           </thead>
           <tbody>
-            {incomeData.map((inc, index) => (
+            {income.map((inc, index) => (
               <tr key={index}>
                 <td>{index + 1} </td>
                 <td>{inc.incomeAmount}</td>
@@ -279,7 +279,7 @@ const TableComp = () => {
 
       {/* Expense Table */}
       <h4>Expense</h4>
-      {expenseData.length > 0 ? (
+      {expense.length > 0 ? (
         <table>
           <thead>
             <tr>
@@ -293,7 +293,7 @@ const TableComp = () => {
             </tr>
           </thead>
           <tbody>
-            {expenseData.map((exp, index) => (
+            {expense.map((exp, index) => (
               <tr key={index}>
                 <td>{index + 1} </td>
                 <td>{exp.expenseAmount}</td>
@@ -326,7 +326,7 @@ const TableComp = () => {
 
       {/* Budget Table */}
       <h4>Budget</h4>
-      {budgetData.length > 0 ? (
+      {budget.length > 0 ? (
         <table>
           <thead>
             <tr>
@@ -339,7 +339,7 @@ const TableComp = () => {
             </tr>
           </thead>
           <tbody>
-            {budgetData.map((bud, index) => (
+            {budget.map((bud, index) => (
               <tr key={index}>
                 <td>{index + 1} </td>
                 <td>{bud.budgetAmount}</td>
@@ -371,7 +371,7 @@ const TableComp = () => {
 
       {/* Saving Table */}
       <h4>Saving</h4>
-      {savingData.length > 0 ? (
+      {saving.length > 0 ? (
         <table>
           <thead>
             <tr>
@@ -384,7 +384,7 @@ const TableComp = () => {
             </tr>
           </thead>
           <tbody>
-            {savingData.map((sav, index) => (
+            {saving.map((sav, index) => (
               <tr key={index}>
                 <td>{index + 1} </td>
                 <td>{sav.savingAmount}</td>
