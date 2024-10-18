@@ -52,7 +52,7 @@ const TableComp = () => {
   useEffect(() => {
     fetchData();
     // setDeletedData(false);
-  }, [userId, token]);
+  }, []);
 
   // const fetchtingData = async () => {
   //   setLoading(true);
