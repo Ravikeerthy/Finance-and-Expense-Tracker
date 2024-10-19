@@ -31,7 +31,7 @@ ChartJS.register(
 const Chart = () => {
  const {updatedChartData} = useContext(FinanceContext)
 
- const { labels=[], expenses=[], income=[], totalExpenses } = updatedChartData || {}; 
+ const { labels=[], expenses=[], income=[], totalExpenses=0 } = updatedChartData || {}; 
 
  useEffect(()=>{
   console.log("Chart Data Updated:", updatedChartData);
@@ -72,7 +72,7 @@ const Chart = () => {
       },
       {
         label: "Expenses",
-        data: expenses.length > 0 ? totalExpenses : [0], 
+        data: [totalExpenses], 
         backgroundColor: "rgba(255, 99, 132, 0.6)",
       },
     ],
