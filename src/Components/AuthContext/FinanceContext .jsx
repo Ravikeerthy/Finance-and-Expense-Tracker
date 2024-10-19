@@ -144,13 +144,13 @@ export const FinanceProvider = ({ children }) => {
       });
 
       if (type === "income") {
-        setIncome((prev) => prev.filter((item) => item._id !== id));
+        setIncome((prev) => (prev ? prev.filter((item) => item._id !== id) : []));
       } else if (type === "expense") {
-        setExpense((prev) => prev.filter((item) => item._id !== id));
+        setExpense((prev) => (prev ? prev.filter((item) => item._id !== id) : []));
       } else if (type === "budget") {
-        setBudget((prev) => prev.filter((item) => item._id !== id));
+        setBudget((prev) => (prev ? prev.filter((item) => item._id !== id) : []));
       } else if (type === "saving") {
-        setSaving((prev) => prev.filter((item) => item._id !== id));
+        setSaving((prev) => (prev ? prev.filter((item) => item._id !== id) : []));
       }
 
       alert("Item deleted successfully.");
