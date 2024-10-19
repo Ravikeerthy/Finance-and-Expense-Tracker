@@ -20,11 +20,8 @@ const TableComp = () => {
 
   const { user, token } = useContext(AuthContext);
   const userId = user ? user._id : null;
- 
-  console.log("Token: ", token);
-  
 
-  
+  console.log("Token: ", token);
 
   const [data, setData] = useState({
     income: [],
@@ -35,13 +32,12 @@ const TableComp = () => {
   const [deletedData, setDeletedData] = useState(false);
 
   const [isEditing, setIsEditing] = useState({ type: null, item: null });
-  
+
   useEffect(() => {
     fetchData();
     // setDeletedData(false);
   }, [fetchData]);
 
-   
   const handleDeleteItem = async (type, id) => {
     try {
       await handleDelete(type, id);
@@ -104,7 +100,7 @@ const TableComp = () => {
                 </td>
                 <td>
                   <button
-                    onClick={() => handleDeleteItem(inc._id)}
+                    onClick={() => handleDeleteItem("income", inc._id)}
                     type="button"
                   >
                     <i className="fa-solid fa-trash"></i>
@@ -151,7 +147,7 @@ const TableComp = () => {
                 </td>
                 <td>
                   <button
-                    onClick={() => handleDeleteItem(exp._id)}
+                    onClick={() => handleDeleteItem("expense", exp._id)}
                     type="button"
                   >
                     <i className="fa-solid fa-trash"></i>
@@ -196,7 +192,7 @@ const TableComp = () => {
                 </td>
                 <td>
                   <button
-                    onClick={() => handleDeleteItem(bud._id)}
+                    onClick={() => handleDeleteItem("budget", bud._id)}
                     type="button"
                   >
                     <i className="fa-solid fa-trash"></i>
@@ -238,7 +234,7 @@ const TableComp = () => {
                 </td>
                 <td>
                   <button
-                    onClick={() => handleDeleteItem(sav._id)}
+                    onClick={() => handleDeleteItem("saving", sav._id)}
                     type="button"
                   >
                     <i className="fa-solid fa-trash"></i>
@@ -267,7 +263,7 @@ const TableComp = () => {
         </div>
       )}
     </div>
-    
-)};
+  );
+};
 
 export default TableComp;
