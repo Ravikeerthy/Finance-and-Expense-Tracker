@@ -50,12 +50,6 @@ const CreateBudget = () => {
     fetchData();
   }, [fetchData]);
 
-  // useEffect(() => {
-  //   chartData;
-  // }, [income, expense]);
-
-  
-
   const openModal = (formType) => {
     console.log(`Opening modal for: ${formType}`);
     setCurrentForm(formType);
@@ -80,7 +74,7 @@ const CreateBudget = () => {
   };
 
   const handleFormSubmit = async (type, values) => {
-    // console.log(`Submitting ${type} with values:`, values);
+   
     try {
       switch (type) {
         case "income":
@@ -107,48 +101,6 @@ const CreateBudget = () => {
       console.error("Failed to fetch data after submitting form", error);
     }
   };
-
-  // const chartDatas = {
-  //   labels: chartsData.labels,
-  //   expense: chartsData.expense,
-  //   income: chartsData.income,
-  //   budget: chartsData.budget,
-  //   saving: chartsData.saving,
-  // };
-  // console.log("chartData:", chartData);
-
-  const totalIncome = Array.isArray(income.userIncome)
-    ? income.userIncome.reduce((acc, curr) => acc + (curr.incomeAmount || 0), 0)
-    : 0;
-
-  const totalExpenses = Array.isArray(expense.expenseByUserId)
-    ? expense.expenseByUserId.reduce(
-        (acc, curr) => acc + (curr.expenseAmount || 0),
-        0
-      )
-    : 0;
-
-  const totalBudget = Array.isArray(budget.userBudget)
-    ? budget.userBudget.reduce((acc, curr) => acc + (curr.budgetAmount || 0), 0)
-    : 0;
-
-  const totalSaving = Array.isArray(saving.savingGoals)
-    ? saving.savingGoals.reduce(
-        (acc, curr) => acc + (curr.savingAmount || 0),
-        0
-      )
-    : 0;
-
-  
-
-  // const reportData = {
-  //   income: totalIncome,
-  //   expense: totalExpenses,
-  //   budget: totalBudget,
-  //   saving: totalSaving,
-  // };
-
-  // console.log("Report Data: ", reportData);
 
   return (
     <div className="create-budget-container">

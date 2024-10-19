@@ -55,7 +55,7 @@ export const FinanceProvider = ({ children }) => {
         `https://back-end-d6p7.onrender.com/expense/expenseuserId/${userId}`,
         { headers, withCredentials: true }
       );
-      setExpense(expenseResponse.data.expenseByUserId || []);
+      setExpense(expenseResponse.data.expenseUserId || []);
 
       const budgetResponse = await axios.get(
         `https://back-end-d6p7.onrender.com/budget/getBudgetByUserId/${userId}`,
