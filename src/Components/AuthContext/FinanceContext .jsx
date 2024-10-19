@@ -76,7 +76,7 @@ export const FinanceProvider = ({ children }) => {
 
       updateChartData(
         incomeResponse.data.userIncome,
-        expenseResponse.data.expenseByUserId
+        expenseResponse.data.userExpenses
         // budgetResponse.data.userBudget,
         // savingResponse.data.savingGoals
       );
@@ -159,6 +159,7 @@ export const FinanceProvider = ({ children }) => {
         setSaving((prev) => prev.filter((item) => item._id !== id));
       }
       console.log("Deleting:", type, "ID:", id);
+      await fetchData();
 
       alert("Item deleted successfully.");
     } catch (error) {
