@@ -136,7 +136,7 @@ export const FinanceProvider = ({ children }) => {
     try {
       const endpointMap = {
         income: `https://back-end-d6p7.onrender.com/income/delete/${id}`,
-        expense: `https://back-end-d6p7.onrender.com/expense/delete/${id}`,
+        expense:`https://back-end-d6p7.onrender.com/expense/delete/${id}`,
         budget: `https://back-end-d6p7.onrender.com/budget/delete/${id}`,
         saving: `https://back-end-d6p7.onrender.com/savings/delete/${id}`,
       };
