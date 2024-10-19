@@ -48,7 +48,7 @@ const CreateBudget = () => {
 
   useEffect(() => {
     fetchData();
-  }, [fetchData]);
+  }, []);
 
   const openModal = (formType) => {
     console.log(`Opening modal for: ${formType}`);
