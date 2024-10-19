@@ -12,7 +12,7 @@ export const FinanceProvider = ({ children }) => {
   const [expense, setExpense] = useState([]);
   //   const [budget, setBudget] = useState({ userBudget: [] });
   const [budget, setBudget] = useState([]);
-//   const [saving, setSaving] = useState({ savingGoals: [] });
+  //   const [saving, setSaving] = useState({ savingGoals: [] });
   const [saving, setSaving] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -22,10 +22,8 @@ export const FinanceProvider = ({ children }) => {
     income: [],
   });
 
-  
-
   const userId = user ? user._id : null;
-  const username = user? user.firstName : "Guest";
+  const username = user ? user.firstName : "Guest";
 
   useEffect(() => {
     fetchData();
@@ -43,42 +41,42 @@ export const FinanceProvider = ({ children }) => {
 
     const headers = {
       "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     };
 
     try {
       const incomeResponse = await axios.get(
         `https://back-end-d6p7.onrender.com/income/getIncomeByUserId/${userId}`,
-        { headers, withCredentials:true }
+        { headers, withCredentials: true }
       );
       setIncome(incomeResponse.data.userIncome || []);
 
       const expenseResponse = await axios.get(
         `https://back-end-d6p7.onrender.com/expense/expenseuserId/${userId}`,
-        { headers, withCredentials:true }
+        { headers, withCredentials: true }
       );
       setExpense(expenseResponse.data.expenseByUserId || []);
 
       const budgetResponse = await axios.get(
         `https://back-end-d6p7.onrender.com/budget/getBudgetByUserId/${userId}`,
-        { headers, withCredentials:true }
+        { headers, withCredentials: true }
       );
       setBudget(budgetResponse.data.userBudget || []);
 
       const savingResponse = await axios.get(
         `https://back-end-d6p7.onrender.com/savings/getbyid/${userId}`,
-        { headers, withCredentials:true }
+        { headers, withCredentials: true }
       );
       setSaving(savingResponse.data.savingGoals || []);
 
-      console.log("Income:", income); 
-      console.log("Expense:", expense); 
-      console.log("Budget:", budget); 
-      console.log("Savings:", saving); 
-      
+      console.log("Income:", income);
+      console.log("Expense:", expense);
+      console.log("Budget:", budget);
+      console.log("Savings:", saving);
+
       updateChartData(
         incomeResponse.data.userIncome,
-        expenseResponse.data.expenseByUserId,
+        expenseResponse.data.expenseByUserId
         // budgetResponse.data.userBudget,
         // savingResponse.data.savingGoals
       );
@@ -108,12 +106,14 @@ export const FinanceProvider = ({ children }) => {
         }
         expensesByCategory[category] += exp.expenseAmount;
       }
+      console.log("Current Month Expense:", exp);
     });
 
     incomeData.forEach((inc) => {
       const incomeDate = new Date(inc.date);
       if (incomeDate.getMonth() === currentMonth) {
         totalIncome += inc.incomeAmount;
+        console.log("Current Month Income:", inc);
       }
     });
 
@@ -126,6 +126,10 @@ export const FinanceProvider = ({ children }) => {
       expenses: expenseValuesArray,
       income: [totalIncome],
     }));
+
+    console.log("Expense Labels Array:", expenseLabelsArray);
+    console.log("Expense Values Array:", expenseValuesArray);
+    console.log("Total Income:", totalIncome);
   };
 
   const handleDelete = async (type, id) => {
@@ -139,12 +143,11 @@ export const FinanceProvider = ({ children }) => {
 
       const deleteResponse = await axios.delete(endpointMap[type], {
         headers: {
-            Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       });
       console.log("Deleted Response: ", deleteResponse);
-      
 
       if (type === "income") {
         setIncome((prev) => prev.filter((item) => item._id !== id));
@@ -156,7 +159,6 @@ export const FinanceProvider = ({ children }) => {
         setSaving((prev) => prev.filter((item) => item._id !== id));
       }
       console.log("Deleting:", type, "ID:", id);
-
 
       alert("Item deleted successfully.");
     } catch (error) {
@@ -185,7 +187,7 @@ export const FinanceProvider = ({ children }) => {
       const response = await axios.put(updateURL, item, {
         headers: {
           "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         withCredentials: true,
       });
@@ -231,7 +233,7 @@ export const FinanceProvider = ({ children }) => {
         saving,
         loading,
         error,
-        updatedChartData : chartData,
+        updatedChartData: chartData,
         fetchData,
         handleDelete,
         editItem,
