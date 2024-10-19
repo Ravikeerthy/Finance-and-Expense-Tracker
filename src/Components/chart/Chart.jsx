@@ -63,7 +63,7 @@ const Chart = () => {
   };
 
   const barData = {
-    labels: ["Income", ...labels, "Expenses"], 
+    labels: ["Income", "Expenses"], 
     datasets: [
       {
         label: "Income",
