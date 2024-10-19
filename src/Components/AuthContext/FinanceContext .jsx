@@ -230,7 +230,7 @@ export const FinanceProvider = ({ children }) => {
         saving,
         loading,
         error,
-        updateChartData : chartData,
+        updatedChartData : chartData,
         fetchData,
         handleDelete,
         editItem,

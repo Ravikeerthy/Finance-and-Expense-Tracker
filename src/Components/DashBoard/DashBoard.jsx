@@ -139,7 +139,7 @@ const totalSavings = Array.isArray(saving)
               {category}: {amount.toFixed(2)}
             </li>
           ))}
-        </ul>
+        </ul> 
       </div>
 
       <Chart userId={userId} token={token} />
