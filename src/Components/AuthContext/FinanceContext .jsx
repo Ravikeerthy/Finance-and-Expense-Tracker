@@ -125,6 +125,7 @@ export const FinanceProvider = ({ children }) => {
       labels: expenseLabelsArray,
       expenses: expenseValuesArray,
       income: [totalIncome],
+      totalExpenses: totalExpenses,
     }));
 
     console.log("Expense Labels Array:", expenseLabelsArray);
@@ -133,10 +134,11 @@ export const FinanceProvider = ({ children }) => {
   };
 
   const handleDelete = async (type, id) => {
+    console.log("Authorization Token:", token);
     try {
       const endpointMap = {
         income: `https://back-end-d6p7.onrender.com/income/delete/${id}`,
-        expense:`https://back-end-d6p7.onrender.com/expense/delete/${id}`,
+        expense: `https://back-end-d6p7.onrender.com/expense/delete/${id}`,
         budget: `https://back-end-d6p7.onrender.com/budget/delete/${id}`,
         saving: `https://back-end-d6p7.onrender.com/savings/delete/${id}`,
       };
@@ -146,6 +148,7 @@ export const FinanceProvider = ({ children }) => {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
+        withCredentials: true,
       });
       console.log("Deleted Response: ", deleteResponse);
 
