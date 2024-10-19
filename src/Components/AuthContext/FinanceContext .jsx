@@ -79,8 +79,8 @@ export const FinanceProvider = ({ children }) => {
       updateChartData(
         incomeResponse.data.userIncome,
         expenseResponse.data.expenseByUserId,
-        budgetResponse.data.userBudget,
-        savingResponse.data.savingGoals
+        // budgetResponse.data.userBudget,
+        // savingResponse.data.savingGoals
       );
     } catch (error) {
       console.error("Error fetching data", error);

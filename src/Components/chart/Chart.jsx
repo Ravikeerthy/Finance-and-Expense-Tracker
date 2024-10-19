@@ -31,10 +31,7 @@ ChartJS.register(
 const Chart = () => {
  const {updatedChartData} = useContext(FinanceContext)
 
- const { labels, expenses, income } = updatedChartData;
-
-
- 
+ const { labels, expenses, income } = updatedChartData; 
  
   const pieColors = [
     "rgba(75, 192, 192, 0.6)", 
@@ -54,7 +51,7 @@ const Chart = () => {
     datasets: [
       {
         data: expenses.length > 0 ? expenses : [0],
-        backgroundColor: expenseLabels.map((_, index) => pieColors[index % pieColors.length]),
+        backgroundColor: labels.map((_, index) => pieColors[index % pieColors.length]),
         borderWidth: 1,
       },
     ],
