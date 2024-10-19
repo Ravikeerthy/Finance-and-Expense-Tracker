@@ -136,22 +136,26 @@ export const FinanceProvider = ({ children }) => {
         saving: `https://back-end-d6p7.onrender.com/savings/delete/${id}`,
       };
 
-      await axios.delete(endpointMap[type], {
+      const deleteResponse = await axios.delete(endpointMap[type], {
         headers: {
             Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       });
+      console.log("Deleted Response: ", deleteResponse);
+      
 
       if (type === "income") {
-        setIncome((prev) => (prev ? prev.filter((item) => item._id !== id) : []));
+        setIncome((prev) => prev.filter((item) => item._id !== id));
       } else if (type === "expense") {
-        setExpense((prev) => (prev ? prev.filter((item) => item._id !== id) : []));
+        setExpense((prev) => prev.filter((item) => item._id !== id));
       } else if (type === "budget") {
-        setBudget((prev) => (prev ? prev.filter((item) => item._id !== id) : []));
+        setBudget((prev) => prev.filter((item) => item._id !== id));
       } else if (type === "saving") {
-        setSaving((prev) => (prev ? prev.filter((item) => item._id !== id) : []));
+        setSaving((prev) => prev.filter((item) => item._id !== id));
       }
+      console.log("Deleting:", type, "ID:", id);
+
 
       alert("Item deleted successfully.");
     } catch (error) {
@@ -226,7 +230,7 @@ export const FinanceProvider = ({ children }) => {
         saving,
         loading,
         error,
-        chartData,
+        updateChartData : chartData,
         fetchData,
         handleDelete,
         editItem,

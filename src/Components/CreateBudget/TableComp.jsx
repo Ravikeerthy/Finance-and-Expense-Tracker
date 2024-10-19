@@ -36,15 +36,12 @@ const TableComp = () => {
   useEffect(() => {
     fetchData();
     // setDeletedData(false);
-  }, [fetchData]);
+  }, []);
 
   const handleDeleteItem = async (type, id) => {
     try {
       await handleDelete(type, id);
-      setData((prevData) => ({
-        ...prevData,
-        [type]: prevData[type].filter((item) => item._id !== id),
-      }));
+     
       alert("Item deleted successfully!");
     } catch (error) {
       console.error("Delete error:", error);

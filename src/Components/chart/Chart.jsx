@@ -12,8 +12,9 @@ import {
 } from "chart.js";
 import { Pie, Bar } from "react-chartjs-2";
 import "./ChartStyle.css";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useContext } from "react";
+
+import { FinanceContext } from "../AuthContext/FinanceContext ";
 
 ChartJS.register(
   CategoryScale,
@@ -27,81 +28,13 @@ ChartJS.register(
   Legend
 );
 
-const Chart = ({ userId, token }) => {
-  const [chartsData, setChartsData] = useState({
-    expenseLabels: [],
-    incomeLabels: [],
-    expenses: [],
-    income: [],
-  });
+const Chart = () => {
+ const {updatedChartData} = useContext(FinanceContext)
 
-  useEffect(() => {
-    if (userId && token) {
-      fetchChartData();
-    }
-  }, [userId, token]);
+ const { labels, expenses, income } = updatedChartData;
 
-  const fetchChartData = async () => {
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    };
-    try{
-    const expensesResponse = await axios.get(
-      `https://back-end-d6p7.onrender.com/expense/expenseuserId/${userId}`,
-      { headers }
-    );
-    const expenseData = expensesResponse.data;
 
  
-    const incomeResponse = await axios.get(
-      `https://back-end-d6p7.onrender.com/income/getIncomeByUserId/${userId}`,
-      { headers }
-    );
-    const incomeData = incomeResponse.data;
-
-   
-    const expenseLabelsSet = new Set();
-    const incomeLabelsSet = new Set();
-    const expensesByCategory = {};
-
-    let totalIncome = 0;
-
-    expenseData.forEach((exp) => {
-      const category = exp.expenseCategory || "Other";
-      expenseLabelsSet.add(category);
-      expensesByCategory[category] = (expensesByCategory[category] || 0) + exp.expenseAmount;
-    });
-
-    incomeData.forEach((inc) => {
-      const source = inc.incomeSource || "Other";
-      incomeLabelsSet.add(source);
-      totalIncome += inc.incomeAmount;
-    });
-
-    const expenseLabelsArray = Array.from(expenseLabelsSet);
-    const incomeLabelsArray = Array.from(incomeLabelsSet);
-    const expenseValuesArray = Object.values(expensesByCategory);
-
-    // Update chart data state
-    setChartsData({
-      expenseLabels: expenseLabelsArray,
-      incomeLabels: incomeLabelsArray,
-      expenses: expenseValuesArray,
-      income: [totalIncome],
-    });
-  } catch (error) {
-    console.error("Error fetching chart data", error);
-  }
-};
-
-  // const expenseLabels = chartsData.expenseLabels || [];
-  // const incomeLabels = chartsData.incomeLabels || [];
-
-  // const expenses = chartsData.expenses || [];
-  // const income = chartsData.income || [];
-
-  const { expenseLabels, incomeLabels, expenses, income } = chartsData;
  
   const pieColors = [
     "rgba(75, 192, 192, 0.6)", 
@@ -117,7 +50,7 @@ const Chart = ({ userId, token }) => {
   ];
   const pieData = {
     
-    labels: expenseLabels.length > 0 ? expenseLabels : ["No Expenses"],
+    labels: labels.length > 0 ? labels : ["No Expenses"],
     datasets: [
       {
         data: expenses.length > 0 ? expenses : [0],
@@ -128,7 +61,7 @@ const Chart = ({ userId, token }) => {
   };
 
   const barData = {
-    labels: [...incomeLabels, ...expenseLabels], 
+    labels: ["Income", ...labels, "Expenses"], 
     datasets: [
       {
         label: "Income",
