@@ -1,8 +1,10 @@
 import React from "react";
 import Testimonial from "./Testimonial";
 import "./StyleBenefits.css";
+import { useNavigate } from "react-router-dom";
 
 const Benefits = () => {
+  const navigate = useNavigate();
   return (
     <div>
       <div className="benefits-container">
@@ -66,7 +68,7 @@ const Benefits = () => {
          <Testimonial/>
         </div>
 
-        <button className="cta-button">Sign Up Now</button>
+        <button className="cta-button" onClick={()=>navigate("/register")}>Sign Up Now</button>
       </div>
     </div>
   );

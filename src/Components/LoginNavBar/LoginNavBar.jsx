@@ -31,7 +31,11 @@ const LoginNavBar = () => {
                     alt=""
                     className="img-thumbnail mb-2"
                   />
-                  <NavLink className="nav-link" aria-current="page" to="/dashboard">
+                  <NavLink
+                    className="nav-link"
+                    aria-current="page"
+                    to="/dashboard"
+                  >
                     Expense Tracker
                   </NavLink>
                 </li>
@@ -52,9 +56,6 @@ const LoginNavBar = () => {
                   >
                     Create
                   </NavLink>
-                </li>
-                <li>
-                  <NavLink to="/notifications" className="nav-link">Notifications</NavLink>
                 </li>
 
                 <li className="nav-item">
