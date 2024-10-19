@@ -12,7 +12,7 @@ import {
 } from "chart.js";
 import { Pie, Bar } from "react-chartjs-2";
 import "./ChartStyle.css";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 import { FinanceContext } from "../AuthContext/FinanceContext ";
 
@@ -32,6 +32,11 @@ const Chart = () => {
  const {updatedChartData} = useContext(FinanceContext)
 
  const { labels, expenses, income } = updatedChartData; 
+
+ useEffect(()=>{
+  console.log("Chart Data Updated:", updatedChartData);
+  
+ },[updatedChartData])
  
   const pieColors = [
     "rgba(75, 192, 192, 0.6)", 

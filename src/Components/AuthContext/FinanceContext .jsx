@@ -120,11 +120,12 @@ export const FinanceProvider = ({ children }) => {
     const expenseLabelsArray = Array.from(expenseLabelsSet);
     const expenseValuesArray = Object.values(expensesByCategory);
 
-    setChartData({
+    setChartData((prevState) => ({
+      ...prevState,
       labels: expenseLabelsArray,
       expenses: expenseValuesArray,
       income: [totalIncome],
-    });
+    }));
   };
 
   const handleDelete = async (type, id) => {
