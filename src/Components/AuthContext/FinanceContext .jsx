@@ -156,7 +156,7 @@ export const FinanceProvider = ({ children }) => {
       alert("Item deleted successfully.");
     } catch (error) {
       console.error("Error deleting item", error);
-      alert("Failed to delete item.");
+      alert("Failed to delete items.");
     }
   };
 

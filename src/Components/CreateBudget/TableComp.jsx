@@ -29,7 +29,7 @@ const TableComp = () => {
     budget: [],
     saving: [],
   });
-  const [deletedData, setDeletedData] = useState(false);
+
 
   const [isEditing, setIsEditing] = useState({ type: null, item: null });
 
@@ -50,6 +50,8 @@ const TableComp = () => {
       console.error("Delete error:", error);
       alert("Failed to delete item.");
     }
+    console.log("Handle Delete Item: ", handleDeleteItem);
+    
   };
 
   const handleEdit = (item, type) => {
