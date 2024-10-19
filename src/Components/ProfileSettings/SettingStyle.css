@@ -1,27 +1,73 @@
-/* SettingStyle.css */
 body {
   transition: background-color 0.3s, color 0.3s;
 }
 
 body.light {
-  background-color: #ffffff; 
-  color: #000000;
+  background-color: #f4f4f4; 
+  color: #333; 
 }
 
 body.dark {
-  background-color: #333333; 
-  color: #ffffff; 
+  background-color: #1a1a1a; 
+  color: #e6e6e6; 
 }
 
 .settings-page {
+  max-width: 600px;
+  margin: 20px auto; 
   padding: 20px;
+  background-color: #fff; 
+  border-radius: 8px; 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+}
+
+.setting-heading {
+  font-size: 28px; 
+  text-align: center; 
+  margin-bottom: 20px;
+  color: #333; 
 }
 
 .theme-toggle {
-  margin-bottom: 20px;
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  margin-bottom: 20px; 
 }
 
 .theme-button, .delete-button {
-  padding: 10px 15px;
+  padding: 12px 20px; 
   margin: 5px;
+  border: none; 
+  border-radius: 5px; 
+  font-size: 16px; 
+  cursor: pointer; 
+  transition: background-color 0.3s, transform 0.2s; 
+}
+
+.theme-button {
+  background-color: #4caf50; 
+  color: white; 
+}
+
+.theme-button:hover {
+  background-color: #45a049; 
+  transform: translateY(-2px); 
+}
+
+.delete-button {
+  background-color: #f44336; 
+  color: white; 
+}
+
+.delete-button:hover {
+  background-color: #e53935; 
+  transform: translateY(-2px); 
+}
+
+
+.alert {
+  color: #f44336;
+  text-align: center;
+  margin-top: 20px; 
 }

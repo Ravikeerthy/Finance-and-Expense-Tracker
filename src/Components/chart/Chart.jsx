@@ -31,7 +31,7 @@ ChartJS.register(
 const Chart = () => {
  const {updatedChartData} = useContext(FinanceContext)
 
- const { labels=[], expenses=[], income=[], totalExpenses=[] } = updatedChartData || {}; 
+ const { labels=[], expenses=[], income=[], totalExpenses } = updatedChartData || {}; 
 
  useEffect(()=>{
   console.log("Chart Data Updated:", updatedChartData);
@@ -77,6 +77,10 @@ const Chart = () => {
       },
     ],
   };
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false, 
+  };
   
   console.log("Pie Data: ", pieData);
   console.log("Bar Data: ", barData);
@@ -88,13 +92,13 @@ const Chart = () => {
       <div className="col-6">
       <h3>Expense Distribution</h3>
       <div className="pie-chart">
-      <Pie data={pieData} />
+      <Pie data={pieData} options={options} />
     </div>
       </div>
       <div className="col-6">
       <h3>Monthly Income vs. Expenses</h3>
     <div className="bar-chart">
-      <Bar data={barData} />
+      <Bar data={barData} options={options} />
     </div>
       </div>
     </div>

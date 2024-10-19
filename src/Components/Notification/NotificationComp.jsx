@@ -38,7 +38,7 @@ const NotificationComp = () => {
   const handleMarkAsRead = async (id) => {
     try {
       await markAsRead(id);
-      fetchingNotifications(); // Refresh notifications after marking as read
+      fetchingNotifications(); 
     } catch (error) {
       console.error("Error marking notification as read:", error);
       setError("Failed to mark notification as read.");
