@@ -8,7 +8,7 @@ export const FinanceProvider = ({ children }) => {
   const { user, token } = useContext(AuthContext);
   //   const [income, setIncome] = useState({ userIncome: [] });
   const [income, setIncome] = useState([]);
-  //   const [expense, setExpense] = useState({ expenseByUserId: [] });
+  //   const [expense, setExpense] = useState({ expenseUserId: [] });
   const [expense, setExpense] = useState([]);
   //   const [budget, setBudget] = useState({ userBudget: [] });
   const [budget, setBudget] = useState([]);
@@ -55,7 +55,7 @@ export const FinanceProvider = ({ children }) => {
         `https://back-end-d6p7.onrender.com/expense/expenseuserId/${userId}`,
         { headers, withCredentials: true }
       );
-      setExpense(expenseResponse.data.expenseUserId || []);
+      setExpense(expenseResponse.data.userExpenses || []);
 
       const budgetResponse = await axios.get(
         `https://back-end-d6p7.onrender.com/budget/getBudgetByUserId/${userId}`,
