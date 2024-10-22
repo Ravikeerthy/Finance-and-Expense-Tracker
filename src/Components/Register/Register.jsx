@@ -13,7 +13,7 @@ const Register = () => {
   // const [isSignUpActive, setIsSignUpActive] = useState(false); 
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
-  // const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [isLoginForm, setIsLoginForm] = useState(true);
 
@@ -134,182 +134,7 @@ const Register = () => {
     navigate("/reset-password");
   };
   return (
-    // <div className="vh-100 d-flex justify-content-center align-items-center bg-gradient">
-    //   <div
-    //     className={`container bg-white shadow rounded-3 position-relative ${
-    //       isSignUpActive ? "active" : ""
-    //     }`}
-    //   >
-    //     {/* Sign Up Form */}
-    //     <div className="form-container sign-up position-absolute w-50 h-100 p-4">
-    //       <Formik
-    //         initialValues={initialValues}
-    //         validationSchema={validationSchema}
-    //         onSubmit={onSubmit}
-    //       >
-    //         <Form>
-    //           <h3>Create Account</h3>
-    //           <span>or use your email for registration</span>
-    //           <div className="form-group my-3">
-    //             <Field
-    //               name="firstName"
-    //               type="text"
-    //               className="form-control"
-    //               placeholder="First Name"
-    //             />
-    //             <ErrorMessage
-    //               name="firstName"
-    //               component="div"
-    //               className="text-danger"
-    //             />
-    //           </div>
-    //           <div className="form-group my-3">
-    //             <Field
-    //               name="lastName"
-    //               type="text"
-    //               className="form-control"
-    //               placeholder="Last Name"
-    //             />
-    //             <ErrorMessage
-    //               name="lastName"
-    //               component="div"
-    //               className="text-danger"
-    //             />
-    //           </div>
-    //           <div className="form-group my-3">
-    //             <Field
-    //               name="userName"
-    //               type="email"
-    //               className="form-control"
-    //               placeholder="User Name(Email)"
-    //             />
-    //             <ErrorMessage
-    //               name="userName"
-    //               component="div"
-    //               className="text-danger"
-    //             />
-    //           </div>
-    //           <div className="form-group my-3">
-    //             <Field
-    //               name="password"
-    //               type="password"
-    //               className="form-control"
-    //               placeholder="Password"
-    //             />
-    //             <ErrorMessage
-    //               name="password"
-    //               component="div"
-    //               className="text-danger"
-    //             />
-    //           </div>
-    //           <div className="form-group my-3">
-    //             <Field
-    //               name="contactNumber"
-    //               type="text"
-    //               className="form-control"
-    //               placeholder="Contact Number"
-    //             />
-    //             <ErrorMessage
-    //               name="contactNumber"
-    //               component="div"
-    //               className="text-danger"
-    //             />
-    //           </div>
-    //           <button
-    //             type="submit"
-    //             className="btn btn-primary w-100"
-    //             disabled={loading}
-    //           >
-    //             {loading ? "Signing Up..." : "Sign Up"}
-    //           </button>
-    //         </Form>
-    //       </Formik>
-    //     </div>
-
-    //     {/* Sign In Form */}
-    //     <div className="form-container sign-in position-absolute w-50 h-100 p-4">
-    //       <Formik
-    //         initialValues={initialLoginValues}
-    //         validationSchema={loginValidationSchema}
-    //         onSubmit={loginOnSubmit}
-    //       >
-    //         <Form>
-    //           <h1>Sign In</h1>
-    //           <span>or use your email and password</span>
-    //           <div className="form-group my-3">
-    //             <Field
-    //               name="userName"
-    //               type="email"
-    //               className="form-control"
-    //               placeholder="User Name(Email)"
-    //             />
-    //             <ErrorMessage
-    //               name="userName"
-    //               component="div"
-    //               className="text-danger"
-    //             />
-    //           </div>
-    //           <div className="form-group my-3">
-    //             <Field
-    //               name="password"
-    //               type="password"
-    //               className="form-control"
-    //               placeholder="Password"
-    //             />
-    //             <ErrorMessage
-    //               name="password"
-    //               component="div"
-    //               className="text-danger"
-    //             />
-    //           </div>
-    //           <a href="#" className="small" onClick={handleForgotPassword}>
-    //             Forgot Your Password?
-    //           </a>
-    //           <button
-    //             type="submit"
-    //             className="btn btn-primary w-100 mt-3"
-    //             disabled={loading}
-    //           >
-    //             {loading ? "Signing In..." : "Sign In"}
-    //           </button>
-    //         </Form>
-    //       </Formik>
-    //     </div>
-
-    //     {/* Toggle Panels */}
-    //     <div className="toggle-container position-absolute w-50 h-100">
-    //       <div className="toggle d-flex align-items-center justify-content-center bg-primary text-white h-100">
-    //         <div className="toggle-panel toggle-left p-4">
-    //           <h1>Welcome Back!</h1>
-    //           <p>
-    //             Enter your personal details to sign in and use all the site
-    //             features
-    //           </p>
-    //           <button
-    //             className="btn btn-outline-light"
-    //             onClick={handleSignInClick}
-    //           >
-    //             Sign In
-    //           </button>
-    //         </div>
-    //         <div className="toggle-panel toggle-right text-center p-4">
-    //           <h1>Hello, Friends!</h1>
-    //           <p>
-    //             Register with your personal details to sign up and enjoy all the
-    //             site features
-    //           </p>
-    //           <button
-    //             className="btn btn-outline-light"
-    //             onClick={handleSignUpClick}
-    //           >
-    //             Sign Up
-    //           </button>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   </div>
-    //   <ToastContainer />
-    // </div>
+    
     <div className="form-modal">
     <h1 className="register-title">Welcome to Finance Tracker</h1>
    <p className="register-description">
@@ -358,12 +183,12 @@ const Register = () => {
            <div className="mb-3">
              <Field
                type="text"
-               name="emailOrUsername"
+               name="userName"
                className="form-control"
                placeholder="Enter email or username *"
              />
              <ErrorMessage
-               name="emailOrUsername"
+               name="userName"
                component="div"
                className="text-danger"
              />
@@ -382,11 +207,15 @@ const Register = () => {
              />
            </div>
            <div className="mb-3">
-             <a href="#">Forgot password</a>
+             <a href="#" onClick={handleForgotPassword}>Forgot password</a>
            </div>
-           <button type="submit" className="btn">
-             Log In
-           </button>
+           <button
+                type="submit"
+                className={`btn ${loading ? "loading" : ""}`} 
+                disabled={loading} 
+              >
+                {loading ? "Loading..." : "Log In"} 
+              </button>
          </Form>
        </Formik>
      </div>
@@ -432,12 +261,12 @@ const Register = () => {
            <div className="mb-3">
              <Field
                type="email"
-               name="email"
+               name="userName"
                className="form-control"
                placeholder="Enter your email *"
              />
              <ErrorMessage
-               name="email"
+               name="userName"
                component="div"
                className="text-danger"
              />
@@ -468,9 +297,13 @@ const Register = () => {
                className="text-danger"
              />
            </div>
-           <button type="submit" className="btn">
-             Create Account
-           </button>
+           <button
+                type="submit"
+                className={`btn ${loading ? "loading" : ""}`} 
+                disabled={loading}
+              >
+                {loading ? "Loading..." : "Create Account"} 
+              </button>
          </Form>
        </Formik>
      </div>

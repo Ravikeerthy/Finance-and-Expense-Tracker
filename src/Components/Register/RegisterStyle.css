@@ -9,7 +9,7 @@
     position: relative;
     overflow: hidden;
     height: 100vh;
-    /* border: 1px solid black; */
+    border: 1px solid black;
   }
   
   
@@ -92,7 +92,7 @@
   
   
   .form-toggle button {
-    width: 50%;
+    width: 100%;
     padding: 10px;
     border: none;
     cursor: pointer;
