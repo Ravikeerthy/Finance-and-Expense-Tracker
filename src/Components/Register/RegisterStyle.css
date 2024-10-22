@@ -1,10 +1,6 @@
 .form-modal {
-    width: 50vw;
-    /* background: linear-gradient(135deg, #f6d365, #fda085); */
-    background-size: 400% 400%;
-    animation: gradientBackground 10s ease infinite;
+    width: 100vw;
     margin: 0 auto;
-    margin-top: 2%;
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -51,8 +47,9 @@
     display: flex;
     justify-content: center;
     margin: 20px;
-  
     border-radius: 50px;
+    z-index: 1;
+    position: relative;
   
   }
   
@@ -92,7 +89,7 @@
   
   
   .form-toggle button {
-    width: 100%;
+    width: 50%;
     padding: 10px;
     border: none;
     cursor: pointer;
@@ -171,23 +168,19 @@
   
   .form-container {
     margin-top: 20px;
-    height: 70vh;
+    height: 100vh; /* Adjust to prevent the container from being too large */
     background: linear-gradient(to right, #47013e, #84377f);
-    background: url("https://media.istockphoto.com/id/1672310037/photo/checklist.jpg?s=612x612&w=0&k=20&c=si4R_V6pCVj6wATMZ41Np5PEn_XoaVzeMja7znc3qYw=");
     background-repeat: no-repeat;
     background-size: auto 100%;
     color: #070707;
     position: relative;
     overflow: hidden;
     width: 100%;
-    transform: translateX(0);
-    transition: transform 0.6s ease-in-out;
-    border: 1px solid black;
-    border-radius: 30px;
     padding: 30px;
     background-color: white;
+    border: 1px solid black;
+    border-radius: 30px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease;
   
   }
   
@@ -196,16 +189,15 @@
   }
   
   .form-container form {
-    position: absolute;
-    width: 50%;
-    height: 100vh;
+    position: relative;
+    width: 100%;
+    height: auto;
     display: flex;
     align-items: center;
-    /* justify-content: center; */
+    justify-content: center;
     flex-direction: column;
     padding: 0 30px;
     text-align: center;
-    top: 0;
     margin-top: 50px;
     transition: transform 0.6s ease-in-out;
   }
@@ -229,18 +221,28 @@
   }
   
   .toggle {
-    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    width: 120px; /* Adjust width for better visibility */
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+    margin: 0 10px; 
   }
   
   .toggle:hover {
     background-color: #333;
-    color: #fff;
-    transform: scale(1.05);
+      color: #fff;
+      transform: scale(1.05);
   }
   
   
   .btn {
-    transition: background-color 0.3s ease, color 0.3s ease;
+    width: auto;
+      padding: 10px 20px;
+      border-radius: 20px;
+      background-color: #d049d7;
+      color: white;
+      transition: background-color 0.3s ease, transform 0.3s ease;
   }
   
   .btn:hover {
