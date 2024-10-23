@@ -48,6 +48,7 @@
     border-radius: 50px;
     z-index: 2;
     position: relative;
+    background-color: white;
   
   }
   @media (max-width: 768px) {
@@ -100,6 +101,8 @@
     border: none;
     cursor: pointer;
     border-radius: 20px;
+    margin-left:50% ;
+    width: 200%;
   }
   
   input {
