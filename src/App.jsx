@@ -64,10 +64,11 @@ const App = () => {
     {
       element: (
         <>
-          {/* <NavBar />, */}
+          <NavBar />,
         </>
       ),
       children: [
+        
         { path: "/", element: <About /> },
         { path: "/register", element: <Register /> },
         { path: "/benefits", element: <Benefits /> },
@@ -78,7 +79,7 @@ const App = () => {
     {
       element: (
         <>
-          <LoginNavBar />,{/* <NotificationComp /> */}
+          <LoginNavBar />,
         </>
       ),
       children: [
