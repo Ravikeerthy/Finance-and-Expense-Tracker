@@ -43,8 +43,8 @@
   
   .form-toggle {
     display: flex;
-    justify-content: center;
-    margin: 20px;
+    justify-content: space-around;
+    margin-bottom: 1 rem;
     border-radius: 50px;
     z-index: 2;
     position: relative;
@@ -124,10 +124,15 @@
   }
   
   .btn {
+    width: auto;
+    padding: 10px 20px;
+    border-radius: 20px;
     position: relative;
     overflow: hidden;
     background-color: #d049d7;
     color: white;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+
   }
   
   
@@ -227,12 +232,10 @@
   }
   
   .toggle {
-    width: 120px; 
-    padding: 10px;
+    padding: 0.5rem 1rem;
     border: none;
+    border-radius: 5px;
     cursor: pointer;
-    border-radius: 20px;
-    margin: 0 10px; 
   }
   
   .toggle:hover {
