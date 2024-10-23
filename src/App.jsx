@@ -64,7 +64,7 @@ const App = () => {
     {
       element: (
         <>
-          <NavBar />,
+          {/* <NavBar />, */}
         </>
       ),
       children: [
