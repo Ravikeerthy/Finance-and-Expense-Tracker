@@ -49,6 +49,8 @@
     z-index: 2;
     position: relative;
     background-color: white;
+    flex-wrap: wrap;
+    flex-direction: column;
   
   }
   @media (max-width: 768px) {
