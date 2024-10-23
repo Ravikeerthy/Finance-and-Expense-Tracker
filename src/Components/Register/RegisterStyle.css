@@ -123,7 +123,7 @@
     text-align: left;
   }
   
-  .btn {
+  .btn-1 {
     width: auto;
     padding: 10px 20px;
     border-radius: 20px;
@@ -136,13 +136,13 @@
   }
   
   
-  .btn.loading {
+  .btn-1.loading {
     position: relative;
     pointer-events: none;
     opacity: 0.6;
   }
   
-  .btn.loading:after {
+  .btn-1.loading:after {
     content: "";
     position: absolute;
     top: 50%;
@@ -245,7 +245,7 @@
   }
   
   
-  .btn {
+  .btn-1 {
     width: auto;
       padding: 10px 20px;
       border-radius: 20px;
@@ -254,7 +254,7 @@
       transition: background-color 0.3s ease, transform 0.3s ease;
   }
   
-  .btn:hover {
+  .btn-1:hover {
     background-color: #eb7ee4;
     transform: scale(1.05);
   }

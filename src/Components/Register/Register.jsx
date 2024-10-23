@@ -211,7 +211,7 @@ const Register = () => {
            </div>
            <button
                 type="submit"
-                className={`btn ${loading ? "loading" : ""}`} 
+                className={`btn-1 ${loading ? "loading" : ""}`} 
                 disabled={loading} 
               >
                 {loading ? "Loading..." : "Log In"} 
@@ -299,7 +299,7 @@ const Register = () => {
            </div>
            <button
                 type="submit"
-                className={`btn ${loading ? "loading" : ""}`} 
+                className={`btn-1 ${loading ? "loading" : ""}`} 
                 disabled={loading}
               >
                 {loading ? "Loading..." : "Create Account"} 
