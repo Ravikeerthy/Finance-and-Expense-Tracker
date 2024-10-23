@@ -1,11 +1,10 @@
 .form-modal {
-    width: 100vw;
+    width: 70vw;
     margin: 0 auto;
     text-align: center;
     position: relative;
     overflow: hidden;
     height: 100vh;
-    border: 1px solid black;
   }
   
   
@@ -20,7 +19,6 @@
     opacity: 0;
     transform: translateX(50px);
     pointer-events: none;
-    /* height: 100vh; */
   }
   
   #login-form.active {
@@ -73,9 +71,11 @@
   }
   
   .register-title-1{
-    /* margin-top: 10px; */
     margin-right: 55%;
     margin-bottom: 20px;
+    color: white;
+    animation: fadeIn 1.2s ease forwards;
+    margin-top: 3%;
   }
   
   .register-description {
@@ -167,9 +167,9 @@
   
   
   .form-container {
-    margin-top: 20px;
-    height: 100vh; /* Adjust to prevent the container from being too large */
-    background: linear-gradient(to right, #47013e, #84377f);
+    /* margin-top: 20px; */
+    height: 100vh; 
+    background: linear-gradient(to right, #e65cd4, #3a0637);
     background-repeat: no-repeat;
     background-size: auto 100%;
     color: #070707;
@@ -178,7 +178,7 @@
     width: 100%;
     padding: 30px;
     background-color: white;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     border-radius: 30px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   
@@ -221,7 +221,7 @@
   }
   
   .toggle {
-    width: 120px; /* Adjust width for better visibility */
+    width: 120px; 
     padding: 10px;
     border: none;
     cursor: pointer;

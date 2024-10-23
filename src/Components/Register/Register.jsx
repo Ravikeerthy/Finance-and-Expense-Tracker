@@ -146,7 +146,7 @@ const Register = () => {
        id="login-toggle"
        onClick={toggleLogin}
        style={{
-         backgroundColor: isLoginForm ? "#b246b8" : "#fff",
+         backgroundColor: isLoginForm ? "#b246b8" : "#D3D3D3",
          color: isLoginForm ? "#fff" : "#222",
        }}
      >
@@ -157,7 +157,7 @@ const Register = () => {
        className="toggle"
        onClick={toggleSignup}
        style={{
-         backgroundColor: !isLoginForm ? "#b246b8" : "#fff",
+         backgroundColor: !isLoginForm ? "#b246b8" : "#D3D3D3",
          color: !isLoginForm ? "#fff" : "#222",
        }}
      >
