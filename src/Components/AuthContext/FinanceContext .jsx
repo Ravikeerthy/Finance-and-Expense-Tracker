@@ -80,6 +80,7 @@ export const FinanceProvider = ({ children }) => {
         // budgetResponse.data.userBudget,
         // savingResponse.data.savingGoals
       );
+      
     } catch (error) {
       console.error("Error fetching data", error);
       setError("Failed to fetch data");

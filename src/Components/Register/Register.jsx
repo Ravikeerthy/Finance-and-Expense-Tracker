@@ -12,7 +12,7 @@ import "./RegisterStyle.css"
 const Register = () => {
   // const [isSignUpActive, setIsSignUpActive] = useState(false); 
   const navigate = useNavigate();
-  const { login } = useContext(AuthContext);
+  const { login, setUserId } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
 
   const [isLoginForm, setIsLoginForm] = useState(true);
@@ -25,15 +25,6 @@ const Register = () => {
     setIsLoginForm(false);
   };
 
-  // const token = localStorage.getItem("token");
-
-  // const handleSignUpClick = () => {
-  //   setIsSignUpActive(true);
-  // };
-
-  // const handleSignInClick = () => {
-  //   setIsSignUpActive(false);
-  // };
   const signUpIntialValues = {
     firstName: "",
     lastName: "",
@@ -117,6 +108,7 @@ const Register = () => {
       const message = response.data.message;
       console.log("Response login data: ", response.data);
       localStorage.setItem("token", token);
+      setUserId(user._id)
       login(user, token);
       resetForm();
       // toast.success(response.data.message || "Login Successful");
@@ -147,7 +139,7 @@ const Register = () => {
        onClick={toggleLogin}
        style={{
          backgroundColor: !isLoginForm ? "#b246b8" : "#D3D3D3",
-         color: isLoginForm ? "#fff" : "#222",
+         color: !isLoginForm ? "#fff" : "#222",
        }}
      >
        Log In

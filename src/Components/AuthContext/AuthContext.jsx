@@ -16,12 +16,14 @@ export const AuthProvider = ({ children }) => {
 
   const [user, setUser] = useState(storedUser ? JSON.parse(storedUser) : null);
   const [token, setToken] = useState(storedToken);
-  const [userId, setUserId] = useState( user ? user._id :null);
+  const [userId, setUserId] = useState(storedUser ? JSON.parse(storedUser)?._id : null );
 
 
   const login = (userData, userToken) => {
     setIsAuthenticated(true);
     setUser(userData);
+    console.log("User Data", userData);
+    
     setUserId(userData._id);
     setToken(userToken)
     localStorage.setItem("isAuthenticated", "true");
@@ -41,7 +43,7 @@ export const AuthProvider = ({ children }) => {
 
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, token, userId, login, logOut }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, token, userId, setUserId, login, logOut }}>
       {children}
     </AuthContext.Provider>
   );

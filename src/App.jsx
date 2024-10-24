@@ -16,7 +16,7 @@ import LoginNavBar from "./Components/LoginNavBar/LoginNavBar";
 import CreateBudget from "./Components/CreateBudget/CreateBudget";
 import Reports from "./Components/Reports/Reports";
 import ProfileSettings from "./Components/ProfileSettings/ProfileSettings";
-import { AuthContext } from "./Components/AuthContext/AuthContext";
+import { AuthContext, AuthProvider } from "./Components/AuthContext/AuthContext";
 import IncomeForm from "./Components/CreateBudget/IncomeForm";
 import SavingForm from "./Components/CreateBudget/SavingForm";
 import ExpenseForm from "./Components/CreateBudget/ExpenseForm";
@@ -37,7 +37,7 @@ const ProtectedRoute = ({ children }) => {
 };
 
 const App = () => {
-  const { userId } = useContext(AuthContext);
+  // const { userId } = useContext(AuthContext);
   useEffect(() => {
     const socket = io("https://back-end-d6p7.onrender.com", {
       withCredentials: true,
@@ -173,6 +173,7 @@ const App = () => {
   ]);
 
   return (
+    <AuthProvider>
     <NotificationProvider>
       <ThemeProvider>
         <FinanceProvider>
@@ -182,6 +183,7 @@ const App = () => {
         </FinanceProvider>
       </ThemeProvider>
     </NotificationProvider>
+    </AuthProvider>
   );
 };
 

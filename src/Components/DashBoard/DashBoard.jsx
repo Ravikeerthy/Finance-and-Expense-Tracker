@@ -3,10 +3,12 @@ import "./DashboardStyle.css";
 import { FinanceContext } from "../AuthContext/FinanceContext ";
 import Chart from "../chart/Chart";
 import axios from "axios";
+import { AuthContext } from "../AuthContext/AuthContext";
 
 const DashBoard = ({}) => {
-  const { income, expense, budget, saving, userId, token, username } =
+  const { income, expense, budget, saving, token, username } =
     useContext(FinanceContext);
+const {userId} = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 

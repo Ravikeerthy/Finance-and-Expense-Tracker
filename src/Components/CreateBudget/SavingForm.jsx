@@ -88,10 +88,7 @@ const SavingForm = ({ onSubmit }) => {
               <Field name="source" type="text" />
               <ErrorMessage name="source" component="div" className="error" />
             </div>
-            {loading && <p className="loading-message">Submitting...</p>}
-            {isSubmitting && (
-              <p className="loading-message">Adding saving...</p>
-            )}
+
             <button type="submit" className="form-button">
               {loading ? "Adding..." : "Add Saving"}
             </button>
