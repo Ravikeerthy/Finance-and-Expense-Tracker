@@ -146,7 +146,7 @@ const Register = () => {
        id="login-toggle"
        onClick={toggleLogin}
        style={{
-         backgroundColor: isLoginForm ? "#b246b8" : "#D3D3D3",
+         backgroundColor: !isLoginForm ? "#b246b8" : "#D3D3D3",
          color: isLoginForm ? "#fff" : "#222",
        }}
      >

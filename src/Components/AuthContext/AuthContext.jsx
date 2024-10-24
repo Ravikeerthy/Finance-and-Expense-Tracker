@@ -16,10 +16,13 @@ export const AuthProvider = ({ children }) => {
 
   const [user, setUser] = useState(storedUser ? JSON.parse(storedUser) : null);
   const [token, setToken] = useState(storedToken);
+  const [userId, setUserId] = useState( user ? user._id :null);
+
 
   const login = (userData, userToken) => {
     setIsAuthenticated(true);
     setUser(userData);
+    setUserId(userData._id);
     setToken(userToken)
     localStorage.setItem("isAuthenticated", "true");
     localStorage.setItem("user", JSON.stringify(userData));
@@ -38,7 +41,7 @@ export const AuthProvider = ({ children }) => {
 
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, token, login, logOut }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, token, userId, login, logOut }}>
       {children}
     </AuthContext.Provider>
   );

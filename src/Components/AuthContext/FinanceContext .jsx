@@ -5,7 +5,7 @@ import { AuthContext } from "./AuthContext";
 export const FinanceContext = createContext();
 
 export const FinanceProvider = ({ children }) => {
-  const { user, token } = useContext(AuthContext);
+  const { user, token, userId } = useContext(AuthContext);
   //   const [income, setIncome] = useState({ userIncome: [] });
   const [income, setIncome] = useState([]);
   //   const [expense, setExpense] = useState({ expenseUserId: [] });
@@ -22,7 +22,7 @@ export const FinanceProvider = ({ children }) => {
     income: [],
   });
 
-  const userId = user ? user._id : null;
+  
   const username = user ? user.firstName : "Guest";
 
   useEffect(() => {
