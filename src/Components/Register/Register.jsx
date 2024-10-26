@@ -110,12 +110,16 @@ const Register = () => {
       setUserId(user._id);
       login(user, token);
       resetForm();
-      // toast.success(response.data.message || "Login Successful");
-      alert("Login Successfull");
+      toast.success(response.data.message || "Login Successful");
+      // alert("Login Successfull");
       navigate("/dashboard");
     } catch (error) {
-      console.log(error);
-      toast.error("Server Error");
+      if (error.response && error.response.data.errorType === "TOKEN_EXPIRED") {
+        alert("Your session has expired. Please log in again.");
+        navigate("/register");
+      } else if (error.response) {
+        toast.error(error.response.data.message || "Server Error");
+      }
     } finally {
       setLoading(false);
     }

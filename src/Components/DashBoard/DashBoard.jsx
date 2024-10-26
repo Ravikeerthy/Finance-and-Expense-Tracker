@@ -13,6 +13,7 @@ const {userId} = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+
   useEffect(() => {
     fetchAllData();
   }, [userId, token]);
@@ -104,6 +105,8 @@ const totalSavings = Array.isArray(saving)
     .slice(0, 5);
   console.log("Recent transactions: ", recentTransactions);
 
+ 
+
   return (
     <div className="dashboard">
       <div className="dashboard-header">
@@ -133,10 +136,8 @@ const totalSavings = Array.isArray(saving)
         </div>
       </div>
 
-      {/* <ExcelReport /> */}
-      <div className="report-button">
-        <button className="report-button-1" type="button">Download Report</button>
-      </div>
+     
+     
 
       {/* Expense Breakdown by Category */}
       <div className="expense-breakdown">
