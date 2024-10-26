@@ -62,7 +62,7 @@ const PasswordResetComp = () => {
                   type="email"
                   className="form-control"
                   placeholder="Enter your Email"
-                  disabled={loading} // Disable input while loading
+                  disabled={loading} 
                 />
                 <ErrorMessage
                   name="userName"
@@ -71,7 +71,7 @@ const PasswordResetComp = () => {
                 />
                 <button
                   type="submit"
-                  className="btn btn-primary w-100 mt-3"
+                  className="btn mt-3"
                   disabled={loading}
                 >
                   {loading ? "Sending..." : "Submit"}

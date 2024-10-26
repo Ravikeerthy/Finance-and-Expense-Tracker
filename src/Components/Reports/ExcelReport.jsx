@@ -1,30 +1,71 @@
-import React from "react";
+import React, { useContext } from "react";
 import axios from "axios";
 import "./ReportStyle.css";
+import { FinanceContext } from "../AuthContext/FinanceContext ";
+import { AuthContext } from "../AuthContext/AuthContext";
 
-const ExcelReport = ({income, expenses, budget, savings, userId, token}) => {
-  console.log("Receiving report vales: ", income, expenses, budget, savings);
+const ExcelReport = () => {
+  const { income=[], budget=[], saving=[], expense=[] } = useContext(FinanceContext);
+  // const { totalExpenses=0 } = updatedChartData || {}; 
+  const { userId, token } = useContext(AuthContext);
+
+  console.log("Excel fetch data: ", income, budget, saving, expense);
+
+  const detailedIncome = income.map((item) => ({
+    incomeAmount: item.incomeAmount,
+    incomeSource: item.incomeSource,
+    date: item.date,
+    frequency: item.frequency,
+   
+  }));
+  console.log("Detailed Income: ", detailedIncome);
   
+  const detailedExpense = expense.map((item) => ({
+    expenseAmount: item.expenseAmount,
+    expenseCategory: item.expenseCategory,
+    date: item.date,
+    frequency: item.frequency,
+    expenseDescription: item.expenseDescription,
+  }));
+  console.log("Detailed Expense: ", detailedExpense);
+  
+
+  const detailedSaving = saving.map((item) => ({
+    savingAmount: item.savingAmount,
+    source: item.source,
+    targetDate: item.targetDate,
+    
+  }));
+  console.log("Detailed Saving: ", detailedSaving);
+  
+  const detailedBudget = budget.map((item) => ({
+    budgetAmount: item.budgetAmount,
+    budgetCategory: item.budgetCategory,
+    budgetPeriod: item.budgetPeriod,
+  }));
+  console.log("Detailed Budget: ", detailedBudget);
+  
+
   const downloadExcelReport = async () => {
     try {
       const response = await axios.post(
         "https://back-end-d6p7.onrender.com/generatereport/generate_excel",
         {
-          income: income || 0,
-          expenses: expenses || 0,
-          savings: savings || 0,
-          budget: budget || 0,
-          userId
+          income: detailedIncome || 0,
+          expense: detailedExpense || 0,
+          saving: detailedSaving || 0,
+          budget: detailedBudget || 0,
+          userId,  
         },
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`, 
+            Authorization: `Bearer ${token}`,
           },
           responseType: "blob",
         }
       );
-      console.log("Generate report values: ", response.data)
+      console.log("Generate report values: ", response.data);
 
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
@@ -33,6 +74,8 @@ const ExcelReport = ({income, expenses, budget, savings, userId, token}) => {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+      window.URL.revokeObjectURL(url); 
+
     } catch (error) {
       console.error("Error downloading Excel report:", error);
       alert("Failed to download the report. Please try again.");
@@ -84,8 +127,6 @@ const ExcelReport = ({income, expenses, budget, savings, userId, token}) => {
         You can use this report to analyze spending habits, manage savings
         goals, and improve your financial planning.
       </p> */}
-
-      
     </div>
   );
 };

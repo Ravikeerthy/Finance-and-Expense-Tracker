@@ -1,6 +1,5 @@
 .home-container {
-    /* background-color: #e0dee0; */
-    text-align: center;
+       text-align: center;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease-in-out;

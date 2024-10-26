@@ -1,12 +1,13 @@
 
   
   .col-md-10 {
-	/* border: 5px solid black;  */
+	
 	height: 100vh; 
 	text-align: center; 
 	position: relative;
 	z-index: 1;
   }
+
   
   
   .nav-link {

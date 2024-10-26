@@ -7,10 +7,10 @@ import "./StyleRegister.css";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../AuthContext/AuthContext";
-import "./RegisterStyle.css"
+import "./RegisterStyle.css";
 
 const Register = () => {
-  // const [isSignUpActive, setIsSignUpActive] = useState(false); 
+  // const [isSignUpActive, setIsSignUpActive] = useState(false);
   const navigate = useNavigate();
   const { login, setUserId } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
@@ -97,7 +97,6 @@ const Register = () => {
         values,
         {
           headers: {
-            
             "Content-Type": "application/json",
           },
           withCredentials: true,
@@ -108,11 +107,11 @@ const Register = () => {
       const message = response.data.message;
       console.log("Response login data: ", response.data);
       localStorage.setItem("token", token);
-      setUserId(user._id)
+      setUserId(user._id);
       login(user, token);
       resetForm();
       // toast.success(response.data.message || "Login Successful");
-      alert("Login Successfull")
+      alert("Login Successfull");
       navigate("/dashboard");
     } catch (error) {
       console.log(error);
@@ -126,182 +125,186 @@ const Register = () => {
     navigate("/reset-password");
   };
   return (
-    
     <div className="form-modal">
-    <h1 className="register-title">Welcome to Finance Tracker</h1>
-   <p className="register-description">
-     Manage your finances with ease. Log in or sign up to track your income, expenses, and budgets.
-   </p>
-   <div className="form-toggle">
-     <button
-       className="toggle"
-       id="login-toggle"
-       onClick={toggleLogin}
-       style={{
-         backgroundColor: !isLoginForm ? "#b246b8" : "#D3D3D3",
-         color: !isLoginForm ? "#fff" : "#222",
-       }}
-     >
-       Log In
-     </button>
-     <button
-       id="signup-toggle"
-       className="toggle"
-       onClick={toggleSignup}
-       style={{
-         backgroundColor: !isLoginForm ? "#b246b8" : "#D3D3D3",
-         color: !isLoginForm ? "#fff" : "#222",
-       }}
-     >
-       Sign Up
-     </button>
-   </div>
+      <h1 className="register-title">Welcome to Finance Tracker</h1>
+      <p className="register-description">
+        Manage your finances with ease. Log in or sign up to track your income,
+        expenses, and budgets.
+      </p>
+      <div className="form-toggle">
+        <button
+          className={`toggle ${
+            isLoginForm ? "toggle-active" : "toggle-inactive"
+          }`}
+          id="login-toggle"
+          onClick={toggleLogin}
+        >
+          Log In
+        </button>
+        <button
+          id="signup-toggle"
+          className={`toggle ${
+            !isLoginForm ? "toggle-active" : "toggle-inactive"
+          }`}
+          onClick={toggleSignup}
+        >
+          Sign Up
+        </button>
+      </div>
 
-   <div className="form-container">
-     {/* Login Form */}
-     <div
-       id="login-form"
-       className={`form-content ${isLoginForm ? "active" : ""}`}
-     >
-        <h1 className="register-title-1">Login</h1>
-  
-  
-       <Formik
-         initialValues={logInInitialValues}
-         validationSchema={loginValidationSchema}
-         onSubmit={handleLoginSubmit}
-       >
-         <Form>
-           <div className="mb-3">
-             <Field
-               type="text"
-               name="userName"
-               className="form-control"
-               placeholder="Enter email or username *"
-             />
-             <ErrorMessage
-               name="userName"
-               component="div"
-               className="text-danger"
-             />
-           </div>
-           <div className="mb-3">
-             <Field
-               type="password"
-               name="password"
-               className="form-control"
-               placeholder="Enter password *"
-             />
-             <ErrorMessage
-               name="password"
-               component="div"
-               className="text-danger"
-             />
-           </div>
-           <div className="mb-3">
-             <a href="#" onClick={handleForgotPassword}>Forgot password</a>
-           </div>
-           <button
+      <div className="form-container">
+        {/* Login Form */}
+        <div
+          id="login-form"
+          className={`form-content ${isLoginForm ? "active" : ""}`}
+        >
+          <Formik
+            initialValues={logInInitialValues}
+            validationSchema={loginValidationSchema}
+            onSubmit={handleLoginSubmit}
+          >
+            <Form>
+              <div className="form-inner">
+              <h1 className="register-title-1">Login</h1>
+              <div className="form-fields">
+              <div className="mb-3">
+                <Field
+                  type="text"
+                  name="userName"
+                  className="form-control"
+                  placeholder="Enter email or username *"
+                />
+                <ErrorMessage
+                  name="userName"
+                  component="div"
+                  className="text-danger"
+                />
+              </div>
+              <div className="mb-3">
+                <Field
+                  type="password"
+                  name="password"
+                  className="form-control"
+                  placeholder="Enter password *"
+                />
+                <ErrorMessage
+                  name="password"
+                  component="div"
+                  className="text-danger"
+                />
+              </div>
+              <div className="mb-3">
+                <a href="#" onClick={handleForgotPassword}>
+                  Forgot password
+                </a>
+              </div>
+              <button
                 type="submit"
-                className={`btn-1 ${loading ? "loading" : ""}`} 
-                disabled={loading} 
-              >
-                {loading ? "Loading..." : "Log In"} 
-              </button>
-         </Form>
-       </Formik>
-     </div>
-
-     {/* Signup Form */}
-     <div
-       id="signup-form"
-       className={`form-content ${!isLoginForm ? "active" : ""}`}
-     >
-        <h1 className="register-title-1">Register</h1>
-       <Formik
-         initialValues={signUpIntialValues}
-         validationSchema={signupValidationSchema}
-         onSubmit={handleSignupSubmit}
-       >
-         <Form>
-           <div className="mb-3">
-             <Field
-               type="text"
-               name="firstName"
-               className="form-control"
-               placeholder="Enter your first name *"
-             />
-             <ErrorMessage
-               name="firstName"
-               component="div"
-               className="text-danger"
-             />
-           </div>
-           <div className="mb-3">
-             <Field
-               type="text"
-               name="lastName"
-               className="form-control"
-               placeholder="Enter your last name *"
-             />
-             <ErrorMessage
-               name="lastName"
-               component="div"
-               className="text-danger"
-             />
-           </div>
-           <div className="mb-3">
-             <Field
-               type="email"
-               name="userName"
-               className="form-control"
-               placeholder="Enter your email *"
-             />
-             <ErrorMessage
-               name="userName"
-               component="div"
-               className="text-danger"
-             />
-           </div>
-           <div className="mb-3">
-             <Field
-               type="password"
-               name="password"
-               className="form-control"
-               placeholder="Enter your password *"
-             />
-             <ErrorMessage
-               name="password"
-               component="div"
-               className="text-danger"
-             />
-           </div>
-           <div className="mb-3">
-             <Field
-               type="text"
-               name="contactNumber"
-               className="form-control"
-               placeholder="Enter your contact number *"
-             />
-             <ErrorMessage
-               name="contactNumber"
-               component="div"
-               className="text-danger"
-             />
-           </div>
-           <button
-                type="submit"
-                className={`btn-1 ${loading ? "loading" : ""}`} 
+                className={`btn-1 ${loading ? "loading" : ""}`}
                 disabled={loading}
               >
-                {loading ? "Loading..." : "Create Account"} 
+                {loading ? "Loading..." : "Log In"}
               </button>
-         </Form>
-       </Formik>
-     </div>
-   </div>
-   <ToastContainer />
- </div>
+              </div>
+              </div>
+            </Form>
+          </Formik>
+        </div>
+
+        {/* Signup Form */}
+        <div
+          id="signup-form"
+          className={`form-content ${!isLoginForm ? "active" : ""}`}
+        >
+          <Formik
+            initialValues={signUpIntialValues}
+            validationSchema={signupValidationSchema}
+            onSubmit={handleSignupSubmit}
+          >
+            <Form>
+              <div className="form-inner">
+              <h1 className="register-title-1">Register</h1>
+              <div className="form-fields">
+              <div className="mb-3">
+                <Field
+                  type="text"
+                  name="firstName"
+                  className="form-control"
+                  placeholder="Enter your first name *"
+                />
+                <ErrorMessage
+                  name="firstName"
+                  component="div"
+                  className="text-danger"
+                />
+              </div>
+              <div className="mb-3">
+                <Field
+                  type="text"
+                  name="lastName"
+                  className="form-control"
+                  placeholder="Enter your last name *"
+                />
+                <ErrorMessage
+                  name="lastName"
+                  component="div"
+                  className="text-danger"
+                />
+              </div>
+              <div className="mb-3">
+                <Field
+                  type="email"
+                  name="userName"
+                  className="form-control"
+                  placeholder="Enter your email *"
+                />
+                <ErrorMessage
+                  name="userName"
+                  component="div"
+                  className="text-danger"
+                />
+              </div>
+              <div className="mb-3">
+                <Field
+                  type="password"
+                  name="password"
+                  className="form-control"
+                  placeholder="Enter your password *"
+                />
+                <ErrorMessage
+                  name="password"
+                  component="div"
+                  className="text-danger"
+                />
+              </div>
+              <div className="mb-3">
+                <Field
+                  type="text"
+                  name="contactNumber"
+                  className="form-control"
+                  placeholder="Enter your contact number *"
+                />
+                <ErrorMessage
+                  name="contactNumber"
+                  component="div"
+                  className="text-danger"
+                />
+              </div>
+              <button
+                type="submit"
+                className={`btn-1 ${loading ? "loading" : ""}`}
+                disabled={loading}
+              >
+                {loading ? "Loading..." : "Create Account"}
+              </button>
+              </div>
+              </div>
+            </Form>
+          </Formik>
+        </div>
+      </div>
+      <ToastContainer />
+    </div>
   );
 };
 

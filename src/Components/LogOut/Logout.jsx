@@ -13,6 +13,7 @@ const Logout = () => {
       navigate("/register");
     };
     handleLogOut();
+    alert("LogOut successful")
   },[logOut, navigate])
   return (
     <div>

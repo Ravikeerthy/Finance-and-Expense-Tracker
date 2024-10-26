@@ -9,31 +9,10 @@ import { FinanceContext } from "../AuthContext/FinanceContext ";
 import TableComp from "./TableComp";
 
 const CreateBudget = () => {
-  const {
-    income,
-    expense,
-    budget,
-    saving,
-    fetchData,
-    chartData,
-    loading,
-    error,
-  } = useContext(FinanceContext);
+  const { income, expense, budget, saving, fetchData } =
+    useContext(FinanceContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentForm, setCurrentForm] = useState(null);
-
-  // const [getIncome, setGetIncome] = useState({ userIncome: [] });
-  // const [getExpense, setGetExpense] = useState({ expenseByUserId: [] });
-  // const [getBudget, setGetBudget] = useState({ userBudget: [] });
-  // const [getSaving, setGetSaving] = useState({ savingGoals: [] });
-
-  const [chartsData, setChartsData] = useState({
-    labels: [],
-    expense: [],
-    income: [],
-    budget: [],
-    saving: [],
-  });
 
   const { user } = useContext(AuthContext);
 
@@ -74,7 +53,6 @@ const CreateBudget = () => {
   };
 
   const handleFormSubmit = async (type, values) => {
-   
     try {
       switch (type) {
         case "income":
@@ -161,10 +139,9 @@ const CreateBudget = () => {
           </div>
         )}
       </>
-     
 
       <div className="chart-table-align"></div>
-     <TableComp />
+      <TableComp />
     </div>
   );
 };

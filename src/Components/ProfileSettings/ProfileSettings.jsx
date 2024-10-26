@@ -5,8 +5,8 @@ import axios from "axios";
 import { AuthContext } from "../AuthContext/AuthContext";
 
 const ProfileSettings = () => {
-  const { user } = useContext(AuthContext);
-  const userId = user ? user._id : null;
+  const { userId, token } = useContext(AuthContext);
+  // const userId = user ? user._id : null;
   const navigate = useNavigate();
 
   const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -15,7 +15,7 @@ const ProfileSettings = () => {
   });
 
   useEffect(() => {
-    document.body.className = isDarkMode ? "dark" : "light"; // Set body class on mount
+    document.body.className = isDarkMode ? "dark" : "light"; 
   }, [isDarkMode]);
 
   const toggleDarkMode = () => {
@@ -25,13 +25,18 @@ const ProfileSettings = () => {
   };
 
   const handleDeleteAccount = async () => {
-    if (!userId) return; // Prevent deletion if no user ID is available
+    if (!userId) return; 
     try {
       await axios.delete(
-        `http://back-end-d6p7.onrender.com/user/newuser/delete/${userId}`
+        `http://back-end-d6p7.onrender.com/user/newuser/delete/${userId}`,  {
+          headers: {
+            Authorization: `Bearer ${token}`,  
+            "Content-Type": "application/json"
+          }, withCredentials:true
+        }
       );
       alert("Account deleted successfully.");
-      navigate("/login");
+      navigate("/register");
     } catch (error) {
       console.log(error);
       alert("Error deleting account. Please try again.");

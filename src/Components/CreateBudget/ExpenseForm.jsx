@@ -53,7 +53,7 @@ const ExpenseForm = ({ onSubmit }) => {
       };
       onSubmit(newExpenseData);
       resetForm();
-      toast.success(response.data.message);
+      alert(response.data.message);
     } catch (error) {
       console.error("Failed to add expense:", error);
       toast.error("Failed to add expense");

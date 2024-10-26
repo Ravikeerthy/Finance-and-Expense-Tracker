@@ -45,7 +45,7 @@ const BudgetForm = ({onSubmit}) => {
        console.log("newBudgetData: ", newBudgetData);
        
       onSubmit(newBudgetData);
-      toast.success(response.data.message)
+      alert(response.data.message)
       resetForm();
     } catch (error) {
       console.error("Failed to add budget:", error);

@@ -57,6 +57,15 @@ const LoginNavBar = () => {
                     Create
                   </NavLink>
                 </li>
+                 <li className="nav-item">
+                  <NavLink
+                    className="nav-link"
+                    aria-current="page"
+                    to="/reports"
+                  >
+                    Report
+                  </NavLink>
+                </li>
 
                 <li className="nav-item">
                   <NavLink className="nav-link" to="/settings">

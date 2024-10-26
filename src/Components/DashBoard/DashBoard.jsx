@@ -4,6 +4,7 @@ import { FinanceContext } from "../AuthContext/FinanceContext ";
 import Chart from "../chart/Chart";
 import axios from "axios";
 import { AuthContext } from "../AuthContext/AuthContext";
+import ExcelReport from "../Reports/ExcelReport";
 
 const DashBoard = ({}) => {
   const { income, expense, budget, saving, token, username } =
@@ -130,6 +131,11 @@ const totalSavings = Array.isArray(saving)
           <h3>Net Balance</h3>
           <p>{netBalance.toFixed(2)}</p>
         </div>
+      </div>
+
+      {/* <ExcelReport /> */}
+      <div className="report-button">
+        <button className="report-button-1" type="button">Download Report</button>
       </div>
 
       {/* Expense Breakdown by Category */}

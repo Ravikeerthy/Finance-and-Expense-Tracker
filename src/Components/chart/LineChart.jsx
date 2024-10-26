@@ -11,7 +11,7 @@ import {
   Legend,
 } from "chart.js";
 
-// Register components for Line chart
+
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const LineChart = () => {
@@ -20,11 +20,11 @@ const LineChart = () => {
         datasets: [
           {
             label: "Expenses",
-            data: [400, 300, 500, 700, 600, 800], // Example data
+            data: [400, 300, 500, 700, 600, 800], 
             fill: false,
             backgroundColor: "rgba(75, 192, 192, 0.6)",
             borderColor: "rgba(75, 192, 192, 1)",
-            tension: 0.1, // Makes the line curved
+            tension: 0.1, 
           },
         ],
       };
@@ -42,7 +42,7 @@ const LineChart = () => {
         },
         scales: {
           y: {
-            beginAtZero: true, // Ensures the y-axis starts at 0
+            beginAtZero: true, 
           },
         },
       };
