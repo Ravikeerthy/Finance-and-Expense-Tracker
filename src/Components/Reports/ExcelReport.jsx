@@ -12,8 +12,8 @@ const ExcelReport = () => {
   console.log("Excel fetch data: ", income, budget, saving, expense);
 
   const detailedIncome = income.map((item) => ({
-    incomeAmount: item.incomeAmount,
-    incomeSource: item.incomeSource,
+    amount: item.incomeAmount,
+    source: item.incomeSource,
     date: item.date,
     frequency: item.frequency,
    
@@ -21,27 +21,27 @@ const ExcelReport = () => {
   console.log("Detailed Income: ", detailedIncome);
   
   const detailedExpense = expense.map((item) => ({
-    expenseAmount: item.expenseAmount,
-    expenseCategory: item.expenseCategory,
+    amount: item.expenseAmount,
+    source: item.expenseCategory,
     date: item.date,
     frequency: item.frequency,
-    expenseDescription: item.expenseDescription,
+    description: item.expenseDescription,
   }));
   console.log("Detailed Expense: ", detailedExpense);
   
 
   const detailedSaving = saving.map((item) => ({
-    savingAmount: item.savingAmount,
+    amount: item.savingAmount,
     source: item.source,
-    targetDate: item.targetDate,
+    date: item.targetDate,
     
   }));
   console.log("Detailed Saving: ", detailedSaving);
   
   const detailedBudget = budget.map((item) => ({
-    budgetAmount: item.budgetAmount,
-    budgetCategory: item.budgetCategory,
-    budgetPeriod: item.budgetPeriod,
+    amount: item.budgetAmount,
+    source: item.budgetCategory,
+    date: item.budgetPeriod,
   }));
   console.log("Detailed Budget: ", detailedBudget);
   
@@ -49,7 +49,8 @@ const ExcelReport = () => {
   const downloadExcelReport = async () => {
     try {
       const response = await axios.post(
-        "https://back-end-d6p7.onrender.com/generatereport/generate_excel",
+        // "https://back-end-d6p7.onrender.com/generatereport/generate_excel",
+        "http://localhost:4000/generatereport/generate_excel",
         {
           income: detailedIncome || 0,
           expense: detailedExpense || 0,
@@ -67,7 +68,7 @@ const ExcelReport = () => {
       );
       console.log("Generate report values: ", response.data);
 
-      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const url =  window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
       link.setAttribute("download", "FinancialReport.xlsx");
