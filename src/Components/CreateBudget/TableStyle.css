@@ -75,14 +75,22 @@ p {
   font-size: 1em;
 }
 
+#edit-icon{
+  color: rgb(86, 180, 206);
+}
+#delete-icon{
+  color: rgb(230, 119, 119);
+}
+
 @media screen and (max-width: 768px) {
   .table-comp {
     width: 100%;
     padding: 10px;
+    overflow: auto;
   }
-
-  table {
+ table {
     font-size: 0.4em;
+   
   }
   .table-comp h3 {
     font-size: 1.2em; 
@@ -102,7 +110,8 @@ p {
 }
 @media screen and (max-width: 480px) {
   .table-comp {
-    padding: 5px;
+    padding: 10px;
+    /* border-radius: 10px; */
   }
 
   table {
@@ -143,6 +152,42 @@ p {
   max-width: 500px;
   border-radius: 8px;
   position: relative;
+}
+
+.edit-close-button {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.edit-close-button:hover {
+  color: black;
+}
+
+@media screen and (max-width: 768px) {
+  .edit-modal-content {
+    width: 90%;
+    padding: 15px;
+    margin: 15% auto;
+  }
+  
+  .edit-close-button {
+    font-size: 24px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .edit-modal-content {
+    width: 95%;
+    padding: 10px;
+    margin: 20% auto;
+  }
+  
+  .edit-close-button {
+    font-size: 20px;
+  }
 }
 
 .edit-close-button {

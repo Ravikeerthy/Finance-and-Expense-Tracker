@@ -63,7 +63,7 @@ const EditValues = ({ item, type='', onClose, onSave }) => {
     <form onSubmit={handleSubmit}>
       {type === "income" && (
         <>
-          <label>
+          <label> 
             Amount:
             <input
               type="number"

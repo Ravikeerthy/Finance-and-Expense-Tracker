@@ -15,32 +15,13 @@ const ProfileSettings = () => {
   });
 
   useEffect(() => {
-    document.body.className = isDarkMode ? "dark" : "light"; 
+    document.body.className = isDarkMode ? "dark" : "light";
   }, [isDarkMode]);
 
   const toggleDarkMode = () => {
     const newTheme = isDarkMode ? "light" : "dark";
     setIsDarkMode(!isDarkMode);
     localStorage.setItem("theme", newTheme);
-  };
-
-  const handleDeleteAccount = async () => {
-    if (!userId) return; 
-    try {
-      await axios.delete(
-        `http://back-end-d6p7.onrender.com/user/newuser/delete/${userId}`,  {
-          headers: {
-            Authorization: `Bearer ${token}`,  
-            "Content-Type": "application/json"
-          }, withCredentials:true
-        }
-      );
-      alert("Account deleted successfully.");
-      navigate("/register");
-    } catch (error) {
-      console.log(error);
-      alert("Error deleting account. Please try again.");
-    }
   };
 
   return (
@@ -53,10 +34,6 @@ const ProfileSettings = () => {
           {isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
         </button>
       </div>
-
-      <button onClick={handleDeleteAccount} className="delete-button">
-        Delete Account
-      </button>
     </div>
   );
 };

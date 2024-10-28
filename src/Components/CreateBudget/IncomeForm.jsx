@@ -79,7 +79,7 @@ const IncomeForm = ({ onSubmit }) => {
           {({ values }) => (
             <Form className="form-class">
               <div>
-                <label className="form-label">Income Amount:</label>
+                <label className="form-label"><i class="bi bi-asterisk" ></i> Income Amount:</label>
                 <Field name="incomeAmount" type="number" />
                 <ErrorMessage
                   name="incomeAmount"
@@ -88,7 +88,7 @@ const IncomeForm = ({ onSubmit }) => {
                 />
               </div>
               <div>
-                <label className="form-label">Income Source:</label>
+                <label className="form-label"><i class="bi bi-asterisk" ></i> Income Source:</label>
                 <Field name="incomeSource" type="text" />
                 <ErrorMessage
                   name="incomeSource"
@@ -97,19 +97,19 @@ const IncomeForm = ({ onSubmit }) => {
                 />
               </div>
               <div>
-                <label className="form-label">Date:</label>
+                <label className="form-label"><i class="bi bi-asterisk" ></i> Date:</label>
                 <Field name="date" type="date" />
                 <ErrorMessage name="date" component="div" className="error" />
               </div>
 
               <div>
-                <label className="form-label">Is Recurring:</label>
+                <label className="form-label"> <i class="bi bi-asterisk" ></i> Is Recurring:</label>
                 <Field name="isRecurring" type="checkbox" />
               </div>
 
               {values.isRecurring && (
                 <div>
-                  <label className="form-label">Frequency:</label>
+                  <label className="form-label"><i class="bi bi-asterisk" ></i> Frequency:</label>
                   <Field as="select" name="frequency">
                     <option value="">Select Frequency</option>
                     <option value="daily">Daily</option>

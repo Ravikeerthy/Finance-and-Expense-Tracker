@@ -63,7 +63,7 @@ const BudgetForm = ({onSubmit}) => {
       >
         <Form className="form-class">
           <div>
-            <label className="form-label">Budget Amount:</label>
+            <label className="form-label"><i class="bi bi-asterisk" ></i> Budget Amount: </label>
             <Field name="budgetAmount" type="number" />
             <ErrorMessage
               name="budgetAmount"
@@ -72,7 +72,7 @@ const BudgetForm = ({onSubmit}) => {
             />
           </div>
           <div>
-            <label className="form-label">Category:</label>
+            <label className="form-label"><i class="bi bi-asterisk" ></i> Category:</label>
             <Field name="budgetCategory" type="text" />
             <ErrorMessage
               name="budgetCategory"
@@ -81,7 +81,7 @@ const BudgetForm = ({onSubmit}) => {
             />
           </div>
           <div>
-            <label className="form-label">Budget Period:</label>
+            <label className="form-label"><i class="bi bi-asterisk" ></i> Budget Period:</label>
             <Field name="budgetPeriod" type="text" />
             <ErrorMessage
               name="budgetPeriod"

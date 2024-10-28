@@ -1,8 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import "./LoginNavBarStyle.css";
 
 const LoginNavBar = () => {
+  const [isCollapsed, setIsCollapsed] = useState(true);
+
+  const toggleNavbar = () => {
+    setIsCollapsed(!isCollapsed);
+  };
+
+  const closeNavbar = () => {
+    setIsCollapsed(true);
+  };
   return (
     <div className="row">
       <div className="col-md-2">
@@ -14,14 +23,15 @@ const LoginNavBar = () => {
               data-bs-toggle="collapse"
               data-bs-target="#navbarToggleExternalContent"
               aria-controls="navbarToggleExternalContent"
-              aria-expanded="false"
+              aria-expanded={!isCollapsed}
+              onClick={toggleNavbar}
               aria-label="Toggle navigation"
               style={{ padding: "0.25rem 0.5rem" }}
             >
               <span className="navbar-toggler-icon"></span>
             </button>
             <div
-              className="collapse d-md-block"
+              className={`collapse d-md-block ${!isCollapsed ? "show" : ""}`}
               id="navbarToggleExternalContent"
             >
               <ul className="nav flex-column" id="navbar-align">
@@ -35,6 +45,7 @@ const LoginNavBar = () => {
                     className="nav-link"
                     aria-current="page"
                     to="/dashboard"
+                    onClick={closeNavbar}
                   >
                     Expense Tracker
                   </NavLink>
@@ -44,6 +55,7 @@ const LoginNavBar = () => {
                     className="nav-link active"
                     aria-current="page"
                     to="/dashboard"
+                    onClick={closeNavbar}
                   >
                     DashBoard
                   </NavLink>
@@ -53,6 +65,7 @@ const LoginNavBar = () => {
                     className="nav-link"
                     aria-current="page"
                     to="/create"
+                    onClick={closeNavbar}
                   >
                     Create
                   </NavLink>
@@ -62,18 +75,19 @@ const LoginNavBar = () => {
                     className="nav-link"
                     aria-current="page"
                     to="/reports"
+                    onClick={closeNavbar}
                   >
                     Report
                   </NavLink>
                 </li>
 
                 <li className="nav-item">
-                  <NavLink className="nav-link" to="/settings">
+                  <NavLink className="nav-link" to="/settings" onClick={closeNavbar}>
                     Settings
                   </NavLink>
                 </li>
                 <li className="nav-item">
-                  <NavLink className="nav-link" to="/logout">
+                  <NavLink className="nav-link" to="/logout" onClick={closeNavbar}>
                     LogOut
                   </NavLink>
                 </li>

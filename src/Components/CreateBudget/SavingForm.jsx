@@ -63,10 +63,10 @@ const SavingForm = ({ onSubmit }) => {
         validationSchema={validationSchema}
         onSubmit={savingOnSubmit}
       >
-        {({ isSubmitting }) => (
+        {() => (
           <Form className="form-class">
             <div>
-              <label className="form-label">Amount:</label>
+              <label className="form-label"><i class="bi bi-asterisk" ></i> Amount:</label>
               <Field name="savingAmount" type="number" />
               <ErrorMessage
                 name="savingAmount"
@@ -75,7 +75,7 @@ const SavingForm = ({ onSubmit }) => {
               />
             </div>
             <div>
-              <label className="form-label">Date:</label>
+              <label className="form-label"><i class="bi bi-asterisk" ></i> Date:</label>
               <Field name="targetDate" type="date" />
               <ErrorMessage
                 name="targetDate"
@@ -84,7 +84,7 @@ const SavingForm = ({ onSubmit }) => {
               />
             </div>
             <div>
-              <label className="form-label">Source:</label>
+              <label className="form-label"><i class="bi bi-asterisk" ></i> Source:</label>
               <Field name="source" type="text" />
               <ErrorMessage name="source" component="div" className="error" />
             </div>

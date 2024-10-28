@@ -129,7 +129,7 @@
   cursor: pointer;
   border-radius: 20px;
   /* color: white; */
-  background-color: #8242aa;
+  background-color: #d198e6;
   /* margin-left: 30%; */
   transition: background-color 0.3s ease, transform 0.3s ease;
 
@@ -238,6 +238,7 @@ input{
   transition: transform 0.6s ease-in-out;
   background-color: #e6c1f8;
   border-radius: 30px;
+  margin-left: 25%
 }
 
 .toggle-left {
@@ -269,7 +270,7 @@ input{
 }
 
 .toggle:hover {
-  background-color: #969696;
+  background-color: #8242aa;
     color: #fff;
     transform: scale(1.05);
 }
@@ -288,4 +289,48 @@ input{
 .btn-1:hover {
   background-color: #bb50f0;
   transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .form-inner {
+    flex-direction: column;
+  }
+
+  .form-container form {
+   
+    width: 90vw;
+    margin: 10px 20px;
+    padding: 20px;
+  }
+
+  #login-form, #signup-form {
+    width: 100vw;
+    transform: translateX(0);
+  }
+
+  .register-title {
+    font-size: 1.5em;
+  }
+
+  .register-description {
+    font-size: 1em;
+  }
+
+  .form-toggle button {
+    font-size: 18px;
+    width: 100%;
+    padding: 10px;
+  }
+
+  .btn-1 {
+    width: 100%;
+    margin-left: 0;
+    padding: 12px;
+  }
+
+  input {
+    font-size: 14px;
+    margin: 10px 0;
+    padding: 8px 12px;
+  }
 }

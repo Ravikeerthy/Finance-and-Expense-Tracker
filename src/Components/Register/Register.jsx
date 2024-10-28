@@ -89,12 +89,13 @@ const Register = () => {
 
     try {
       const { userName, password } = values;
+      const lowerCaseUserName = userName.toLowerCase();
       console.log("Login Values: ", values);
 
       let response = await axios.post(
         // "https://localhost:4000/user/newuser/login",
         "https://back-end-d6p7.onrender.com/user/newuser/login",
-        values,
+        { userName: lowerCaseUserName, password },
         {
           headers: {
             "Content-Type": "application/json",

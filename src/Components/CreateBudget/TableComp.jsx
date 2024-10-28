@@ -94,7 +94,7 @@ const TableComp = () => {
                     onClick={() => handleEdit(inc, "income")}
                     type="button"
                   >
-                    <i className="fa-solid fa-pen-to-square"></i>
+                    <i className="fa-solid fa-pen-to-square" id="edit-icon"></i>
                   </button>
                 </td>
                 <td>
@@ -102,7 +102,7 @@ const TableComp = () => {
                     onClick={() => handleDeleteItem("income", inc._id)}
                     type="button"
                   >
-                    <i className="fa-solid fa-trash"></i>
+                    <i className="fa-solid fa-trash" id="delete-icon"></i>
                   </button>
                 </td>
               </tr>
@@ -141,7 +141,7 @@ const TableComp = () => {
                     onClick={() => handleEdit(exp, "expense")}
                     type="button"
                   >
-                    <i className="fa-solid fa-pen-to-square"></i>
+                    <i className="fa-solid fa-pen-to-square" id="edit-icon"></i>
                   </button>
                 </td>
                 <td>
@@ -149,7 +149,7 @@ const TableComp = () => {
                     onClick={() => handleDeleteItem("expense", exp._id)}
                     type="button"
                   >
-                    <i className="fa-solid fa-trash"></i>
+                    <i className="fa-solid fa-trash" id="delete-icon"></i>
                   </button>
                 </td>
               </tr>
@@ -186,7 +186,7 @@ const TableComp = () => {
                     onClick={() => handleEdit(bud, "budget")}
                     type="button"
                   >
-                    <i className="fa-solid fa-pen-to-square"></i>
+                    <i className="fa-solid fa-pen-to-square" id="edit-icon"></i>
                   </button>
                 </td>
                 <td>
@@ -194,7 +194,7 @@ const TableComp = () => {
                     onClick={() => handleDeleteItem("budget", bud._id)}
                     type="button"
                   >
-                    <i className="fa-solid fa-trash"></i>
+                    <i className="fa-solid fa-trash" id="delete-icon"></i>
                   </button>
                 </td>
               </tr>
@@ -228,7 +228,7 @@ const TableComp = () => {
                 <td>{sav.targetDate}</td>
                 <td>
                   <button onClick={() => handleEdit(sav, "saving")}>
-                    <i className="fa-solid fa-pen-to-square"></i>
+                    <i className="fa-solid fa-pen-to-square" id="edit-icon"></i>
                   </button>
                 </td>
                 <td>
@@ -236,7 +236,7 @@ const TableComp = () => {
                     onClick={() => handleDeleteItem("saving", sav._id)}
                     type="button"
                   >
-                    <i className="fa-solid fa-trash"></i>
+                    <i className="fa-solid fa-trash" id="delete-icon"></i>
                   </button>
                 </td>
               </tr>

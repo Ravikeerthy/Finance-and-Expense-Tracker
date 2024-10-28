@@ -100,15 +100,57 @@
     background-color: rgb(200, 80, 80);
 }
 
+.bi{
+
+    color: red;
+    font-size: 0.5rem;
+    /* margin-bottom: 10px; */
+    
+}
+
 @media screen and (max-width: 768px) {
     .chart-table-align {
         flex-direction: column;
         align-items: center;
     }
-}
-@media screen and (max-width: 768px) {
+
+    .create-budget-container {
+        padding: 10px;
+    }
+
+    .button-group {
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .create-button {
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+    }
+
     .modal-content {
-        padding: 20px; 
+        padding: 20px;
+        max-width: 90%;
+    }
+}
+@media screen and (max-width: 480px) {
+    .create-heading {
+        font-size: 1.5em;
+    }
+
+    .button-group {
+        gap: 8px;
+    }
+
+    .create-button {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .modal-content {
+        padding: 15px;
     }
 }
 

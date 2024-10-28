@@ -73,7 +73,7 @@ const ExpenseForm = ({ onSubmit }) => {
         {({ values }) => (
           <Form className="form-class">
             <div>
-              <label className="form-label">Amount:</label>
+              <label className="form-label"><i class="bi bi-asterisk" ></i> Amount:</label>
               <Field name="expenseAmount" type="number" />
               <ErrorMessage
                 name="expenseAmount"
@@ -82,7 +82,7 @@ const ExpenseForm = ({ onSubmit }) => {
               />
             </div>
             <div>
-              <label className="form-label">Category:</label>
+              <label className="form-label"><i class="bi bi-asterisk" ></i> Category:</label>
               <Field name="expenseCategory" type="text" />
               <ErrorMessage
                 name="expenseCategory"
@@ -91,7 +91,7 @@ const ExpenseForm = ({ onSubmit }) => {
               />
             </div>
             <div>
-              <label className="form-label">Description:</label>
+              <label className="form-label"><i class="bi bi-asterisk" ></i> Description:</label>
               <Field name="expenseDescription" type="text" />
               <ErrorMessage
                 name="expenseDescription"
@@ -100,19 +100,19 @@ const ExpenseForm = ({ onSubmit }) => {
               />
             </div>
             <div>
-              <label className="form-label">Date:</label>
+              <label className="form-label"><i class="bi bi-asterisk" ></i> Date:</label>
               <Field name="date" type="date" />
               <ErrorMessage name="date" component="div" className="error" />
             </div>
 
             <div>
-              <label className="form-label">Is Recurring:</label>
+              <label className="form-label"><i class="bi bi-asterisk" ></i> Is Recurring:</label>
               <Field name="isRecurring" type="checkbox" />
             </div>
 
             {values.isRecurring && (
               <div>
-                <label className="form-label">Frequency:</label>
+                <label className="form-label"><i class="bi bi-asterisk" ></i> Frequency:</label>
                 <Field as="select" name="frequency">
                   <option value="">Select Frequency</option>
                   <option value="daily">Daily</option>
@@ -127,9 +127,11 @@ const ExpenseForm = ({ onSubmit }) => {
                 />
               </div>
             )}
-            <button type="submit" className="form-button" disabled={loading}>
-              {loading ? "Submitting..." : "Add Expense"}
-            </button>
+            <div className="form-button-container">
+          <button type="submit" className="form-button" disabled={loading}>
+            {loading ? "Submitting..." : "Add Expense"}
+          </button>
+        </div>
           </Form>
         )}
       </Formik>
