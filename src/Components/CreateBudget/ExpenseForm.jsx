@@ -74,7 +74,7 @@ const ExpenseForm = ({ onSubmit }) => {
           <Form className="form-class">
             <div>
               <label className="form-label"><i class="bi bi-asterisk" ></i> Amount:</label>
-              <Field name="expenseAmount" type="number" />
+              <Field name="expenseAmount" type="number"  />
               <ErrorMessage
                 name="expenseAmount"
                 component="div"
