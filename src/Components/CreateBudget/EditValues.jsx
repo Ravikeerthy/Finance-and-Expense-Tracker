@@ -4,6 +4,7 @@ import "./EditStyle.css";
 
 const EditValues = ({ item, type='', onClose, onSave }) => {
   const [formData, setFormData] = useState(item);
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     setFormData(item);
@@ -17,6 +18,7 @@ const EditValues = ({ item, type='', onClose, onSave }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
+    setLoading(true);
     
     let updateURL;
 
@@ -54,6 +56,8 @@ const EditValues = ({ item, type='', onClose, onSave }) => {
     } catch (error) {
       console.error("Error updating record", error);
       alert("Failed to update Values.");
+    }finally{
+      setLoading(false)
     }
     onClose();
   };
@@ -217,7 +221,7 @@ const EditValues = ({ item, type='', onClose, onSave }) => {
           </label>
         </>
       )}
-      <button type="submit">Save</button>
+      <button type="submit" disabled={loading}>{loading? "Update saving...": "Save Update"}</button>
       <button type="button" onClick={onClose}>
         Cancel
       </button>

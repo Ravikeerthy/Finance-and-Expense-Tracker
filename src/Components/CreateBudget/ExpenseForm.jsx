@@ -129,7 +129,7 @@ const ExpenseForm = ({ onSubmit }) => {
             )}
             <div className="form-button-container">
           <button type="submit" className="form-button" disabled={loading}>
-            {loading ? "Submitting..." : "Add Expense"}
+            {loading ? "Adding Expense..." : "Add Expense"}
           </button>
         </div>
           </Form>

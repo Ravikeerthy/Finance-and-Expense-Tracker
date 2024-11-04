@@ -136,6 +136,9 @@ export const FinanceProvider = ({ children }) => {
 
   const handleDelete = async (type, id) => {
     console.log("Authorization Token:", token);
+    const confirmDelete = window.confirm("Are you sure you want to delete the item?");
+    if(!confirmDelete) {return};
+
     try {
       const endpointMap = {
         income: `https://back-end-d6p7.onrender.com/income/delete/${id}`,
@@ -169,6 +172,8 @@ export const FinanceProvider = ({ children }) => {
     } catch (error) {
       console.error("Error deleting item", error);
       alert("Failed to delete items.");
+    } finally{
+      await fetchData();
     }
   };
 

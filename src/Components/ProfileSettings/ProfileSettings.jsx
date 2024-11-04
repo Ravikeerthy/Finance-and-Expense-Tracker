@@ -1,37 +1,34 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import "./SettingStyle.css";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { AuthContext } from "../AuthContext/AuthContext";
+import { ThemeContext } from "../AuthContext/ThemeMode";
 
 const ProfileSettings = () => {
-  const { userId, token } = useContext(AuthContext);
-  // const userId = user ? user._id : null;
-  const navigate = useNavigate();
+ 
+  const {theme, toggleTheme} = useContext(ThemeContext);
 
-  const [isDarkMode, setIsDarkMode] = useState(() => {
-    const storedTheme = localStorage.getItem("theme");
-    return storedTheme === "dark";
-  });
+  // const [isDarkMode, setIsDarkMode] = useState(() => {
+  //   const storedTheme = localStorage.getItem("theme");
+  //   return storedTheme === "dark";
+  // });
 
   useEffect(() => {
-    document.body.className = isDarkMode ? "dark" : "light";
-  }, [isDarkMode]);
+    document.body.className = theme;
+  }, [theme]);
 
-  const toggleDarkMode = () => {
-    const newTheme = isDarkMode ? "light" : "dark";
-    setIsDarkMode(!isDarkMode);
-    localStorage.setItem("theme", newTheme);
-  };
+  // const toggleDarkMode = () => {
+  //   const newTheme = isDarkMode ? "light" : "dark";
+  //   setIsDarkMode(!isDarkMode);
+  //   localStorage.setItem("theme", newTheme);
+  // };
 
   return (
-    <div className="settings-page">
-      <h2 className="setting-heading">Settings Page</h2>
+    <div className={`settings-page ${theme}`}>
+      <h2 className={`settings-page ${theme}`}>Settings Page</h2>
 
       <div className="theme-toggle">
         <label>Theme:</label>
-        <button onClick={toggleDarkMode} className="theme-button">
-          {isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+        <button onClick={toggleTheme} className="theme-button">
+          {theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
         </button>
       </div>
     </div>

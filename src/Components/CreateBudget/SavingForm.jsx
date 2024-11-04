@@ -89,8 +89,8 @@ const SavingForm = ({ onSubmit }) => {
               <ErrorMessage name="source" component="div" className="error" />
             </div>
 
-            <button type="submit" className="form-button">
-              {loading ? "Adding..." : "Add Saving"}
+            <button type="submit" className="form-button" disabled={loading}>
+              {loading ? "Adding saving..." : "Add Saving"}
             </button>
           </Form>
         )}

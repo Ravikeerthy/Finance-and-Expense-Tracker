@@ -7,7 +7,7 @@ import { toast, ToastContainer } from "react-toastify";
 
 const IncomeForm = ({ onSubmit }) => {
   const [incomeDetails, setIncomeDetails] = useState([]);
-  // const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const initialValues = {
     incomeAmount: "",
@@ -29,6 +29,7 @@ const IncomeForm = ({ onSubmit }) => {
 
   const onSubmitHandler = async (values, { resetForm }) => {
     console.log("Submitted values:", values);
+    setLoading(true)
 
     try {
       const response = await axios.post(
@@ -65,6 +66,8 @@ const IncomeForm = ({ onSubmit }) => {
     } catch (error) {
       console.error("Failed to add budget:", error);
       // toast.error("Failed to add income. Please try again.");
+    }finally{
+      setLoading(false)
     }
   };
   return (
@@ -125,8 +128,8 @@ const IncomeForm = ({ onSubmit }) => {
                 </div>
               )}
 
-              <button type="submit" className="form-button">
-                Add Income
+              <button type="submit" className="form-button" disabled={loading}>
+                 {loading? "Adding Income..." : "Add Income"}
               </button>
             </Form>
           )}

@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./TableStyle.css";
 import { AuthContext } from "../AuthContext/AuthContext";
-import axios from "axios";
 import EditValues from "./EditValues";
 import { FinanceContext } from "../AuthContext/FinanceContext ";
 
@@ -11,11 +10,8 @@ const TableComp = () => {
     expense,
     budget,
     saving,
-    loading,
-    error,
     fetchData,
     handleDelete,
-    editItem,
   } = useContext(FinanceContext);
 
   const { user, token } = useContext(AuthContext);
@@ -30,7 +26,6 @@ const TableComp = () => {
     saving: [],
   });
 
-
   const [isEditing, setIsEditing] = useState({ type: null, item: null });
 
   useEffect(() => {
@@ -41,14 +36,13 @@ const TableComp = () => {
   const handleDeleteItem = async (type, id) => {
     try {
       await handleDelete(type, id);
-     
+
       alert("Item deleted successfully!");
     } catch (error) {
       console.error("Delete error:", error);
       alert("Failed to delete item.");
     }
     console.log("Handle Delete Item: ", handleDeleteItem);
-    
   };
 
   const handleEdit = (item, type) => {

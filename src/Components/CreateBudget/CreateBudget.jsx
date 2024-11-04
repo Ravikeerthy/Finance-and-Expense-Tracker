@@ -89,14 +89,14 @@ const CreateBudget = () => {
           <button onClick={() => openModal("income")} className="create-button">
             Create New Income
           </button>
-          <button onClick={() => openModal("budget")} className="create-button">
-            Create New Budget
-          </button>
           <button
             onClick={() => openModal("expense")}
             className="create-button"
           >
             Create New Expense
+          </button>
+          <button onClick={() => openModal("budget")} className="create-button">
+            Create New Budget
           </button>
           <button onClick={() => openModal("saving")} className="create-button">
             Create New Saving
