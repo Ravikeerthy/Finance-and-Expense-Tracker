@@ -100,7 +100,7 @@ const NewPasswordComp = () => {
                 </div>
                 <button
                   type="submit"
-                  className="btn btn-primary w-100 mt-3"
+                  className="btn w-100 mt-3"
                   disabled={loading}
                 >
                   {loading ? (

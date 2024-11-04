@@ -69,12 +69,23 @@ const PasswordResetComp = () => {
                   component="div"
                   className="text-danger"
                 />
-                <button
+               <button
                   type="submit"
-                  className="btn mt-3"
+                  className="btn  w-100 mt-3"
                   disabled={loading}
                 >
-                  {loading ? "Sending..." : "Submit"}
+                  {loading ? (
+                    <>
+                      <span
+                        className="spinner-border spinner-border-sm"
+                        role="status"
+                        aria-hidden="true"
+                      ></span>
+                      sending...
+                    </>
+                  ) : (
+                    "Submit"
+                  )}
                 </button>
               </Form>
             )}
