@@ -4,6 +4,7 @@ import * as yup from "yup";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import "./StyleRegister.css";
 
 const NewPasswordComp = () => {
   const { token } = useParams();
@@ -59,8 +60,8 @@ const NewPasswordComp = () => {
         className="container d-flex justify-content-center align-items-center"
         style={{ minHeight: "100vh" }}
       >
-        <div className="card p-4 shadow-sm" style={{ width: "400px" }}>
-          <h3 className="text-center">Reset Your Password</h3>
+      <div className="card p-5 shadow-sm" id="card-design">
+      <h3 className="text-center">Enter New Password</h3>
 
           {message && <p className="text-success">{message}</p>}
           {error && <p className="text-danger">{error}</p>}

@@ -45,7 +45,7 @@ const PasswordResetComp = () => {
         className="container d-flex justify-content-center align-items-center"
         style={{ minHeight: "100vh" }}
       >
-        <div className="card p-4 shadow-sm" style={{ width: "400px" }}>
+        <div className="card p-5 shadow-sm" id="card-design">
           <h3 className="text-center">Reset Your Password</h3>
 
           {message && <p className="text-success">{message}</p>}
