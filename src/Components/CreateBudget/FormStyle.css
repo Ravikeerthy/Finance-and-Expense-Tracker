@@ -3,8 +3,9 @@
     border-radius: 8px; 
     padding: 20px; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
-    max-width: 400px; 
-    margin: 20px auto;
+    max-width: 500px; 
+    /* margin: 20px auto; */
+    
   }
   
   .form-heading {
@@ -16,7 +17,7 @@
   
   .form-label {
     display: block; 
-    margin-bottom: 2px; 
+    margin-bottom: 0; 
     font-weight: bold; 
     color: #555; 
   }
@@ -33,7 +34,7 @@
   input[type="text"],
   input[type="date"],
   select {
-    padding: 10px; 
+    /* padding: 10px;  */
     border: 1px solid #ccc; 
     border-radius: 4px; 
     /* margin-bottom: 30px; */
@@ -54,7 +55,7 @@
   .form-button-container {
     display: flex; 
     justify-content: center; 
-    margin-top: 20px; 
+    /* margin-top: 20px;  */
 }
   
   .form-button {
